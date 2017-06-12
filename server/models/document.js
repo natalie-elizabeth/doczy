@@ -1,0 +1,21 @@
+'use strict';
+module.exports = function (sequelize, DataTypes) {
+  var Document = sequelize.define('Document', {
+    title: DataTypes.STRING,
+    content: DataTypes.STRING,
+    access: DataTypes.ENUM('private', 'public')
+  }, {
+      tableName: 'documents',
+      underscored: true,
+      classMethods: {
+        associate: function (models) {
+          // associations can be defined here
+          Document.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            allowNull: false
+          })
+        }
+      }
+    });
+  return Document;
+};
