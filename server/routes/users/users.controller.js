@@ -19,5 +19,12 @@ class UserController {
         res.status(400).json(error)
       });
   }
+
+  static list(req, res) {
+    return User
+      .all()
+      .then(users => res.status(200).json(users))
+      .catch(error => { console.log(error); res.status(400).json(error) });
+  }
 };
 module.exports = UserController;

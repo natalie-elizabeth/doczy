@@ -2,8 +2,8 @@ const Router = require('express').Router();
 const User = require('./users.controller');
 
 Router.route('/users')
-  .post(User.create);
-//   .get(Role.list);
+  .post(User.create)
+  .get(User.list);
 
 // Router.route('/roles/:id')
 //   .get(Role.find)

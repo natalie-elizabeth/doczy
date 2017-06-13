@@ -26,6 +26,18 @@ class RoleController {
       .then(roles => res.status(200).json(roles))
       .catch(error => { console.log(error); res.status(400).json(error) });
   }
+
+  static listall(req, res) {
+    return Role
+      .findAll({
+        include: [{
+          model: User,
+          as: 'users',
+        }],
+      })
+      .then(roles => res.status(200).send(roles))
+      .catch(error => res.status(400).send(error));
+  }
   static find(req, res) {
     return res.json({ message: "ddduuuuh" })
   }

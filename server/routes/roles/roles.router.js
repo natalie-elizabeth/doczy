@@ -3,7 +3,8 @@ const Role = require('./roles.controller');
 
 Router.route('/roles')
   .post(Role.create)
-  .get(Role.list);
+  // .get(Role.list)
+  .get(Role.listall);
 
 Router.route('/roles/:id')
   .get(Role.find)
