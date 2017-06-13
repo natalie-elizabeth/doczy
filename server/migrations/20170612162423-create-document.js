@@ -9,17 +9,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       access: {
-        type: Sequelize.ENUM('private', 'public')
+        type: Sequelize.ENUM('private', 'public'),
+        allowNull: false
       },
       user_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+          as: 'user_id'
+        }
       },
       created_at: {
         allowNull: false,

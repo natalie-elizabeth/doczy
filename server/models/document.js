@@ -1,8 +1,21 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
   var Document = sequelize.define('Document', {
-    title: DataTypes.STRING,
-    content: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
     access: DataTypes.ENUM('private', 'public')
   }, {
       tableName: 'documents',
