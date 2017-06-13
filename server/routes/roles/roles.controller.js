@@ -19,12 +19,12 @@ class RoleController {
         res.status(400).json(error)
       });
   }
-
   static list(req, res) {
     return Role
       .all()
-      .then(roles => res.status(200).json(roles))
-      .catch(error => { console.log(error); res.status(400).json(error) });
+      .then(roles => res.status(201).send(roles))
+      .catch(error => res.status(400).send(error));
+
   }
 
   static listall(req, res) {
@@ -35,11 +35,26 @@ class RoleController {
           as: 'users',
         }],
       })
-      .then(roles => res.status(200).send(roles))
+      .then(roles => res.status(201).send(roles))
       .catch(error => res.status(400).send(error));
   }
-  static find(req, res) {
-    return res.json({ message: "ddduuuuh" })
+  static retrieve(req, res) {
+    return Role
+      .findById(req.params.id, {
+        include: [{
+          model: User,
+          as: 'users'
+        }]
+      })
+      .then(role => {
+        if (!role) {
+          res.status(404).send({
+            message: 'Role Not Found'
+          });
+        }
+        return res.status(201).json(role);
+      })
+      .catch(error => { res.status(400).json(error) });
   }
 
   static update(req, res) {
@@ -48,10 +63,10 @@ class RoleController {
 
   static delete(req, res) {
     return Role
-      .findById(req.params.roleId)
+      .findById(req.params.id)
       .then(role => {
         if (!role) {
-          res.status(404).send({ message: "user not found" });
+          res.status(404).send({ message: "Role not found" });
         }
         return role
           .destroy()

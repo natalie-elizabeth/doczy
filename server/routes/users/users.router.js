@@ -3,11 +3,14 @@ const User = require('./users.controller');
 
 Router.route('/users')
   .post(User.create)
-  .get(User.list);
+  .get(User.listall);
 
-// Router.route('/roles/:id')
-//   .get(Role.find)
+Router.route('/users/login')
+  .post(User.login);
+
+Router.route('/users/:id')
+  .get(User.retrieve)
+  .delete(User.delete);
 //   .put(Role.update)
-//   .delete(Role.delete);
 
 module.exports = Router;
