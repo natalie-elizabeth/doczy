@@ -4,18 +4,20 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_PATH=/server node ./bin/www",
-    "ssh": "docker exec -it $(docker ps | grep docker_api | awk '{ print $1}') bash",
+    "start": "NODE_PATH=./server node ./bin/www",
+    "ssh:app": "docker exec -it $(docker ps | grep docker_api | awk '{ print $1}') bash",
+    "ssh:db": "docker exec -it $(docker ps | grep postgres | awk '{ print $1}') bash",
     "migrations": "sequelize db:migrate:undo:all && sequelize db:migrate",
-    "start:dev": "NODE_PATH=/server nodemon ./bin/www"
+    "start:dev": "NODE_PATH=./server nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "morgan": "^1.8.2",
-    "pg": "^6.2.4",
-    "sequelize": "^4.1.0",
+    "pg": "^6.1.5",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0"
   }
 }

@@ -1,6 +1,6 @@
 FROM node:boron
 
-MAINTAINER Thomas Nyambati <thomasnyambati@gmail.com>
+MAINTAINER Natalie Elizabeth <natalie.elizabeth@andela.com>
 
 # use nodemon for development
 RUN npm install --global nodemon

@@ -8,16 +8,16 @@ const env = process.env.NODE_ENV || 'development'
 const app = express();
 
 // Log requests to the console.
-if (env.name === 'development') {
-    app.use(logger('dev'));
-}
+
+app.use(logger('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
+require('routes')(app)
 app.get('/*', (req, res) => res.status(200).send({
-    message: 'Welcome to the beginning of nothingness.',
+  message: 'Welcome to the beginning of nothingness.',
 }));
 
 module.exports = app;
