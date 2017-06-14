@@ -5,8 +5,8 @@ Router.route('/users')
   .post(User.create)
   .get(User.listall);
 
-Router.route('/users/login')
-  .post(User.login);
+// Router.route('/users/login')
+//   .post(User.login);
 
 Router.route('/users/:id')
   .get(User.retrieve)

@@ -69,43 +69,6 @@ class UserController {
       .catch(error => res.status(400).send(error));
   }
 
-  static login(req, res) {
-    User.findOne({
-      where: {
-        email: req.body.email
-      }
-    })
-      .then((user) => {
-        if (!user) {
-          return res.status(403).send({
-            message: 'Invalid user'
-          });
-        }
-        bcrypt.compare(req.body.password, User.password)
-          .then((diff) => {
-            if (diff) {
-              const token = jwt.sign({ user_id: User.id }, secretKey, { expiresIn: '24h' });
-              return res.status(200).send({
-                message: 'You were successfully logged in',
-                token,
-                expiresIn: '24h'
-              })
-            }
-            return res.send('Password/ email is incorrect')
-          })
-          .catch(() => {
-            res.status(401).send({
-              message: 'Invalid login credentials'
-            });
-          });
-      })
-      .catch(() => {
-        res.status(401).send({
-          message: 'Invalid login credentials'
-        });
-      })
-  }
-
   static update(req, res) {
     return User
       .findById(req.params.id)
@@ -115,7 +78,14 @@ class UserController {
             message: 'User Not Found',
           });
         }
-        User.update({ username: req.body.username || User.username, })
+        return user
+          .update({
+            username: req.body.username || user.username,
+            email: req.body.email || user.email,
+            password: req.body.password || user.password,
+
+
+          })
           .then(() => res.status(200).send(user))
           .catch((error) => res.status(400).send(error));
       })

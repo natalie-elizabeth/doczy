@@ -7,7 +7,7 @@ Router.route('/documents')
 
 Router.route('/documents/:id')
   .get(Document.retrieve)
-  //   .put(Role.update)
+  .put(Document.update)
   .delete(Document.delete);
 
 module.exports = Router;

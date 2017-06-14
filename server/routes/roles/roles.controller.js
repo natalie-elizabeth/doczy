@@ -57,10 +57,6 @@ class RoleController {
       .catch(error => { res.status(400).json(error) });
   }
 
-  static update(req, res) {
-    return res.json({ message: "ddduuuuh" })
-  }
-
   static delete(req, res) {
     return Role
       .findById(req.params.id)
@@ -74,6 +70,23 @@ class RoleController {
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
+  }
+  static update(req, res) {
+    return Role
+      .findById(req.params.id)
+      .then(role => {
+        if (!role) {
+          return res.status(404).send({
+            message: 'Role Not Found',
+          });
+        }
+        return role
+          .update({
+            name: req.body.name || document.name
+          })
+          .then(() => res.status(200).send(role))
+          .catch((error) => res.status(400).send(error));
+      })
   }
 }
 
