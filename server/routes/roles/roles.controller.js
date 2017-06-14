@@ -36,7 +36,7 @@ class RoleController {
         }],
       })
       .then(roles => res.status(201).send(roles))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(404).send(error));
   }
   static retrieve(req, res) {
     return Role

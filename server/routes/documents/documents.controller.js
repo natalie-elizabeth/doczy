@@ -24,8 +24,9 @@ class DocumentController {
     return Document
       .findAll()
       .then(roles => res.status(200).send(roles))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(404).send(error));
   }
+
   static retrieve(req, res) {
     return Document
       .findById(req.params.id)
@@ -37,8 +38,26 @@ class DocumentController {
         }
         return res.status(201).json(doc);
       })
-      .catch(error => { res.status(400).json(error) });
   }
 
+  static delete(req, res) {
+    return Document
+      .findById(req.params.id)
+      .then(document => {
+        if (!document) {
+          res.status(404).send({ message: "User not found" });
+        }
+        return document
+          .destroy()
+          .then(() => res.status(204).send())
+          .catch(error => res.status(400).send(document));
+      })
+      .catch(error => res.status(400).send(error));
+  }
+  static update(req, res) {
+    return Document
+
+  }
 }
+
 module.exports = DocumentController;

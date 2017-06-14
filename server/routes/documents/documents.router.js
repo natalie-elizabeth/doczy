@@ -6,8 +6,8 @@ Router.route('/documents')
   .get(Document.listall);
 
 Router.route('/documents/:id')
-  .get(Document.retrieve);
-//   .put(Role.update)
-//   .delete(Role.delete);
+  .get(Document.retrieve)
+  //   .put(Role.update)
+  .delete(Document.delete);
 
 module.exports = Router;

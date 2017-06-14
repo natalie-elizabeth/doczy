@@ -10,7 +10,7 @@ Router.route('/users/login')
 
 Router.route('/users/:id')
   .get(User.retrieve)
-  .delete(User.delete);
-//   .put(Role.update)
+  .delete(User.delete)
+  .put(User.update);
 
 module.exports = Router;

@@ -32,8 +32,9 @@ class UserController {
         }],
       })
       .then(users => res.status(200).json(users))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(404).send(error));
   }
+
   static retrieve(req, res) {
     return User
       .findById(req.params.id, {
@@ -52,6 +53,7 @@ class UserController {
       })
       .catch(error => { res.status(400).json(error) });
   }
+
   static delete(req, res) {
     return User
       .findById(req.params.id)
@@ -66,6 +68,7 @@ class UserController {
       })
       .catch(error => res.status(400).send(error));
   }
+
   static login(req, res) {
     User.findOne({
       where: {
@@ -101,8 +104,23 @@ class UserController {
           message: 'Invalid login credentials'
         });
       })
+  }
 
+  static update(req, res) {
+    return User
+      .findById(req.params.id)
+      .then(user => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'User Not Found',
+          });
+        }
+        User.update({ username: req.body.username || User.username, })
+          .then(() => res.status(200).send(user))
+          .catch((error) => res.status(400).send(error));
+      })
   }
 }
+
 module.exports = UserController;
 
