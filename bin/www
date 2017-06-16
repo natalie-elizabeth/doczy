@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const http = require('http');
+const app = require('../app'); // The express app we just created
+
+const port = parseInt(process.env.PORT, 10) || 8000;
+app.set('port', port);
+
+const server = http.createServer(app);
+server.listen(port, error => {
+    if (error) throw error;
+    console.log(`The app is running on http://localhost:${port} on ${app.get('env')} mode`);
+});
