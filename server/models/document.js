@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
-  var Document = sequelize.define('Document', {
+  const Document = sequelize.define('Document', {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -26,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
           Document.belongsTo(models.User, {
             foreignKey: 'user_id',
             allowNull: false
-          })
+          });
         }
       }
     });

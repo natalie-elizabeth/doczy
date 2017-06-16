@@ -6,7 +6,7 @@ class RoleController {
     const { name } = req.body;
 
     if (!name) {
-      return res.status(500).json({
+      return res.status(400).json({
         error: 'Missing required field',
         errors: ['Missing require field name']
       });
@@ -15,8 +15,8 @@ class RoleController {
     return Role.create({ name })
       .then(role => res.status(201).json(role))
       .catch(error => {
-        console.log(error)
-        res.status(400).json(error)
+        console.log(error);
+        res.status(400).json(error);
       });
   }
   static list(req, res) {
@@ -54,7 +54,7 @@ class RoleController {
         }
         return res.status(201).json(role);
       })
-      .catch(error => { res.status(400).json(error) });
+      .catch(error => { res.status(400).json(error); });
   }
 
   static delete(req, res) {
@@ -86,7 +86,7 @@ class RoleController {
           })
           .then(() => res.status(200).send(role))
           .catch((error) => res.status(400).send(error));
-      })
+      });
   }
 }
 

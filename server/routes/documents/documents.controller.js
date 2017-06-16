@@ -6,16 +6,16 @@ class DocumentController {
     const { title, content, access, user_id } = req.body;
 
     if (!title || !content || !access) {
-      return res.status(500).json({
+      return res.status(400).json({
         error: 'Missing required field',
-        errors: ['Missing require field name']
+        errors: ['Missing require fields']
       });
     }
     return Document.create({ title, content, access, user_id })
       .then(doc => res.status(201).json(doc))
       .catch(error => {
-        console.log(error)
-        res.status(400).json(error)
+        console.log(error);
+        res.status(400).json(error);
       });
 
   }
@@ -37,7 +37,7 @@ class DocumentController {
           });
         }
         return res.status(201).json(doc);
-      })
+      });
   }
 
   static delete(req, res) {
@@ -73,7 +73,7 @@ class DocumentController {
           })
           .then(() => res.status(200).send(document))
           .catch((error) => res.status(400).send(error));
-      })
+      });
   }
 }
 

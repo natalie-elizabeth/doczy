@@ -10,16 +10,16 @@ class UserController {
     const { username, firstname, lastname, email, password, role_id } = req.body;
 
     if (!username || !firstname || !lastname || !email || !password) {
-      return res.status(500).json({
+      return res.status(400).json({
         error: 'Missing required field',
-        errors: ['Missing require field name']
+        errors: ['Missing require fields']
       });
     }
 
     return User.create({ username, firstname, lastname, email, password, role_id })
       .then(user => res.status(201).json(user))
       .catch(error => {
-        res.status(400).json(error)
+        res.status(400).json(error);
       });
   }
 
@@ -51,7 +51,7 @@ class UserController {
         }
         return res.status(200).json(user);
       })
-      .catch(error => { res.status(400).json(error) });
+      .catch(error => { res.status(400).json(error); });
   }
 
   static delete(req, res) {
@@ -88,7 +88,7 @@ class UserController {
           })
           .then(() => res.status(200).send(user))
           .catch((error) => res.status(400).send(error));
-      })
+      });
   }
 }
 
