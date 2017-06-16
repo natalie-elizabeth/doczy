@@ -30,10 +30,21 @@ describe('Users', () => {
     });
     done();
   })
+  it('should update a single user\'s information', (done) => {
+    api.put('/api/users/:id', (error, response, body) => {
+      expect(expect(response.statusCode).to.equal(200));
+      expect(response.body.username).to.not.equal(null);
+      expect(response.body.email).to.not.equal(null);
+      expect(response.body.password).to.not.equal(null);
+
+    });
+    done();
+  })
   it('should delete a user', (done) => {
     api.delete('/api/user/:id', (error, response, body) => {
       expect(response.statusCode).toEqual(204);
       expect(response.statusMessage).toEqual('Cool');
+      expect(body).to.be.a('object');
     });
     done();
   })

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 const secretKey = process.env.SECRET_KEY;
 
-const { User, Document } = require('models');
+const { User, Document } = require('../../models');
 
 class UserController {
 

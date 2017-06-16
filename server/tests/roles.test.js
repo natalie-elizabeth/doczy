@@ -40,4 +40,13 @@ describe('Roles', () => {
     });
     done();
   })
+  it('should update a single role', (done) => {
+    api.put('/api/roles/:id', (error, response, body) => {
+      expect(expect(response.statusCode).to.equal(200));
+      expect(response.body.name).to.not.equal(null);
+
+
+    });
+    done();
+  })
 })

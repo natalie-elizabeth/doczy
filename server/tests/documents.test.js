@@ -37,4 +37,13 @@ describe('Documentss', () => {
     });
     done();
   })
+  it('should update a single document\'s information', (done) => {
+    api.put('/api/documents/:id', (error, response, body) => {
+      expect(expect(response.statusCode).to.equal(200));
+      expect(response.body.title).to.not.equal(null);
+      expect(response.body.body).to.not.equal(null);
+      expect(response.body.access).to.not.equal(null);
+    });
+    done();
+  })
 })

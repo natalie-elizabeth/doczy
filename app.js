@@ -1,23 +1,24 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const env = process.env.NODE_ENV || 'development'
-
+const env = process.env.NODE_ENV || 'development';
+const path = require("path");
 
 // Set up the express app
+const port = process.env.NODE_ENV || 3000;
 const app = express();
 
 // Log requests to the console.
-
 app.use(logger('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-require('routes')(app)
-app.get('/*', (req, res) => res.status(200).send({
-  message: 'You aint seen nothing yet.',
-}));
+require('./server/routes')(app);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './dist/index.html'));
+});
 
 module.exports = app;

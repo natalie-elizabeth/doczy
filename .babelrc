@@ -1,0 +1,10 @@
+{
+  "compact": "false",
+  "plugins": [
+    "transform-class-properties"
+  ],
+  "presets": [
+    "env",
+    "react"
+  ]
+}

@@ -1,4 +1,4 @@
-const { User, Document } = require('models');
+const { User, Document } = require('../../models');
 
 class DocumentController {
 
