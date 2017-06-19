@@ -1,1 +1,3 @@
-export const CREATE_DOCUMENT_SUCCESS = 'CREATE_DOCUMENT_SUCCESS';
+export const LOGOUT = 'LOGOUT';
+export const LOGIN = 'LOGIN';
+export const CREATE_USER = 'CREATE_USER';

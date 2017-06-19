@@ -7,4 +7,4 @@ module.exports = app => {
   app.use('/api', RoleRouter);
   app.use('/api', UserRouter);
   app.use('/api', DocumentRouter);
-}
+};

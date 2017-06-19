@@ -5,6 +5,7 @@ import Header from './common/Header';
 import Home from './Home/home';
 import Documents from './Documents/documents';
 import About from './About/about';
+import User from './User/loginPage';
 
 export default class App extends Component {
   render() {
@@ -15,6 +16,7 @@ export default class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/documents' component={Documents} />
           <Route path='/about' component={About} />
+          <Route path='/login' component={User} />
         </div>
       </Router>
     );

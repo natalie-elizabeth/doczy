@@ -19,7 +19,7 @@ class UserController {
     return User.create({ username, firstname, lastname, email, password, role_id })
       .then(user => res.status(201).json(user))
       .catch(error => {
-        res.status(400).json(error)
+        res.status(400).json(error);
       });
   }
 
@@ -51,7 +51,7 @@ class UserController {
         }
         return res.status(200).json(user);
       })
-      .catch(error => { res.status(400).json(error) });
+      .catch(error => { res.status(400).json(error); });
   }
 
   static delete(req, res) {
@@ -88,9 +88,52 @@ class UserController {
           })
           .then(() => res.status(200).send(user))
           .catch((error) => res.status(400).send(error));
+      });
+  }
+
+  static login(req, res) {
+    return User
+      .findOne({
+        where: {
+          email: req.body.email
+        }
       })
+      .then((user) => {
+        if (!user) {
+          return res.status(403).json({
+            message: 'Invalid user',
+          });
+        }
+        bcrypt.compare(req.body.password, user.password, (err, matched) => {
+          if (err) {
+            return res.status(401).json({
+              message: 'Invalid credentials',
+            });
+          }
+          if (!matched) {
+            return res.json('password or email is incorrect');
+          }
+          const token = jwt.sign({ userId: user.id, roleId: user.roleId }, secretKey, { expiresIn: '24h' });
+          return res.status(200).json({
+            message: 'Login Successful',
+            token,
+            expiresIn: '24h'
+          });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(401).send({
+          message: 'invalid'
+        });
+      });
+
+  }
+  static logout(req, res) {
+    res.status(200).send({
+      message: 'You were logged out successfully'
+    });
   }
 }
 
 module.exports = UserController;
-
