@@ -10,9 +10,10 @@ const app = express();
 
 // Log requests to the console.
 app.use(logger('dev'));
-
+app.use(express.static(`${__dirname}/dist`));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(require('webpack-hot-middleware'));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 require('./server/routes')(app);

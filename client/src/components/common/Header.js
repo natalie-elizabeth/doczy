@@ -1,21 +1,3 @@
-// import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// // import { IndexLink } from 'react-router';
-// import { NavLink, Link } from 'react-router-dom';
-
-// const Header = () => {
-//   return (
-//     <nav>
-//       <NavLink exact to="/home" activeClassName='active'>Home </NavLink>
-//       {' | '}
-//       <Link to='/about' activeClassName='active'> About</Link>
-//     </nav>
-//   );
-// };
-
-// export default Header;
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -29,7 +11,11 @@ const LoggedOutView = props => {
             Home
           </Link>
         </li>
-
+        <li className="nav-item">
+          <Link to="/documents" className="nav-link">
+            Documents
+          </Link>
+        </li>
         <li className="nav-item">
           <Link to="login" className="nav-link">
             Sign in
@@ -61,7 +47,7 @@ const LoggedInView = props => {
 
         <li className="nav-item">
           <Link to="editor" className="nav-link">
-            <i className="ion-compose"></i>&nbsp;New Post
+            <i className="ion-compose"></i>&nbsp;New Document
           </Link>
         </li>
 
