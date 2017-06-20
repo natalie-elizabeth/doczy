@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import Login from '../User/loginPage';
+import { Card, CardTitle } from 'material-ui/Card';
 
-export default class Home extends Component {
-  render() {
-    return (
-      <div>
-        <h1><center> Doczy</center></h1>
-        <Login />
-      </div>
-    );
-  }
-}
+const Home = () => (
+  <Card className="container">
+    <center><CardTitle title="Doczy" subtitle="All your documents in one place" /></center>
+  </Card>
+);
+export default Home;

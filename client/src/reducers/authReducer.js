@@ -11,6 +11,12 @@ const authReducer = (state = { isFetching: false, isAuthenticated: !!tokenUtils.
       });
     default:
       return state;
+
+    case c.CREATE_USER:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isSignedUp: false,
+      });
   }
 };
 export default authReducer;

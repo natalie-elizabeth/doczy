@@ -26,3 +26,19 @@ export const login = userData => (dispatch) => {
       })
   );
 };
+
+export const signupRequest = userData => (dispatch) => {
+  dispatch(createUser(userData));
+  return (
+    request
+      .post('/api/user')
+      .send(userData)
+      .then((response) => {
+        window.localStorage.setItem('token', response.body.token);
+        dispatch(loginSuccessful(response.body));
+      })
+      .catch((error) => {
+        dispatch(loginFailed(error.response));
+      })
+  );
+};

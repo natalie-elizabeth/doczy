@@ -23,6 +23,15 @@ class UserController {
       });
   }
 
+  static seeall(req, res) {
+    return User
+      .all()
+      .then(users => res.status(201).send(users))
+      .catch(error => res.status(400).send(error));
+
+  }
+
+
   static listall(req, res) {
     return User
       .findAll({
@@ -133,6 +142,20 @@ class UserController {
     res.status(200).send({
       message: 'You were logged out successfully'
     });
+  }
+
+  static search(req, res) {
+    return User
+      .findAll({
+        where: {
+          email: {
+            $like: `%${req.query.q}%`
+          }
+        }
+
+          .then(response => res.status(200).send(response))
+          .catch(error => res.status(400).send(error))
+      });
   }
 }
 

@@ -7,15 +7,21 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import login from '../../actions/authActions';
+import { signupRequest } from '../../actions/authActions';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
-class LoginUser extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
+      role_id: '',
       errors: {},
       isLoading: false
     };
@@ -55,16 +61,52 @@ class LoginUser extends Component {
           <center>
             <Card className="container">
               <form action="/" onSubmit={this.onSubmit} className="col s12">
-                <h2 className="card-heading">Sign In</h2>
+                <h2 className="card-heading">Sign Up</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
+
                 <div className='row'>
                   <div className="input-field col s6">
                     <TextField
-                      floatingLabelText="email"
+                      floatingLabelText="Username"
+                      name="username"
+                      errorText={errors.username}
+                      onChange={this.onChange}
+                      value={this.state.username}
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <TextField
+                      floatingLabelText="First Name"
+                      name="firstname"
+                      errorText={errors.firstname}
+                      onChange={this.onChange}
+                      value={this.state.firstname}
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <TextField
+                      floatingLabelText="Last Name"
+                      name="lastname"
+                      errorText={errors.lastname}
+                      onChange={this.onChange}
+                      value={this.state.lastname}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <TextField
+                      floatingLabelText="Email"
                       name="email"
                       errorText={errors.email}
                       onChange={this.onChange}
-                      value={this.state.name}
+                      value={this.state.email}
                     />
                   </div>
                 </div>
@@ -84,7 +126,7 @@ class LoginUser extends Component {
                 <div className="button-line">
                   <RaisedButton type="submit" label="Create New Account" primary />
                 </div>
-                <CardText>Dont have an account? <Link to={'/signup'}>Register</Link></CardText>
+                <CardText>Already have an account? <Link to={'/'}>Log in</Link></CardText>
               </form>
             </Card>
           </center>
@@ -94,11 +136,11 @@ class LoginUser extends Component {
   }
 }
 
-LoginUser.propTypes = {
-  // login: PropTypes.func.isRequired
+SignUp.propTypes = {
+  signupRequest: PropTypes.func.isRequired
 };
-LoginUser.contextTypes = {
+SignUp.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(null, { login })(LoginUser);
+export default connect(null, { signupRequest })(SignUp);

@@ -12,11 +12,7 @@ const LoggedOutView = props => {
               Home
           </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/documents" className="nav-link">
-              Documents
-          </Link>
-          </li>
+
           <li className="nav-item">
             <Link to="/login" className="nav-link">
               Sign in
@@ -24,7 +20,7 @@ const LoggedOutView = props => {
           </li>
 
           <li className="nav-item">
-            <Link to="/register" className="nav-link">
+            <Link to="/signup" className="nav-link">
               Sign up
           </Link>
           </li>
@@ -50,6 +46,11 @@ const LoggedInView = props => {
         <li className="nav-item">
           <Link to="editor" className="nav-link">
             <i className="ion-compose"></i>&nbsp;New Document
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/documents" className="nav-link">
+            Documents
           </Link>
         </li>
 
