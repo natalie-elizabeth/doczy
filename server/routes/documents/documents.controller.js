@@ -14,17 +14,20 @@ class DocumentController {
     return Document.create({ title, content, access, user_id })
       .then(doc => res.status(201).json(doc))
       .catch(error => {
-        console.log(error)
-        res.status(400).json(error)
+        res.status(400).json(error);
       });
 
   }
 
   static listall(req, res) {
-    return Document
-      .findAll()
-      .then(roles => res.status(200).send(roles))
-      .catch(error => res.status(404).send(error));
+    if (req.query.limit || req.query.offset) {
+      return Document.findAll({ limit: req.query.limit, offset: req.query.offset })
+        .then(documents => res.status(200).json(documents))
+        .catch(error => res.status(404).json(error));
+    }
+    Document.all()
+      .then(documents => res.status(200).json(documents))
+      .catch(error => res.status(404).json(error));
   }
 
   static retrieve(req, res) {
@@ -37,7 +40,7 @@ class DocumentController {
           });
         }
         return res.status(201).json(doc);
-      })
+      });
   }
 
   static delete(req, res) {

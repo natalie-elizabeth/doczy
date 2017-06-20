@@ -12,7 +12,7 @@ Router.route('/users/login')
 Router.route('/users/logout')
   .post(User.logout);
 
-Router.route('/search/users/?q={}')
+Router.route('/search/users/')
   .get(User.search);
 
 Router.route('/users/:id')

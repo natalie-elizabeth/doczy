@@ -145,17 +145,20 @@ class UserController {
   }
 
   static search(req, res) {
-    return User
-      .findAll({
+    if (req.query.q) {
+      return user.findAll({
         where: {
-          email: {
-            $like: `%${req.query.q}%`
-          }
+          $or: [
+            { firstname: { $like: `%${req.query.q}%` } },
+            { lastname: { $like: `%${req.query.q}%` } },
+            { username: { $like: `%${req.query.q}%` } },
+            { email: { $like: `%${req.query.q}%` } }
+          ]
         }
-
-          .then(response => res.status(200).send(response))
-          .catch(error => res.status(400).send(error))
-      });
+      })
+        .then(response => res.status(200).send(response))
+        .catch(error => res.status(400).send(error));
+    }
   }
 }
 
