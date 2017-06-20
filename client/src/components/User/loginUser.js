@@ -40,7 +40,7 @@ class LoginUser extends Component {
 
   }
   isValid() {
-    const { errors, isValid } = loginValidate(this.state);
+    const { errors, isValid } = login(this.state);
     if (isValid) {
       this.setState({ errors });
     }
@@ -58,7 +58,8 @@ class LoginUser extends Component {
                 <h2 className="card-heading">Sign In</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
                 <div className='row'>
-                  <div className="input-field col s6">
+                  <div className="input-field col s12">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="email"
                       name="email"
@@ -71,6 +72,7 @@ class LoginUser extends Component {
 
                 <br />
                 <div className="input-field col s6">
+                  <i className="material-icons prefix">lock</i> &nbsp;&nbsp;
                   <TextField
                     floatingLabelText="Password"
                     type="password"
@@ -82,7 +84,7 @@ class LoginUser extends Component {
                 </div>
                 <br />
                 <div className="button-line">
-                  <RaisedButton type="submit" label="Create New Account" primary />
+                  <RaisedButton type="submit" label="Sign in" primary />
                 </div>
                 <CardText>Dont have an account? <Link to={'/signup'}>Register</Link></CardText>
               </form>
@@ -95,7 +97,7 @@ class LoginUser extends Component {
 }
 
 LoginUser.propTypes = {
-  // login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired
 };
 LoginUser.contextTypes = {
   router: React.PropTypes.object.isRequired

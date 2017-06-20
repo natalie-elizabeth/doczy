@@ -20,18 +20,21 @@ const validateInput = (data) => {
   if (Validator.isEmpty(data.email)) {
     errors.email = 'Email is required';
   }
+
   if (!Validator.isEmail(data.email)) {
     errors.email = 'Your email is invalid';
   }
   if (Validator.isEmpty(data.password)) {
     errors.password = 'This field is required';
   }
-  if (Validator.isEmpty(data.confirmPassword)) {
-    errors.confirmPassword = 'This field is required';
+
+
+  if (Validator.isEmpty(data.confirm)) {
+    errors.confirm = 'This field is required';
   }
-  if (!Validator.equals(data.password, data.confirmPassword)) {
-    errors.confirmPassword = 'Passwords don\'t match';
-  }
+  // if (!Validator.equals(data.password, data.confirm)) {
+  //   errors.confirm = 'Passwords don\'t match';
+  // }
 
   return {
     errors,

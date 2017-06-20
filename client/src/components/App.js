@@ -19,7 +19,6 @@ export default class App extends Component {
           <Route path='/about' component={About} />
           <Route path='/login' component={Login} />
           <Route path='/signup' component={SignUp} />
-
         </div>
       </Router>
     );

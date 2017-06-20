@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, BrowserRouter } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { signupRequest } from '../../actions/authActions';
+import validateInput from '../../utils/validateSignup';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -34,19 +35,20 @@ class SignUp extends Component {
       [event.target.name]: event.target.value
     });
   }
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
-      this.props.login(this.state).then((res) => {
-        this.context.router.push('/Header');
-      })
+      this.props.signupRequest(this.state)
+        .then(() => {
+          BrowserRouter.push('/about');
+        })
         .catch(err => this.setState({ errors: err, isLoading: false }));
     }
-
   }
+
   isValid() {
-    const { errors, isValid } = loginValidate(this.state);
+    const { errors, isValid } = validateInput(this.state);
     if (isValid) {
       this.setState({ errors });
     }
@@ -54,7 +56,7 @@ class SignUp extends Component {
   }
 
   render() {
-    const { errors, email, password, isLoading } = this.state;
+    const { errors } = this.state;
     return (
       <div>
         <MuiThemeProvider>
@@ -66,6 +68,7 @@ class SignUp extends Component {
 
                 <div className='row'>
                   <div className="input-field col s6">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="Username"
                       name="username"
@@ -78,6 +81,7 @@ class SignUp extends Component {
 
                 <div className='row'>
                   <div className="input-field col s6">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="First Name"
                       name="firstname"
@@ -90,6 +94,7 @@ class SignUp extends Component {
 
                 <div className='row'>
                   <div className="input-field col s6">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="Last Name"
                       name="lastname"
@@ -101,6 +106,7 @@ class SignUp extends Component {
                 </div>
                 <div className='row'>
                   <div className="input-field col s6">
+                    <i className="material-icons prefix">email</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="Email"
                       name="email"
@@ -111,8 +117,8 @@ class SignUp extends Component {
                   </div>
                 </div>
 
-                <br />
                 <div className="input-field col s6">
+                  <i className="material-icons prefix">lock</i> &nbsp;&nbsp;
                   <TextField
                     floatingLabelText="Password"
                     type="password"
@@ -122,11 +128,22 @@ class SignUp extends Component {
                     value={this.state.password}
                   />
                 </div>
+                <div className="input-field col s6">
+                  <i className="material-icons prefix">lock</i> &nbsp;&nbsp;
+                  <TextField
+                    floatingLabelText="Confirm Password"
+                    type="password"
+                    name="confirm"
+                    onChange={this.onChange}
+                    errorText={errors.confirm}
+                    value={this.state.confirm}
+                  />
+                </div>
                 <br />
                 <div className="button-line">
                   <RaisedButton type="submit" label="Create New Account" primary />
                 </div>
-                <CardText>Already have an account? <Link to={'/'}>Log in</Link></CardText>
+                <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
               </form>
             </Card>
           </center>
@@ -137,10 +154,10 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  signupRequest: PropTypes.func.isRequired
+  // signupRequest: PropTypes.func.isRequired
 };
 SignUp.contextTypes = {
-  router: React.PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
 export default connect(null, { signupRequest })(SignUp);

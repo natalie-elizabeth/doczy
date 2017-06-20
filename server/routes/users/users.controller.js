@@ -24,8 +24,12 @@ class UserController {
   }
 
   static seeall(req, res) {
-    return User
-      .all()
+    if (req.query.limit || req.query.offset) {
+      return User.findAll({ limit: req.query.limit, offset: req.query.offset })
+        .then(users => res.status(200).json(users))
+        .catch(error => res.status(404).json(error));
+    }
+    User.all()
       .then(users => res.status(201).send(users))
       .catch(error => res.status(400).send(error));
 
