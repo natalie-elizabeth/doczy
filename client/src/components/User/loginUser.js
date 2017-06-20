@@ -21,6 +21,7 @@ class LoginUser extends Component {
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.isValid = this.isValid.bind(this);
 
   };
   onChange(event) {

@@ -22,7 +22,7 @@ class SignUp extends Component {
       lastname: '',
       email: '',
       password: '',
-      role_id: '',
+      role_id: 7,
       errors: {},
       isLoading: false
     };
@@ -36,14 +36,19 @@ class SignUp extends Component {
     });
   }
   onSubmit(event) {
+    console.log(this.state);
     event.preventDefault();
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.signupRequest(this.state)
         .then(() => {
+           console.log('jjhgjhgj');
           BrowserRouter.push('/about');
         })
-        .catch(err => this.setState({ errors: err, isLoading: false }));
+        .catch(err => {
+           console.log('errri', err);
+          this.setState({ errors: err, isLoading: false });
+      });
     }
   }
 
