@@ -6,35 +6,35 @@ import * as tokenUtils from '../utils/tokenUtils';
 
 // document creation
 export const createDocument = documents => ({
-    type: c.CREATE_DOCUMENT,
-    documents
+  type: c.CREATE_DOCUMENT,
+  documents
 });
 
 export const creationSuccess = documents => ({
-    type: C.CREATION_SUCCESS,
-    documents
+  type: C.CREATION_SUCCESS,
+  documents
 });
 
 export const creationFailure = documents => ({
-    type: C.CREATION_FAILURE,
-    documents
+  type: C.CREATION_FAILURE,
+  documents
 });
 
 export const newDocument = documentData => (dispatch) => {
-    dispatch(createDocument(documentData));
-    console.log('token: ', window.localStorage.getItem('token'));
-    return (
-        request
-            .post('/api/documents')
-            .set('x-access-token', window.localStorage.getItem('token'))
-            .send(documentData)
-            .then((response) => {
-                dispatch(creationSuccess(response.body));
-            })
-            .catch((error) => {
-                dispatch(creationFailure(error.response));
-            })
-    );
+  dispatch(createDocument(documentData));
+  console.log('token: ', window.localStorage.getItem('token'));
+  return (
+    request
+      .post('/api/documents')
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .send(documentData)
+      .then((response) => {
+        dispatch(creationSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(creationFailure(error.response));
+      })
+  );
 };
 
 
@@ -42,142 +42,149 @@ export const newDocument = documentData => (dispatch) => {
 
 // document closing
 export const closeDocument = () => ({
-    type: c.CLOSE_DOCUMENT
+  type: c.CLOSE_DOCUMENT
 });
+
 
 // document listing
 export const documentsRequest = () => ({
-    type: c.DOCUMENTS_RETRIEVAL
+  type: c.DOCUMENTS_RETRIEVAL
 });
 
-
 export const listDocuments = () => (dispatch) => {
-    dispatch(documentsRequest());
-    return (
-        request
-            .get('/api/document')
-            .set('x-access-token', window.localStorage.getItem('token'))
-            .then((response) => {
-                dispatch(documentsSuccess(response.body));
-            })
-            .catch((error) => {
-                dispatch(documentsFailure(error));
-            })
-    );
+  dispatch(documentsRequest());
+  return (
+    request
+      .get('/api/documents')
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .then((response) => {
+        dispatch(documentsRetrievalSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(documentsRetrievalFailure(error));
+      })
+  );
 };
 
 export const documentsRetrievalSuccess = documents => ({
-    type: types.DOCUMENTS_RETRIEVAL_SUCCESS,
-    documents
+  type: c.DOCUMENTS_RETRIEVAL_SUCCESS,
+  documents
 });
 
 export const documentsRetrievalFailure = documents => ({
-    type: types.DOCUMENTS_RETRIEVAL_FAILURE,
-    documents
+  type: c.DOCUMENTS_RETRIEVAL_FAILURE,
+  documents
 });
 
 
-
-
-
-
-
+// get a document
 export const documentsGetRequest = () => ({
-    type: types.DOCUMENTS_GET_REQUEST
+  type: c.GET_DOCUMENT,
 });
 
 export const documentsGetSuccess = documents => ({
-    type: types.DOCUMENTS_GET_SUCCESS,
-    documents
+  type: c.GET_SUCCESS,
+  documents
 });
 
 export const documentsGetFailure = documents => ({
-    type: types.DOCUMENTS_GET_FAILURE,
-    documents
+  type: c.GET_FAILURE,
+  documents
 });
 
+export const getDocument = documentId => (dispatch) => {
+  dispatch(documentsGetRequest());
+  return (
+    request
+      .get(`/api/documents/${documentId}`)
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .then((response) => {
+        dispatch(documentsGetSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(documentsGetFailure(error.response));
+      })
+  );
+};
+
+
+// delete document
+export const documentsDeleteRequest = () => ({
+  type: c.DELETE_DOCUMENT
+});
+export const documentsDeleteSuccess = documents => ({
+  type: c.DELETE_SUCCESS,
+  documents
+});
+export const documentsDeleteFailure = documents => ({
+  type: c.DELETE_FAILURE,
+  documents
+});
+export const deleteDocument = documentId => (dispatch) => {
+  dispatch(documentsDeleteRequest());
+  return (
+    request
+      .delete(`/api/documents/${documentId}`)
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .then((response) => {
+        dispatch(documentsDeleteSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(documentsDeleteFailure(error.response));
+      })
+  );
+};
+
+
+// update documents
+
 export const documentsUpdateRequest = documents => ({
-    type: types.DOCUMENTS_UPDATE_REQUEST,
-    documents
+  type: c.UPDATE_DOCUMENT,
+  documents
 });
 
 export const documentsUpdateSuccess = documents => ({
-    type: types.DOCUMENTS_UPDATE_SUCCESS,
-    documents
+  type: c.UPDATE_SUCCESS,
+  documents
 });
 
 export const documentsUpdateFailure = documents => ({
-    type: types.DOCUMENTS_UPDATE_FAILURE,
-    documents
+  type: c.UPDATE_FAILURE,
+  documents
 });
 
-export const documentsDeleteRequest = () => ({
-    type: types.DOCUMENTS_DELETE_REQUEST
-});
+export const updateDocument = documentData => (dispatch) => {
+  dispatch(documentsUpdateRequest(documentData));
+  return (
+    request
+      .put(`/api/documents/${documentData.id}`)
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .send(documentData)
+      .then((response) => {
+        dispatch(documentsUpdateSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(documentsUpdateFailure(error.response));
+      })
+  );
+};
 
-export const documentsDeleteSuccess = documents => ({
-    type: types.DOCUMENTS_DELETE_SUCCESS,
-    documents
-});
 
-export const documentsDeleteFailure = documents => ({
-    type: types.DOCUMENTS_DELETE_FAILURE,
-    documents
-});
+
+
+
 
 export const documentsSearchFilter = searchFilter => ({
-    type: types.SET_DOCUMENTS_SEARCH_FILTER,
-    searchFilter
+  type: c.SET_DOCUMENTS_SEARCH_FILTER,
+  searchFilter
 });
 
 /* eslint no-undef: "off"*/
 
+// delete Document
 
 
 
 
-export const updateDocument = documentData => (dispatch) => {
-    dispatch(documentsUpdateRequest(documentData));
-    return (
-        request
-            .put(`/api/document/${documentData.id}`)
-            .set('x-access-token', window.localStorage.getItem('token'))
-            .send(documentData)
-            .then((response) => {
-                dispatch(documentsUpdateSuccess(response.body));
-            })
-            .catch((error) => {
-                dispatch(documentsUpdateFailure(error.response));
-            })
-    );
-};
 
-export const deleteDocument = documentId => (dispatch) => {
-    dispatch(documentsDeleteRequest());
-    return (
-        request
-            .delete(`/api/document/${documentId}`)
-            .set('x-access-token', window.localStorage.getItem('token'))
-            .then((response) => {
-                dispatch(documentsDeleteSuccess(response.body));
-            })
-            .catch((error) => {
-                dispatch(documentsDeleteFailure(error.response));
-            })
-    );
-};
 
-export const getDocument = documentId => (dispatch) => {
-    dispatch(documentsGetRequest());
-    return (
-        request
-            .get(`/api/document/${documentId}`)
-            .set('x-access-token', window.localStorage.getItem('token'))
-            .then((response) => {
-                dispatch(documentsGetSuccess(response.body));
-            })
-            .catch((error) => {
-                dispatch(documentsGetFailure(error.response));
-            })
-    );
-};

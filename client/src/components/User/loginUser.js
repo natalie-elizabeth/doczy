@@ -33,11 +33,10 @@ class LoginUser extends Component {
   }
   onSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.authActions.login(this.state).then((res) => {
-        this.context.router.history.push('/Header');
+        this.context.router.history.push('/documents');
       })
         .catch(err => this.setState({ errors: err, isLoading: false }));
     }
