@@ -1,3 +1,13 @@
 export const LOGOUT = 'LOGOUT';
 export const LOGIN = 'LOGIN';
 export const CREATE_USER = 'CREATE_USER';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
+
+export const CLOSE_DOCUMENT = 'CLOSE_DOCUMENT';
+export const CREATE_DOCUMENT = 'CREATE_DOCUMENT';
+export const EDIT_DOCUMENT = 'EDIT_DOCUMENT';
+export const DELETE_DOCUMENT = 'DELETE_DOCUMENT';
+export const VIEW_DOCUMENT = 'VIEW_DOCUMENT';
+export const LIST_DOCUMENTS = 'LIST_DOCUMENTS';

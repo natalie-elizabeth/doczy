@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 
 module.exports = {
   entry: [
-    'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
+    //note that it reloads the page if hot module reloading fails.
     path.resolve(__dirname, 'client/src/index.js')
   ],
   target: 'web',
@@ -48,7 +48,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'client/src/index.html'
     }),
-    new webpack.NoEmitOnErrorsPlugin()
+    // new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     loaders: [

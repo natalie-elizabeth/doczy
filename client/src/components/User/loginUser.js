@@ -8,7 +8,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import login from '../../actions/authActions';
-
+import { bindActionCreators } from 'redux';
+import * as authActions from '../../actions/authActions';
+import loginValidate from '../../utils/validateLogin';
 
 class LoginUser extends Component {
   constructor(props) {
@@ -21,7 +23,7 @@ class LoginUser extends Component {
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.isValid = this.isValid.bind(this);
+    // this.isValid = this.isValid.bind(this);
 
   };
   onChange(event) {
@@ -29,19 +31,20 @@ class LoginUser extends Component {
       [event.target.name]: event.target.value
     });
   }
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
+    console.log(this.state);
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
-      this.props.login(this.state).then((res) => {
-        this.context.router.push('/Header');
+      this.props.authActions.login(this.state).then((res) => {
+        this.context.router.history.push('/Header');
       })
         .catch(err => this.setState({ errors: err, isLoading: false }));
     }
 
   }
   isValid() {
-    const { errors, isValid } = login(this.state);
+    const { errors, isValid } = loginValidate(this.state);
     if (isValid) {
       this.setState({ errors });
     }
@@ -59,7 +62,7 @@ class LoginUser extends Component {
                 <h2 className="card-heading">Sign In</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
                 <div className='row'>
-                  <div className="input-field col s12">
+                  <div className="input-field col s6">
                     <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="email"
@@ -98,10 +101,18 @@ class LoginUser extends Component {
 }
 
 LoginUser.propTypes = {
-  login: PropTypes.func.isRequired
+  // login: PropTypes.func.isRequired
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    authActions: bindActionCreators(authActions, dispatch)
+  };
+}
+
 LoginUser.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(null, { login })(LoginUser);
+export default connect(null, mapDispatchToProps)(LoginUser);
+
