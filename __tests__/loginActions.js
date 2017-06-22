@@ -9,20 +9,11 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('actions', () => {
-  it('should create a user', () => {
+  it('should login a user', () => {
     const user = "Natalie Larhette";
     const expectedAction = {
-      type: c.CREATE_USER, user
+      type: c.LOGIN, user
     };
-    expect(actions.createUser(user)).toEqual(expectedAction);
+    expect(actions.loginUser(user)).toEqual(expectedAction);
   });
 });
-
-// describe('async actions', () =>{
-//   afterEach(() => {
-//     nock.cleanAll();
-//   });
-//   it('creates a')
-
-
-// });
