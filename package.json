@@ -12,8 +12,10 @@
     "build": "webpack -p",
     "coverage": "`npm bin`/istanbul cover server/**/**/**.test.js",
     "test": "NODE_PATH=./server  && node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./server/tests/*.js --recursive && cat ./coverage/lcov.info | codecov",
-    "test:jest": "jest",
-    "test:watch": "jest --watch"
+    "test:jest": "jest"
+  },
+  "jest": {
+    "testRegex": "./__tests__/.*.jsx?$"
   },
   "repository": {
     "type": "git",
@@ -74,7 +76,9 @@
     "jest": "^20.0.4",
     "mocha": "^3.4.2",
     "open": "^0.0.5",
+    "react-dom": "^15.5.4",
     "react-scripts": "^1.0.7",
+    "react-test-renderer": "^15.6.1",
     "supertest": "^3.0.0",
     "webpack-dev-server": "^2.4.5",
     "webpack-hmr": "^1.0.2",

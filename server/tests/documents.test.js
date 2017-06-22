@@ -5,7 +5,7 @@ const should = require('chai').should;
 expect = require('chai').expect;
 chai.use(chaiHttp);
 
-api = supertest('http://localhost:3000');
+api = supertest('http://localhost:8080');
 
 describe('Documentss', () => {
   it('should create user on /documents/POST', (done) => {
@@ -22,7 +22,7 @@ describe('Documentss', () => {
       expect(response.statusMessage).toEqual('Cool');
     });
     done();
-  })
+  });
   it('should show a single document', (done) => {
     api.get('/api/documents/:id', (error, response, body) => {
       expect(response.statusCode).toEqual(200);

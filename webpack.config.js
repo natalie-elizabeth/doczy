@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 8080;
 
 module.exports = {
   entry: [
-    //note that it reloads the page if hot module reloading fails.
     path.resolve(__dirname, 'client/src/index.js')
   ],
   target: 'web',
