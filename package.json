@@ -10,9 +10,10 @@
     "migrations": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "start:dev:server": "webpack-dev-server --progress",
     "build": "webpack -p",
-    "coverage": "`npm bin`/istanbul cover server/**/**/**.test.js",
-    "test": "NODE_PATH=./server  && node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./server/tests/*.js --recursive && cat ./coverage/lcov.info | codecov",
-    "test:jest": "jest"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": "nyc --reporter=html --reporter=text mocha ./server/tests/*.js --recursive && cat ./coverage/lcov.info | codecov",
+    "test:jest": "jest",
+    "test:coverage": "jest --coverage"
   },
   "jest": {
     "testRegex": "./__tests__/.*.jsx?$"
@@ -77,6 +78,7 @@
     "jest": "^20.0.4",
     "mocha": "^3.4.2",
     "nock": "^9.0.13",
+    "nyc": "^11.0.2",
     "open": "^0.0.5",
     "react-dom": "^15.5.4",
     "react-scripts": "^1.0.7",
