@@ -18,11 +18,3 @@ describe('actions', () => {
   });
 });
 
-// describe('async actions', () =>{
-//   afterEach(() => {
-//     nock.cleanAll();
-//   });
-//   it('creates a')
-
-
-// });

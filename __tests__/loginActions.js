@@ -17,3 +17,26 @@ describe('actions', () => {
     expect(actions.loginUser(user)).toEqual(expectedAction);
   });
 });
+
+// describe('async actions', () => {
+//   afterEach(() => {
+//     nock.cleanAll();
+//   });
+//   it('create LOGIN_SUCCESS when login has been done', () => {
+//     nock('/api/users/login')
+//       .get('/users/login')
+//       .reply(200, { body: { users: ['do something'] } });
+
+//     const expectedActions = [
+//       { type: c.LOGIN },
+//       { type: c.LOGIN_SUCCESS, body: { todos: ['do something'] } }
+//     ];
+//     const store = mockStore({ users: [] });
+
+//     return store.dispatch(actions.loginSuccessful()).then(() => {
+//       // return of async actions
+//       expect(store.loginUser()).toEqual(expectedActions);
+
+//     });
+//   });
+// });
