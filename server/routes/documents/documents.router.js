@@ -1,9 +1,10 @@
 const Router = require('express').Router();
 const Document = require('./documents.controller');
+const Auth = require('../../middleware/index');
 
 Router.route('/documents')
-  .post(Document.create)
-  .get(Document.listall);
+  .post(Auth, Document.create)
+  .get(Auth, Document.listall);
 
 Router.route('/documents/:id')
   .get(Document.retrieve)

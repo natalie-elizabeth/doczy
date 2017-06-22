@@ -1,4 +1,4 @@
-import * as c from '../actions/actionTypes';
+import * as types from '../actions/actionTypes';
 
 const DOCUMENT_LIST = {
   documents: [],
@@ -9,75 +9,75 @@ const DOCUMENT_LIST = {
 
 export default function reducer(state = DOCUMENT_LIST, action) {
   switch (action.type) {
-    case c.DOCUMENTS_RETRIEVAL:
+    case types.DOCUMENTS_REQUEST:
       return Object.assign({}, state, {
         error: null,
         loading: true,
       });
-    case c.DOCUMENTS_RETRIEVAL_SUCCESS:
+    case types.DOCUMENTS_SUCCESS:
       return Object.assign({}, state, {
         documents: action.documents,
         error: null,
         loading: false,
       });
-    case c.DOCUMENTS_RETRIEVAL_SUCCESS:
+    case types.DOCUMENTS_FAILURE:
       return Object.assign({}, state, {
         error: action.error,
         loading: false,
       });
-    case c.DOCUMENTS_DELETE_SUCCESS:
+    case types.DOCUMENTS_DELETE_SUCCESS:
       return Object.assign({}, state, {
         documents: state.documents.filter(id => id !== action.documentId),
       });
-    case c.SET_DOCUMENTS_SEARCH_FILTER:
+    case types.SET_DOCUMENTS_SEARCH_FILTER:
       return Object.assign({}, state, {
         searchFilter: action.searchFilter,
       });
-    case c.UPDATE_DOCUMENT:
+    case types.DOCUMENTS_UPDATE_REQUEST:
       return {
         error: null,
         loading: true,
       };
-    case c.UPDATE_SUCCESS:
+    case types.DOCUMENTS_UPDATE_SUCCESS:
       return {
         error: null,
         loading: false,
       };
-    case c.UPDATE_FAILURE:
+    case types.DOCUMENTS_UPDATE_FAILURE:
       return {
         error: action.error,
         loading: false,
       };
-    case c.CREATE_DOCUMENT:
+    case types.DOCUMENTS_ADD_REQUEST:
       return Object.assign({}, state, {
         error: null,
         loading: true,
       });
-    case c.CREATION_SUCCESS:
+    case types.DOCUMENTS_ADD_SUCCESS:
       return Object.assign({}, state, {
         documents: [action.documents,
         ...state.documents],
         loading: false,
       });
-    case c.CREATION_FAILURE:
+    case types.DOCUMENTS_ADD_FAILURE:
       return Object.assign({}, state, {
         error: action.error,
         loading: false,
       });
 
-    case c.GET_DOCUMENT:
+    case types.DOCUMENTS_GET_REQUEST:
       return {
         documents: null,
         error: null,
         loading: true,
       };
-    case c.GET_SUCCESS:
+    case types.DOCUMENTS_GET_SUCCESS:
       return {
         documents: action.response.result,
         error: null,
         loading: false,
       };
-    case c.GET_FAILURE:
+    case types.DOCUMENTS_GET_FAILURE:
       return {
         documents: null,
         error: action.error,

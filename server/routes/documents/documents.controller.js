@@ -3,21 +3,31 @@ const { User, Document } = require('../../models');
 class DocumentController {
 
   static create(req, res) {
-    const { title, content, access, user_id } = req.body;
-
-    if (!title || !content || !access) {
-      return res.status(500).json({
-        error: 'Missing required field',
-        errors: ['Missing require field name']
-      });
-    }
-    return Document.create({ title, content, access, user_id })
+    Document.create({
+      user_id: req.userId,
+      content: req.body.content,
+      title: req.body.title,
+      access: req.body.access
+    })
       .then(doc => res.status(201).json(doc))
       .catch(error => {
         res.status(400).json(error);
       });
-
   }
+
+  // if (!title || !content || !access) {
+  //   return res.status(500).json({
+  //     error: 'Missing required field',
+  //     errors: ['Missing require field name']
+  //   });
+  // }
+  // return Document.create({ title, content, access, user_id })
+  //   .then(doc => res.status(201).json(doc))
+  //   .catch(error => {
+  //     res.status(400).json(error);
+  //   });
+
+
 
   static listall(req, res) {
     if (req.query.limit || req.query.offset) {

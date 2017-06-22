@@ -7,7 +7,7 @@ import Documents from './Documents/documents';
 import About from './About/about';
 import Login from './User/loginPage';
 import SignUp from './User/signUpPage';
-import documentContainer from './Documents/documentContainer';
+import DocumentContainer from './Documents/documentContainer';
 
 export default class App extends Component {
   render() {
@@ -19,7 +19,7 @@ export default class App extends Component {
           <Route path='/about' component={About} />
           <Route path='/login' component={Login} />
           <Route path='/signup' component={SignUp} />
-          <Route path='/documents' component={documentContainer} />
+          <Route path='/documents' component={DocumentContainer} />
         </div>
       </Router>
     );

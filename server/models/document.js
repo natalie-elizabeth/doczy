@@ -26,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
           Document.belongsTo(models.User, {
             foreignKey: 'user_id',
             allowNull: false
-          })
+          });
         }
       }
     });
