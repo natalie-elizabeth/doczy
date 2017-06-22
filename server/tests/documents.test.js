@@ -15,7 +15,7 @@ describe('Documentss', () => {
       expect(body).to.equal(true);
     });
     done();
-  })
+  });
   it('should Get all documents', (done) => {
     api.get('/api/documents', (error, response, body) => {
       expect(response.statusCode).toEqual(200);

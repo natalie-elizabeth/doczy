@@ -11,7 +11,9 @@
     "start:dev:server": "webpack-dev-server --progress",
     "build": "webpack -p",
     "coverage": "`npm bin`/istanbul cover server/**/**/**.test.js",
-    "test": "NODE_PATH=./server  && node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./server/tests/*.js --recursive && cat ./coverage/lcov.info | codecov"
+    "test": "NODE_PATH=./server  && node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./server/tests/*.js --recursive && cat ./coverage/lcov.info | codecov",
+    "test:jest": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -49,6 +51,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-jest": "^20.0.3",
     "babel-loader": "^7.0.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.5.2",
@@ -61,13 +64,14 @@
     "codecov": "^2.2.0",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.1",
-    "enzyme": "^2.8.2",
+    "enzyme": "^2.9.0",
     "enzyme-to-json": "^1.5.1",
     "eslint": "^4.0.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
+    "jest": "^20.0.4",
     "mocha": "^3.4.2",
     "open": "^0.0.5",
     "react-scripts": "^1.0.7",

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
-import SelectButton from 'material-ui/SelectField';
+
 import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
 import DocumentView from './documentView';
 
 const DocumentForm = props => (
@@ -33,6 +34,7 @@ const DocumentForm = props => (
     >
       <MenuItem value={'public'} primaryText="Public" />
       <MenuItem value={'private'} primaryText="Private" />
+
     </SelectField>
   </div>
 );

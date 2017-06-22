@@ -16,7 +16,7 @@ console.log('this is shit');
 const DocumentView = props => (
   <div>
     <GridList>
-      {getUserFromToken().user_id === props.document.user_id ?
+      {getUserFromToken().userId === props.document.userId ?
         <IconMenu
           style={{ float: 'right' }}
           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
