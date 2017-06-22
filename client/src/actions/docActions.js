@@ -11,74 +11,74 @@ export const closeDocument = () => ({
 });
 
 export const documentsRequest = () => ({
-  type: types.DOCUMENTS_REQUEST
+  type: types.DOCUMENT_REQUEST
 });
 
 export const documentsSuccess = documents => ({
-  type: types.DOCUMENTS_SUCCESS,
+  type: types.DOCUMENT_SUCCESS,
   documents
 });
 
 export const documentsFailure = documents => ({
-  type: types.DOCUMENTS_FAILURE,
+  type: types.DOCUMENT_FAILURE,
   documents
 });
 
 export const documentsAddRequest = documents => ({
-  type: types.DOCUMENTS_ADD_REQUEST,
+  type: types.DOCUMENT_ADD_REQUEST,
   documents
 });
 
 export const documentsAddSuccess = documents => ({
-  type: types.DOCUMENTS_ADD_SUCCESS,
+  type: types.DOCUMENT_ADD_SUCCESS,
   documents
 });
 
 export const documentsAddFailure = documents => ({
-  type: types.DOCUMENTS_ADD_FAILURE,
+  type: types.DOCUMENT_ADD_FAILURE,
   documents
 });
 
 export const documentsGetRequest = () => ({
-  type: types.DOCUMENTS_GET_REQUEST
+  type: types.DOCUMENT_GET_REQUEST
 });
 
 export const documentsGetSuccess = documents => ({
-  type: types.DOCUMENTS_GET_SUCCESS,
+  type: types.DOCUMENT_GET_SUCCESS,
   documents
 });
 
 export const documentsGetFailure = documents => ({
-  type: types.DOCUMENTS_GET_FAILURE,
+  type: types.DOCUMENT_GET_FAILURE,
   documents
 });
 
 export const documentsUpdateRequest = documents => ({
-  type: types.DOCUMENTS_UPDATE_REQUEST,
+  type: types.DOCUMENT_UPDATE_REQUEST,
   documents
 });
 
 export const documentsUpdateSuccess = documents => ({
-  type: types.DOCUMENTS_UPDATE_SUCCESS,
+  type: types.DOCUMENT_UPDATE_SUCCESS,
   documents
 });
 
 export const documentsUpdateFailure = documents => ({
-  type: types.DOCUMENTS_UPDATE_FAILURE,
+  type: types.DOCUMENT_UPDATE_FAILURE,
   documents
 });
 
 export const documentsDeleteRequest = () => ({
-  type: types.DOCUMENTS_DELETE_REQUEST
+  type: types.DOCUMENT_DELETE_REQUEST
 });
 
 export const documentsDeleteSuccess = documents => ({
-  type: types.DOCUMENTS_DELETE_SUCCESS,
+  type: types.DOCUMENT_DELETE_SUCCESS,
   documents
 });
 
 export const documentsDeleteFailure = documents => ({
-  type: types.DOCUMENTS_DELETE_FAILURE,
+  type: types.DOCUMENT_DELETE_FAILURE,
   documents
 });
 
@@ -141,7 +141,7 @@ export const deleteDocument = documentId => (dispatch) => {
   dispatch(documentsDeleteRequest());
   return (
     request
-      .delete(`/api/document/${documentId}`)
+      .delete(`/api/documents/${documentId}`)
       .set('x-access-token', window.localStorage.getItem('token'))
       .then((response) => {
         dispatch(documentsDeleteSuccess(response.body));
@@ -156,7 +156,7 @@ export const getDocument = documentId => (dispatch) => {
   dispatch(documentsGetRequest());
   return (
     request
-      .get(`/api/document/${documentId}`)
+      .get(`/api/documents/${documentId}`)
       .set('x-access-token', window.localStorage.getItem('token'))
       .then((response) => {
         dispatch(documentsGetSuccess(response.body));

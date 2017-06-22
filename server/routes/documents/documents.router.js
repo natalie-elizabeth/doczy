@@ -9,6 +9,6 @@ Router.route('/documents')
 Router.route('/documents/:id')
   .get(Document.retrieve)
   .put(Document.update)
-  .delete(Document.delete);
+  .delete(Auth, Document.delete);
 
 module.exports = Router;

@@ -8,7 +8,7 @@ const config = require('./webpack.config');
 
 
 // Set up the express app
-const port = process.env.NODE_ENV || 3000;
+const port = process.env.NODE_ENV || 8080;
 const app = express();
 const compiler = webpack(config);
 

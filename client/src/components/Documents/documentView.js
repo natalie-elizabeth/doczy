@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import JWTDecode from 'jwt-decode';
 import Header from '../common/Header';
 import { getUserFromToken } from '../../utils/tokenUtils';
-
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -13,7 +12,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { GridList, GridTile } from 'material-ui/GridList';
 
 const owner = window.localStorage.getItem('username');
-
+console.log('this is shit');
 const DocumentView = props => (
   <div>
     <GridList>
