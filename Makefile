@@ -8,4 +8,4 @@ ssh_app:
 	npm run ssh:app
 
 start:
-		npm run start:dev:server
+		npm run build && npm run start:dev:server

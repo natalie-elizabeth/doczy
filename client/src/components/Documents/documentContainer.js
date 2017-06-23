@@ -13,14 +13,15 @@ import DocumentList from './documentList';
 import DocumentForm from './documentForm';
 
 
-const style = {
-  position: 'fixed',
-  bottom: 20,
-  right: 20,
-  marginRight: 20,
-};
+// const style = {
+//   position: 'fixed',
+//   top: 20,
+//   right: 20,
+//   marginRight: 20,
+// };
 
 class DocumentContainer extends React.Component {
+  debugger;
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -31,31 +32,30 @@ class DocumentContainer extends React.Component {
         access: ''
       }
     };
-    // const token = window.localStorage.getItem('token');
-    // const userId = JWTDecode.decode(token)["userId"];
-    // console.log(userId);
+
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.onSetAccess = this.onSetAccess.bind(this);
     this.onTitleChange = this.onTitleChange.bind(this);
     this.onContentChange = this.onContentChange.bind(this);
   }
+
   componentWillMount() {
     this.props.documentActions.listDocuments();
   }
-  onSetAccess(e, index, value) {
+  onSetAccess(event, index, value) {
     const Document = this.state.document;
     Document.access = value;
     this.setState({ document: Document });
   }
-  onTitleChange(e) {
+  onTitleChange(event) {
     const Document = this.state.document;
-    Document.title = e.target.value;
+    Document.title = event.target.value;
     this.setState({ document: Document });
   }
-  onContentChange(e) {
+  onContentChange(event) {
     const Document = this.state.document;
-    Document.content = e.target.value;
+    Document.content = event.target.value;
     this.setState({ document: Document });
   }
   handleOpen() {
@@ -85,7 +85,7 @@ class DocumentContainer extends React.Component {
         onTouchTap={(e) => {
           e.preventDefault();
           this.props.documentActions.createDocument(this.state.document);
-          {/*console.log("documents", this.props.listDocuments());*/ }
+          console.log("documents", this.props.listDocuments());
           this.handleClose();
         }}
       />,
@@ -94,7 +94,7 @@ class DocumentContainer extends React.Component {
     return (
       <div className="container">
         <div>
-          {/*{this.props.documentList.documents.map(document =>
+          {this.props.documentList.documents.map(document =>
             (<DocumentView
               key={document.id}
               document={document}
@@ -102,23 +102,23 @@ class DocumentContainer extends React.Component {
               deleteDocument={this.props.documentActions.deleteDocument}
               listDocuments={this.props.documentActions.listDocuments}
             />)
-          )}*/}
+          )}
           <div>
-            <FloatingActionButton onClick={this.handleOpen} backgroundColor="#123c69" style={style}>
+            <FloatingActionButton onClick={this.handleOpen} backgroundColor="#681039" >
               <ContentAdd />
             </FloatingActionButton>
           </div>
         </div>
         <br />
         <Dialog
-          title="Create a new Document"
+          title="Create a new document"
+          backgroundColor="#681039"
           actions={viewActions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
           <DocumentForm
-            style={style}
             onSetAccess={this.onSetAccess}
             document={this.state.document}
             onTitleChange={this.onTitleChange}
@@ -126,10 +126,19 @@ class DocumentContainer extends React.Component {
           />
 
         </Dialog>
-      </div>
+      </div >
     );
   }
 }
+console.log('did you get here?');
+DocumentContainer.propTypes = {
+  documentList: PropTypes.object.isRequired,
+  deleteDocument: PropTypes.func.isRequired,
+  listDocuments: PropTypes.func.isRequired,
+  documentActions: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
+};
+
 
 DocumentContainer.contextTypes = {
   router: PropTypes.object.isRequired
@@ -148,3 +157,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+
+

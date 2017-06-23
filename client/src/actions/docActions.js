@@ -14,12 +14,12 @@ export const documentsRequest = () => ({
   type: types.DOCUMENT_REQUEST
 });
 
-export const documentsSuccess = documents => ({
+export const documentsLoadSuccess = documents => ({
   type: types.DOCUMENT_SUCCESS,
   documents
 });
 
-export const documentsFailure = documents => ({
+export const documentsLoadFailure = documents => ({
   type: types.DOCUMENT_FAILURE,
   documents
 });
@@ -95,10 +95,10 @@ export const listDocuments = () => (dispatch) => {
       .get('/api/documents')
       .set('x-access-token', window.localStorage.getItem('token'))
       .then((response) => {
-        dispatch(documentsSuccess(response.body));
+        dispatch(documentsLoadSuccess(response.body));
       })
       .catch((error) => {
-        dispatch(documentsFailure(error));
+        dispatch(documentsLoadFailure(error));
       })
   );
 };

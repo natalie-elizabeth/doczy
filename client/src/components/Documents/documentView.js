@@ -13,10 +13,11 @@ import { GridList, GridTile } from 'material-ui/GridList';
 
 const owner = window.localStorage.getItem('username');
 console.log('this is shit');
+
 const DocumentView = props => (
   <div>
     <GridList>
-      {getUserFromToken().userId === props.document.userId ?
+      {getUserFromToken().userid === props.document.userid ?
         <IconMenu
           style={{ float: 'right' }}
           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -25,8 +26,7 @@ const DocumentView = props => (
         >
           <MenuItem
             primaryText="Edit Document"
-            onTouchTap={() =>
-              props.onUpdate(props.document)}
+            onTouchTap={props.onUpdate}
           />
           <MenuItem
             primaryText="Delete Document"
@@ -34,6 +34,7 @@ const DocumentView = props => (
               props.deleteDocument(props.document.id)
                 .then(() => {
                   props.listDocuments();
+                  console.log('here?');
                 });
             }
             }
@@ -41,8 +42,7 @@ const DocumentView = props => (
         </IconMenu> : <span />
       }
       <GridTile
-        title={`Title: ${props.document.title}`}
-        titleStyle={styles.titleStyle}
+        title={props.document.title}
       >
         <h5>{props.document.title}</h5>
         {props.document.content}
@@ -52,7 +52,8 @@ const DocumentView = props => (
 );
 Document.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  documents: PropTypes.func.isRequired
+  documents: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired
 };
 
 export default DocumentView;
