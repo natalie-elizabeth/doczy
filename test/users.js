@@ -15,9 +15,9 @@ chai.use(chaiHttp);
 
 let token = '';
 
-api = supertest('http://localhost:3000');
+api = supertest('http://localhost:8080');
 
-const Usertest = {
+const userTest = {
   username: 'Nnana_Larhy',
   firstname: 'Natalie',
   lastname: 'Elizabeth',
@@ -40,8 +40,63 @@ describe('/POST user', () => {
         done();
       });
   });
-  it('')
+  it('should fail when an invalid email is passed', (done) => {
+    const invalidEmailTest = {
+      username: 'Nnana_Larhy',
+      firstname: 'Natalie',
+      lastname: 'Elizabeth',
+      email: 'invalid',
+      password: 'issastrongpassword',
+      role_id: 1
+    };
+    request(app)
+      .post(endpoint)
+      .send(invalidEmailTest)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.equal(res.body.message, "Please Enter A Valid Email Address");
+        done();
+      });
+  });
+  // it('should create new user successfully', (done) => {
+  //   let createStub = sinon.stub(User, 'create').resolves({ id: 1 });
 
+  //   request(app)
+  //     .post(endpoint)
+  //     .send(userTest)
+  //     .expect(201)
+  //     .end((err, res) => {
+  //       if (err) throw err;
+  //       assert(res.body.firstname, userTest.firstname);
+  //       createStub.restore();
+  //       done();
+  //     });
+  // });
+  it('should fail when create fails', (done) => {
+    let createStub = sinon.stub(User, 'create').rejects({});
+
+    request(app)
+      .post(endpoint)
+      .send(userTest)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        createStub.restore();
+        done();
+      });
+  });
+
+  it('should return all users', (done => {
+    request(app)
+      .get('/api/users')
+      .set('x-access-login', token)
+      .accept('application/json')
+      .end(function (err, res) {
+        expect(res.status).to.equal(400);
+        done();
+      });
+  }));
 });
 
 describe('Users', () => {
@@ -84,5 +139,5 @@ describe('Users', () => {
       expect(body).to.be.a('object');
     });
     done();
-  })
-})
+  });
+});
