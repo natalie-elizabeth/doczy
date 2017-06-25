@@ -1,11 +1,48 @@
 const chaiHttp = require('chai-http');
 const chai = require('chai');
 const supertest = require('supertest');
+const request = require('supertest');
 const should = require('chai').should;
-expect = require('chai').expect;
+const expect = require('chai').expect;
+const sinon = require('sinon');
+require('sinon-as-promised');
+const assert = chai.assert;
+
+const User = require('../server/models').User;
+const app = require('../app');
+
 chai.use(chaiHttp);
 
+let token = '';
+
 api = supertest('http://localhost:3000');
+
+const Usertest = {
+  username: 'Nnana_Larhy',
+  firstname: 'Natalie',
+  lastname: 'Elizabeth',
+  email: 'nnanalarhy@gmail.com',
+  password: 'issastrongpassword',
+  role_id: 1
+
+};
+
+describe('/POST user', () => {
+  const endpoint = '/api/users';
+
+  it('should fail when POST user is called without params', (done) => {
+    request(app)
+      .post(endpoint)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.equal(res.body.message, "Missing required field name");
+        done();
+      });
+  });
+  it('')
+
+});
 
 describe('Users', () => {
   it('should create user on /users/POST', (done) => {

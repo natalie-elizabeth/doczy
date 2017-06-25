@@ -12,7 +12,6 @@ import * as documentActions from '../../actions/docActions';
 import DocumentView from './documentView';
 import DocumentList from './documentList';
 import CreateDocument from './CreateForm';
-import { Card, CardText } from 'material-ui/Card';
 
 
 import * as tokenUtils from '../../utils/tokenUtils';
@@ -23,7 +22,7 @@ const style = {
   position: 'fixed',
   bottom: 20,
   right: 20,
-  marginRight: 15,
+  marginRight: 30,
 };
 
 export class DocumentViewContainer extends React.Component {
@@ -117,7 +116,6 @@ export class DocumentViewContainer extends React.Component {
     return (
       <div className="container">
         <div>
-
           {this.props.documentList.documents.map(document =>
             (<DocumentView
               key={document.id}
@@ -128,7 +126,7 @@ export class DocumentViewContainer extends React.Component {
             />)
           )}
           <div>
-            <FloatingActionButton onClick={this.handleOpen} backgroundColor="#681140" >
+            <FloatingActionButton onClick={this.handleOpen} backgroundColor="#681140" style={style}>
               <ContentAdd />
             </FloatingActionButton>
           </div>
@@ -148,7 +146,7 @@ export class DocumentViewContainer extends React.Component {
             />
           ) : (
               <CreateDocument
-
+                style={style}
                 onSetAccess={this.onSetAccess}
                 document={this.state.document}
                 onTitleChange={this.onTitleChange}

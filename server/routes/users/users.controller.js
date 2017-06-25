@@ -10,10 +10,9 @@ class UserController {
     const { username, firstname, lastname, email, password, role_id } = req.body;
 
     if (!username || !firstname || !lastname || !email || !password) {
-      return res.status(500).json({
-        error: 'Missing required field',
-        errors: ['Missing require field name']
-      });
+      return res.status(400).json({ message: 'Missing required field name' });
+    } else if (!(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email))) {
+      return res.status(400).json({ message: 'Please Enter A Valid Email Address' });
     }
 
     return User.create({ username, firstname, lastname, email, password, role_id })
