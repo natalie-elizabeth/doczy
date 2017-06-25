@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './common/Header';
 import Home from './Home/home';
-import Documents from './Documents/documents';
 import About from './About/about';
 import Login from './User/loginPage';
 import SignUp from './User/signUpPage';

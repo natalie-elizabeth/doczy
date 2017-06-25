@@ -15,19 +15,6 @@ class DocumentController {
       });
   }
 
-  // if (!title || !content || !access) {
-  //   return res.status(500).json({
-  //     error: 'Missing required field',
-  //     errors: ['Missing require field name']
-  //   });
-  // }
-  // return Document.create({ title, content, access, user_id })
-  //   .then(doc => res.status(201).json(doc))
-  //   .catch(error => {
-  //     res.status(400).json(error);
-  //   });
-
-
 
   static listall(req, res) {
     if (req.query.limit || req.query.offset) {

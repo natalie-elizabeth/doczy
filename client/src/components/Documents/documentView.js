@@ -1,23 +1,29 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import JWTDecode from 'jwt-decode';
-import Header from '../common/Header';
-import { getUserFromToken } from '../../utils/tokenUtils';
+import React, { PropTypes } from 'react';
 import Chip from 'material-ui/Chip';
-import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { GridList, GridTile } from 'material-ui/GridList';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import JWTdecode from 'jwt-decode';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import Header from '../common/Header';
+import { getUserFromToken } from '../../utils/tokenUtils';
 
-const owner = window.localStorage.getItem('username');
-console.log('this is shit');
+const styles = {
+  titleStyle: {
+    color: '#ffffff',
+    font: 'cursive'
+  }
+};
 
 const DocumentView = props => (
   <div>
-    <GridList>
-      {getUserFromToken().userid === props.document.userid ?
+    <GridList
+      cellHeight="auto"
+      cols={1}
+    >
+      {getUserFromToken().userId === props.document.userId ?
         <IconMenu
           style={{ float: 'right' }}
           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -34,26 +40,25 @@ const DocumentView = props => (
               props.deleteDocument(props.document.id)
                 .then(() => {
                   props.listDocuments();
-                  console.log('here?');
                 });
             }
             }
           />
         </IconMenu> : <span />
       }
-      <GridTile
-        title={props.document.title}
-      >
-        <h5>{props.document.title}</h5>
+      <GridTile>
+        <h2>{props.document.title}</h2>
         {props.document.content}
+        <Chip backgroundColor="#123c69" labelColor="#ffffff"> {props.document.access} </Chip> <br />
       </GridTile>
     </GridList>
   </div>
 );
+
 Document.propTypes = {
   dispatch: PropTypes.func.isRequired,
   documents: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default DocumentView;
