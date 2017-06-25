@@ -7,6 +7,7 @@ import About from './About/about';
 import Login from './User/loginPage';
 import SignUp from './User/signUpPage';
 import DocumentContainer from './Documents/documentContainer';
+import content from './Home/content';
 
 export default class App extends Component {
   render() {
@@ -19,6 +20,7 @@ export default class App extends Component {
           <Route path='/login' component={Login} />
           <Route path='/signup' component={SignUp} />
           <Route path='/documents' component={DocumentContainer} />
+          <Route path='/content' component={content} />
         </div>
       </Router>
     );

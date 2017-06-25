@@ -13,7 +13,7 @@ import { getUserFromToken } from '../../utils/tokenUtils';
 const styles = {
   titleStyle: {
     color: '#ffffff',
-    font: 'cursive'
+    fontFamily: 'Roboto'
   }
 };
 
