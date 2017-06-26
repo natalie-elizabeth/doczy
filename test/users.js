@@ -59,20 +59,7 @@ describe('/POST user', () => {
         done();
       });
   });
-  // it('should create new user successfully', (done) => {
-  //   let createStub = sinon.stub(User, 'create').resolves({ id: 1 });
 
-  //   request(app)
-  //     .post(endpoint)
-  //     .send(userTest)
-  //     .expect(201)
-  //     .end((err, res) => {
-  //       if (err) throw err;
-  //       assert(res.body.firstname, userTest.firstname);
-  //       createStub.restore();
-  //       done();
-  //     });
-  // });
   it('should fail when create fails', (done) => {
     let createStub = sinon.stub(User, 'create').rejects({});
 
@@ -82,6 +69,20 @@ describe('/POST user', () => {
       .expect(400)
       .end((err, res) => {
         if (err) throw err;
+        createStub.restore();
+        done();
+      });
+  });
+  it('should create new user successfully', (done) => {
+    let createStub = sinon.stub(User, 'create').resolves({ id: 1 });
+
+    request(app)
+      .post(endpoint)
+      .send(userTest)
+      .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        assert(res.body.firstname, userTest.firstname);
         createStub.restore();
         done();
       });
@@ -97,6 +98,77 @@ describe('/POST user', () => {
         done();
       });
   }));
+
+  // deletion tests
+  it('should successfully delete a user', (done) => {
+    let findByIdStub = sinon.stub(User, 'findById').resolves({
+      destroy: () => new Promise((resolve, reject) => {
+        resolve(true);
+      })
+    });
+    let destroyStub = sinon.stub(User, 'destroy').resolves({});
+    request(app)
+      .delete('/api/users/1')
+      .set('x-access-token', token)
+      .expect(204)
+      .end(function (err, res) {
+        findByIdStub.restore();
+        destroyStub.restore();
+        done();
+      });
+  });
+  it('should fail to delete', (done) => {
+    let findByIdStub = sinon.stub(User, 'findById').rejects();
+    request(app)
+      .delete('/api/users/1')
+      .set('x-access-token', token)
+      .expect(400)
+      .end(function (err, res) {
+        findByIdStub.restore();
+        done();
+      });
+  });
+
+  it('should fail to delete if id is not found', (done) => {
+    let findByIdStub = sinon.stub(User, 'findById').resolves();
+    request(app)
+      .delete('/api/users/1')
+      .set('x-access-token', token)
+      .expect(404)
+      .end(function (err, res) {
+        findByIdStub.restore();
+        done();
+      });
+  });
+
+  it('should fail to delete a user ', (done) => {
+    let findByIdStub = sinon.stub(User, 'findById').resolves({
+      destroy: () => new Promise((resolve, reject) => {
+        reject();
+      })
+    });
+    let destroyStub = sinon.stub(User, 'destroy').resolves({});
+    request(app)
+      .delete('/api/users/1')
+      .set('x-access-token', token)
+      .expect(400)
+      .end(function (err, res) {
+        findByIdStub.restore();
+        destroyStub.restore();
+        done();
+      });
+  });
+  it('should fail to find user', (done) => {
+    let findAllStub = sinon.stub(User, 'findAll').rejects();
+    request(app)
+      .get('/api/search/users')
+      .set('x-access-token', token)
+      .expect(400)
+      .end(function (err, res) {
+        findAllStub.restore();
+        done();
+      });
+  });
 });
 
 describe('Users', () => {
