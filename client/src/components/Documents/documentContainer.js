@@ -20,7 +20,7 @@ console.log('tokenUtil:', tokenUtils.getUserFromToken + '');
 
 const style = {
   position: 'fixed',
-  top: 20,
+  top: 100,
   left: 20,
   marginRight: 30,
 };

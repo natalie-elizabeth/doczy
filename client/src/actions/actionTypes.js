@@ -35,6 +35,10 @@ export const ROLE_REQUEST = 'ROLE_REQUEST';
 export const ROLE_SUCCESS = 'ROLE_SUCCESS';
 export const ROLE_FAILURE = 'ROLE_FAILURE';
 
+export const ROLE_ADD_REQUEST ='ROLE_ADD_REQUEST';
+export const ROLE_ADD_SUCCESS = 'ROLE_ADD_SUCCESS';
+export const ROLE_ADD_FAILURE = 'ROLE_ADD_FAILURE';
+
 
 
 

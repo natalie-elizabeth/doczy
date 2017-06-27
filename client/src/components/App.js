@@ -8,6 +8,7 @@ import About from './About/about';
 import Login from './User/loginPage';
 import SignUp from './User/signUpPage';
 import DocumentContainer from './Documents/documentContainer';
+import RolePage from './roles/rolePage';
 
 
 export default class App extends Component {
@@ -23,6 +24,7 @@ export default class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/signup' component={SignUp} />
             <Route path='/documents' component={DocumentContainer} />
+            <Route path='/roles' component={RolePage} />
           </div>
         </div>
       </Router>

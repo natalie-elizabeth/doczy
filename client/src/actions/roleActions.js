@@ -25,14 +25,14 @@ export const rolesRequest = () => ({
   type: c.ROLE_REQUEST
 });
 
-export const rolesLoadSuccess = documents => ({
+export const rolesLoadSuccess = roles => ({
   type: c.ROLE_SUCCESS,
-  documents
+  roles
 });
 
-export const rolesLoadFailure = documents => ({
+export const rolesLoadFailure = roles => ({
   type: c.ROLE_FAILURE,
-  documents
+  roles
 });
 
 export const createRole = roleData => (dispatch) => {
@@ -50,4 +50,20 @@ export const createRole = roleData => (dispatch) => {
       })
   );
 };
+
+export const roleAddRequest = roles => ({
+  type: c.ROLE_ADD_REQUEST,
+  roles
+});
+
+export const rolesAddSuccess = roles => ({
+  type: c.ROLE_ADD_SUCCESS,
+  roles
+});
+
+export const rolesAddFailure = roles => ({
+  type: c.ROLE_ADD_FAILURE,
+  roles
+});
+
 

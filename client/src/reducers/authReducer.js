@@ -9,6 +9,20 @@ const authReducer = (state = { isFetching: false, isAuthenticated: !!tokenUtils.
         isFetching: true,
         isAuthenticated: false,
       });
+
+    case c.LOGIN_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: true,
+        errorMessage: '',
+        user: action.user.user
+      });
+    case c.LOGIN_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        errorMessage: action.message.message
+      });
     default:
       return state;
 
@@ -16,6 +30,12 @@ const authReducer = (state = { isFetching: false, isAuthenticated: !!tokenUtils.
       return Object.assign({}, state, {
         isFetching: true,
         isSignedUp: false,
+      });
+    case c.LOGOUT:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        user: null
       });
   }
 };

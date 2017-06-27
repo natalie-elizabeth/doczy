@@ -26,7 +26,6 @@ const DocumentView = props => (
 
       {getUserFromToken().userId === props.document.userId ?
         <IconMenu
-
           style={{ float: 'right' }}
           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}

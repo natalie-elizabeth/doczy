@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 class LoggedInView extends React.Component {
   constructor(props) {
     super(props);
-    this.logout = this.logout.bind(this);
+    // this.logout = this.logout.bind(this);
   }
 
-  logout() {
-    window.localStorage.removeItem('token');
-    // dispatch(logoutUser());
-  };
+  // logout() {
+  //   window.localStorage.removeItem('token');
+  //   // dispatch(logoutUser());
+  // };
 
   render() {
     return (
@@ -35,9 +35,9 @@ class LoggedInView extends React.Component {
         </li>
 
         <li className="nav-item">
-          <button to="settings" className="nav-link" onClick={this.logout()}>
+          <button to="settings" className="nav-link">
             <i className="ion-gear-a"></i>&nbsp;Logout
-        </button>
+          </button>
         </li>
 
       </ul>
@@ -88,10 +88,6 @@ class Header extends React.Component {
           {
             token ? <LoggedInView currentUser={this.props.currentUser} /> : <LoggedOutView currentUser={this.props.currentUser} />
           }
-
-
-
-
         </div>
       </nav>
     );
