@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class LoggedInView extends React.Component{
+class LoggedInView extends React.Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
@@ -78,7 +78,8 @@ class Header extends React.Component {
   render() {
     let token = window.localStorage.getItem('token');
     return (
-      <nav className="navbar navbar-light">
+
+      <nav className="navbar navbar-inverse">
         <div className="container">
 
           <Link to="/" className="navbar-brand">

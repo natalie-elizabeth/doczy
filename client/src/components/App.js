@@ -16,12 +16,14 @@ export default class App extends Component {
       <Router>
         <div>
           <HeaderApp />
-          <Route exact path='/' component={Home} />
-          <Route path='/about' component={About} />
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={SignUp} />
-          <Route path='/documents' component={DocumentContainer} />
-
+          <br />
+          <div className='container'>
+            <Route exact path='/' component={Home} />
+            <Route path='/about' component={About} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={SignUp} />
+            <Route path='/documents' component={DocumentContainer} />
+          </div>
         </div>
       </Router>
     );
