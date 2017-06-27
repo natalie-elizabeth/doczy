@@ -22,4 +22,11 @@ const Auth = (req, res, next) => {
     return next();
   });
 };
-module.exports = Auth;
+const isAdmin = (req, res, next) => {
+  const admin = 1;
+  if (req.role_id === admin) {
+    return next();
+  }
+  res.status(403).send('you are not an admin');
+};
+module.exports = { isAdmin, Auth };

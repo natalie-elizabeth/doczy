@@ -125,7 +125,7 @@ class UserController {
           if (!matched) {
             return res.json('password or email is incorrect');
           }
-          const token = jwt.sign({ userId: user.id, roleId: user.roleId }, secretKey, { expiresIn: '24h' });
+          const token = jwt.sign({ userId: user.id, roleId: user.role_id }, secretKey, { expiresIn: '24h' });
           return res.status(200).json({
             message: 'Login Successful',
             token,

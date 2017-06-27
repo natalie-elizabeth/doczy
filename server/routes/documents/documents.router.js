@@ -1,6 +1,6 @@
 const Router = require('express').Router();
 const Document = require('./documents.controller');
-const Auth = require('../../middleware/index');
+const { Auth, isAdmin } = require('../../middleware/index');
 
 Router.route('/documents')
   .post(Auth, Document.create)
