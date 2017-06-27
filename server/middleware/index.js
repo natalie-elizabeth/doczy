@@ -19,12 +19,13 @@ const Auth = (req, res, next) => {
     }
 
     req.userId = decoded.userId;
+    req.roleId = decoded.roleId;
     return next();
   });
 };
 const isAdmin = (req, res, next) => {
   const admin = 1;
-  if (req.role_id === admin) {
+  if (req.roleId === admin) {
     return next();
   }
   res.status(403).send('you are not an admin');

@@ -15,7 +15,7 @@ describe('Roles', () => {
       expect(body).to.equal(true);
     });
     done();
-  })
+  });
 
   it('should Get all roles', (done) => {
     api.get('/api/roles', (error, response, body) => {
@@ -23,7 +23,7 @@ describe('Roles', () => {
       expect(response.statusMessage).toEqual('OK');
     });
     done();
-  })
+  });
 
   it('should list a single role', (done) => {
     api.get('/api/roles/:id', (error, response, body) => {
@@ -31,7 +31,7 @@ describe('Roles', () => {
       expect(response.statusMessage).toEqual('OK');
     });
     done();
-  })
+  });
 
   it('should delete a role', (done) => {
     api.delete('/api/roles/:id', (error, response, body) => {

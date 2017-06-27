@@ -1,38 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const LoggedOutView = props => {
-  if (!props.currentUser) {
-    return (
-      <div className="card-header danger-color-dark ">
-        <ul className="nav navbar-nav pull-xs-right">
-
-          <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Home
-          </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/login" className="nav-link">
-              Sign in
-          </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link to="/signup" className="nav-link">
-              Sign up
-          </Link>
-          </li>
-
-        </ul>
-      </div>
-    );
+class LoggedInView extends React.Component{
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
   }
-  return null;
-};
 
-const LoggedInView = props => {
-  if (props.currentUser) {
+  logout() {
+    window.localStorage.removeItem('token');
+    // dispatch(logoutUser());
+  };
+
+  render() {
     return (
       <ul className="nav navbar-nav pull-xs-right">
 
@@ -55,23 +35,48 @@ const LoggedInView = props => {
         </li>
 
         <li className="nav-item">
-          <Link
-            to={`@${props.currentUser.username}`}
-            className="nav-link">
-            <img src={props.currentUser.image} className="user-pic" alt={props.currentUser.username} />
-            {props.currentUser.username}
-          </Link>
+          <button to="settings" className="nav-link" onClick={this.logout()}>
+            <i className="ion-gear-a"></i>&nbsp;Logout
+        </button>
         </li>
 
       </ul>
     );
   }
+};
 
-  return null;
+const LoggedOutView = props => {
+
+
+  return (
+    <div className="card-header danger-color-dark ">
+      <ul className="nav navbar-nav pull-xs-right">
+
+        <li className="nav-item">
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/login" className="nav-link">
+            Sign in
+          </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link to="/signup" className="nav-link">
+            Sign up
+          </Link>
+        </li>
+
+      </ul>
+    </div>
+  );
 };
 
 class Header extends React.Component {
   render() {
+    let token = window.localStorage.getItem('token');
     return (
       <nav className="navbar navbar-light">
         <div className="container">
@@ -79,10 +84,13 @@ class Header extends React.Component {
           <Link to="/" className="navbar-brand">
             {this.props.appName}
           </Link>
+          {
+            token ? <LoggedInView currentUser={this.props.currentUser} /> : <LoggedOutView currentUser={this.props.currentUser} />
+          }
 
-          <LoggedOutView currentUser={this.props.currentUser} />
 
-          <LoggedInView currentUser={this.props.currentUser} />
+
+
         </div>
       </nav>
     );

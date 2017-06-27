@@ -8,7 +8,7 @@ Router.route('/documents')
 
 Router.route('/documents/:id')
   .get(Auth, Document.retrieve)
-  .put(Document.update)
+  .put(Auth, Document.update)
   .delete(Auth, Document.delete);
 
 module.exports = Router;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './common/Header';
+import HeaderApp from './common/App';
 import Home from './Home/home';
 import About from './About/about';
 import Login from './User/loginPage';
@@ -14,7 +15,7 @@ export default class App extends Component {
     return (
       <Router>
         <div>
-          <Header />
+          <HeaderApp />
           <Route exact path='/' component={Home} />
           <Route path='/about' component={About} />
           <Route path='/login' component={Login} />

@@ -23,8 +23,10 @@ const DocumentView = props => (
       cellHeight="auto"
       cols={1}
     >
+
       {getUserFromToken().userId === props.document.userId ?
         <IconMenu
+
           style={{ float: 'right' }}
           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}

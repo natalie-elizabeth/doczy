@@ -12,7 +12,7 @@ import * as documentActions from '../../actions/docActions';
 import DocumentView from './documentView';
 import DocumentList from './documentList';
 import CreateDocument from './CreateForm';
-
+import DocumentEditForm from './editDocument';
 
 import * as tokenUtils from '../../utils/tokenUtils';
 
@@ -20,7 +20,7 @@ console.log('tokenUtil:', tokenUtils.getUserFromToken + '');
 
 const style = {
   position: 'fixed',
-  bottom: 20,
+  top: 20,
   right: 20,
   marginRight: 30,
 };

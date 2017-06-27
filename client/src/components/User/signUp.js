@@ -14,156 +14,156 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 class SignUp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-            role_id: 7,
-            errors: {},
-            isLoading: false
-        };
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      role_id: 1,
+      errors: {},
+      isLoading: false
     };
-    onChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+
+  };
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.signupRequest((this.state))
+        .then(() => {
+          console.log('hey');
+          this.context.router.history.push('/about');
+          console.log('why');
+        })
+        .catch(err => {
+          this.setState({ errors: err, isLoading: false });
         });
     }
+  }
 
-    onSubmit(event) {
-        event.preventDefault();
-        if (this.isValid()) {
-            this.setState({ errors: {}, isLoading: true });
-            this.props.signupRequest((this.state))
-                .then(() => {
-                    console.log('hey');
-                    this.context.router.history.push('/about');
-                    console.log('why');
-                })
-                .catch(err => {
-                    this.setState({ errors: err, isLoading: false });
-                });
-        }
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+    if (isValid) {
+      this.setState({ errors });
     }
+    return isValid;
+  }
 
-    isValid() {
-        const { errors, isValid } = validateInput(this.state);
-        if (isValid) {
-            this.setState({ errors });
-        }
-        return isValid;
-    }
+  render() {
+    const { errors } = this.state;
+    return (
+      <div>
+        <MuiThemeProvider>
+          <center>
+            <Card className="container">
+              <form action="/" onSubmit={this.onSubmit} className="col s12">
+                <h2 className="card-heading">Sign Up</h2>
+                {errors.summary && <p className="error-message">{errors.summary}</p>}
 
-    render() {
-        const { errors } = this.state;
-        return (
-            <div>
-                <MuiThemeProvider>
-                    <center>
-                        <Card className="container">
-                            <form action="/" onSubmit={this.onSubmit} className="col s12">
-                                <h2 className="card-heading">Sign Up</h2>
-                                {errors.summary && <p className="error-message">{errors.summary}</p>}
-
-                                <div className='row'>
-                                    <div className="input-field col s6">
-                                        <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
-                                            floatingLabelText="Username"
-                                            name="username"
-                                            errorText={errors.username}
-                                            onChange={this.onChange}
-                                            value={this.state.username}
-                                        />
-                                    </div>
-                                </div>
+                      floatingLabelText="Username"
+                      name="username"
+                      errorText={errors.username}
+                      onChange={this.onChange}
+                      value={this.state.username}
+                    />
+                  </div>
+                </div>
 
-                                <div className='row'>
-                                    <div className="input-field col s6">
-                                        <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
-                                            floatingLabelText="First Name"
-                                            name="firstname"
-                                            errorText={errors.firstname}
-                                            onChange={this.onChange}
-                                            value={this.state.firstname}
-                                        />
-                                    </div>
-                                </div>
+                      floatingLabelText="First Name"
+                      name="firstname"
+                      errorText={errors.firstname}
+                      onChange={this.onChange}
+                      value={this.state.firstname}
+                    />
+                  </div>
+                </div>
 
-                                <div className='row'>
-                                    <div className="input-field col s6">
-                                        <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
-                                            floatingLabelText="Last Name"
-                                            name="lastname"
-                                            errorText={errors.lastname}
-                                            onChange={this.onChange}
-                                            value={this.state.lastname}
-                                        />
-                                    </div>
-                                </div>
-                                <div className='row'>
-                                    <div className="input-field col s6">
-                                        <i className="material-icons prefix">email</i> &nbsp;&nbsp;
+                      floatingLabelText="Last Name"
+                      name="lastname"
+                      errorText={errors.lastname}
+                      onChange={this.onChange}
+                      value={this.state.lastname}
+                    />
+                  </div>
+                </div>
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <i className="material-icons prefix">email</i> &nbsp;&nbsp;
                     <TextField
-                                            floatingLabelText="Email"
-                                            name="email"
-                                            errorText={errors.email}
-                                            onChange={this.onChange}
-                                            value={this.state.email}
-                                        />
-                                    </div>
-                                </div>
+                      floatingLabelText="Email"
+                      name="email"
+                      errorText={errors.email}
+                      onChange={this.onChange}
+                      value={this.state.email}
+                    />
+                  </div>
+                </div>
 
-                                <div className="input-field col s6">
-                                    <i className="material-icons prefix">lock</i> &nbsp;&nbsp;
+                <div className="input-field col s6">
+                  <i className="material-icons prefix">lock</i> &nbsp;&nbsp;
                   <TextField
-                                        floatingLabelText="Password"
-                                        type="password"
-                                        name="password"
-                                        onChange={this.onChange}
-                                        errorText={errors.password}
-                                        value={this.state.password}
-                                    />
-                                </div>
-                                <div className="input-field col s6">
-                                    <i className="material-icons prefix">lock</i> &nbsp;&nbsp;
+                    floatingLabelText="Password"
+                    type="password"
+                    name="password"
+                    onChange={this.onChange}
+                    errorText={errors.password}
+                    value={this.state.password}
+                  />
+                </div>
+                <div className="input-field col s6">
+                  <i className="material-icons prefix">lock</i> &nbsp;&nbsp;
                   <TextField
-                                        floatingLabelText="Confirm Password"
-                                        type="password"
-                                        name="confirm"
-                                        onChange={this.onChange}
-                                        errorText={errors.confirm}
-                                        value={this.state.confirm}
-                                    />
-                                </div>
-                                <br />
-                                <div className="button-line">
-                                    <RaisedButton type="submit" label="Create New Account" primary />
-                                </div>
-                                <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
-                            </form>
-                        </Card>
-                    </center>
-                </MuiThemeProvider>
-            </div>
-        );
-    }
+                    floatingLabelText="Confirm Password"
+                    type="password"
+                    name="confirm"
+                    onChange={this.onChange}
+                    errorText={errors.confirm}
+                    value={this.state.confirm}
+                  />
+                </div>
+                <br />
+                <div className="button-line">
+                  <RaisedButton type="submit" label="Create New Account" primary />
+                </div>
+                <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
+              </form>
+            </Card>
+          </center>
+        </MuiThemeProvider>
+      </div>
+    );
+  }
 }
 
 SignUp.propTypes = {
-    // signupRequest: PropTypes.func.isRequired
+  // signupRequest: PropTypes.func.isRequired
 };
 
 SignUp.contextTypes = {
-    router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
 export default connect(null, { signupRequest })(SignUp);
