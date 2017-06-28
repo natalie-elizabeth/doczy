@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 class LoggedInView extends React.Component {
   constructor(props) {
     super(props);
-    // this.logout = this.logout.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
-  // logout() {
-  //   window.localStorage.removeItem('token');
-  //   // dispatch(logoutUser());
-  // };
+  logout() {
+    window.localStorage.removeItem('token');
+    // dispatch(logoutUser());
+  };
 
   render() {
     return (
@@ -35,9 +35,11 @@ class LoggedInView extends React.Component {
         </li>
 
         <li className="nav-item">
-          <button to="settings" className="nav-link">
-            <i className="ion-gear-a"></i>&nbsp;Logout
-          </button>
+          <li className="nav-item">
+            <Link to="settings" className="nav-link">
+              <i className="ion-gear-a"></i>&nbsp;Logout
+            </Link>
+          </li>
         </li>
 
       </ul>
@@ -46,8 +48,6 @@ class LoggedInView extends React.Component {
 };
 
 const LoggedOutView = props => {
-
-
   return (
     <div className="card-header danger-color-dark ">
       <ul className="nav navbar-nav pull-xs-right">
@@ -77,8 +77,8 @@ const LoggedOutView = props => {
 class Header extends React.Component {
   render() {
     let token = window.localStorage.getItem('token');
+    console.log('Token>>>>>>>>>>>>>', token);
     return (
-
       <nav className="navbar navbar-inverse">
         <div className="container">
 

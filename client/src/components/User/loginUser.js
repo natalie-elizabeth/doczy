@@ -11,6 +11,7 @@ import login from '../../actions/authActions';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/authActions';
 import loginValidate from '../../utils/validateLogin';
+import isEmpty from 'lodash/isEmpty';
 
 class LoginUser extends Component {
   constructor(props) {
@@ -23,8 +24,7 @@ class LoginUser extends Component {
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    // this.isValid = this.isValid.bind(this);
-
+    this.isValid = this.isValid.bind(this);
   };
   onChange(event) {
     this.setState({
@@ -34,20 +34,28 @@ class LoginUser extends Component {
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.authActions.login(this.state).then((res) => {
+      // this.setState({ errors: {}, isLoading: true });
+      this.props.authActions.login({ email: this.state.email, password: this.state.password }).then((res) => {
         this.context.router.history.push('/documents');
       })
         .catch(err => this.setState({ errors: err, isLoading: false }));
     }
-
   }
+
   isValid() {
-    const { errors, isValid } = loginValidate(this.state);
-    if (isValid) {
-      this.setState({ errors });
+    // const { errors, isValid } = loginValidate(this.state);
+    // if (!isValid) {
+    //   this.setState({ errors });
+    // }
+    // return true;
+    let errors = {};
+    if (!this.state.email) {
+      this.state.errors.email = "Email is required";
     }
-    return isValid;
+    if (!this.state.password) {
+      this.state.errors.email = "Password is required";
+    }
+    return isEmpty(errors);
   }
 
   render() {
@@ -57,7 +65,7 @@ class LoginUser extends Component {
         <MuiThemeProvider>
           <center>
             <Card className="container">
-              <form action="/" onSubmit={this.onSubmit} className="col s12">
+              <form onSubmit={this.onSubmit} className="col s12">
                 <h2 className="card-heading">Sign In</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
                 <div className='row'>

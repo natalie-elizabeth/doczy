@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Login from '../User/loginPage';
 import { Card, CardTitle } from 'material-ui/Card';
 import DocumentList from '../Documents/documentList';
 

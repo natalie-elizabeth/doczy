@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../../actions/actionTypes';
 
+
 const mapStateToProps = state => ({
   appLoaded: state.common.appLoaded,
   appName: state.common.appName,
@@ -28,12 +29,12 @@ class HeaderApp extends React.Component {
   }
 
   componentWillMount() {
-    const token = window.localStorage.getItem('jwt');
-    if (token) {
-      agent.setToken(token);
-    }
+    const token = window.localStorage.getItem('token');
+    // if (token) {
+    //   agent.setToken(token);
+    // }
 
-    this.props.onLoad(token ? agent.Auth.current() : null, token);
+    // this.props.onLoad(token ? agent.Auth.current() : null, token);
   }
 
   render() {
