@@ -37,5 +37,39 @@ describe('actions', () => {
     };
     expect(actions.createUser(user)).toEqual(expectedAction);
   });
+  it('should create an action to Login a user', () => {
+    const user = {
+      email: 'email',
+      password: 'password'
+    };
+    const expectedAction = {
+      type: c.LOGIN,
+      user
+    };
+    expect(actions.loginUser(user)).toEqual(expectedAction);
+  });
+  it('should create an action to log a user succesfully', () => {
+    const user = {
+      email: 'email',
+      password: 'password',
+    };
+    const expectedAction = {
+      type: c.LOGIN_SUCCESS,
+      user,
+      isFetching: false,
+      isAuthenticated: true,
+    };
+    expect(actions.loginSuccessful(user)).toEqual(expectedAction);
+  });
+  it('should craete an action on log in failure', () => {
+    const message = '';
+    const expectedAction = {
+      type: c.LOGIN_FAILURE,
+      message,
+      isFetching: false,
+      isAuthenticated: false,
+    };
+    expect(actions.loginFailed(message)).toEqual(expectedAction);
+  });
 });
 
