@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import DocumentView from './documentView';
+import { Card, CardText } from 'material-ui/Card';
 
 const DocumentList = ({ documents, handleOpen, style }) => (
   <div>
-    {documents.map(document =>
-      <DocumentView key={document.id} document={document} />
-    )}
+    <Card>
+      {documents.map(document =>
+        <DocumentView key={document.id} document={document} />
+      )}
+    </Card>
     <div>
       <FloatingActionButton onClick={handleOpen} style={style}>
         <ContentAdd />
       </FloatingActionButton>
     </div>
-  </div>
+  </div >
 );
 DocumentList.propTypes = {
   documents: PropTypes.array.isRequired,

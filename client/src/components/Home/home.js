@@ -4,16 +4,16 @@ import DocumentList from '../Documents/documentList';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const Home = () => (
-  <div>
-    <Card className="container">
-      <center><CardTitle title="Doczy" subtitle="All your documents in one place" /></center>
-    </Card>
-    <br /><br />
-    <nav className="container">
-      <center><RaisedButton label="View all users"></RaisedButton></center>
-      <center><RaisedButton label="Create new roles"></RaisedButton></center>
-      <center><RaisedButton label="Delete Users users"></RaisedButton></center>
-    </nav>
-  </div>
+    <div>
+        <Card className="container">
+            <center><CardTitle title="Doczy" subtitle="All your documents in one place" />
+                <RaisedButton label="View all users" />&nbsp;&nbsp;
+                <RaisedButton label="Create new roles" />
+                <RaisedButton label="Delete Users users" />
+            </center>
+        </Card>
+        <br /><br />
+
+    </div>
 );
 export default Home;
