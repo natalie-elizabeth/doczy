@@ -50,7 +50,7 @@ const DocumentView = props => (
             <GridTile>
                 <h2>{props.document.title}</h2>
                 {props.document.content}
-                {console.log(getUserFromToken().userId, props.document.user_id)}
+                {/*{console.log(getUserFromToken().userId, props.document.user_id)}*/}
                 <Chip backgroundColor="#123c69" labelColor="#ffffff"> {props.document.access} </Chip> <br />
             </GridTile>
         </GridList>

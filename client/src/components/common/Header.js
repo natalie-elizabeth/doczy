@@ -23,8 +23,8 @@ class LoggedInView extends React.Component {
         </li>
 
         <li className="nav-item">
-          <Link to="editor" className="nav-link">
-            <i className="ion-compose"></i>&nbsp;New Document
+          <Link to="documents" className="nav-link">
+            <i className="ion-compose"></i>&nbsp;Documents
           </Link>
         </li>
 
@@ -34,12 +34,11 @@ class LoggedInView extends React.Component {
           </Link>
         </li>
 
+
         <li className="nav-item">
-          <li className="nav-item">
-            <Link to="logout" className="nav-link">
-              <i className="ion-gear-a"></i>&nbsp;Logout
+          <Link to="logout" className="nav-link">
+            <i className="ion-gear-a"></i>&nbsp;Logout
             </Link>
-          </li>
         </li>
 
       </ul>
