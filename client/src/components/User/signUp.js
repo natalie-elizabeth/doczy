@@ -10,6 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { signupRequest } from '../../actions/authActions';
 import validateInput from '../../utils/validateSignup';
 
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -43,8 +44,8 @@ class SignUp extends Component {
       this.props.signupRequest((this.state))
         .then(() => {
           console.log('hey');
-          this.context.router.history.push('/about');
-          console.log('why');
+          this.context.router.history.push('/login');
+
         })
         .catch(err => {
           this.setState({ errors: err, isLoading: false });

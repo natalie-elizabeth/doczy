@@ -11,7 +11,7 @@ import storeConfig from './store/index';
 const store = storeConfig();
 render((
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+    <MuiThemeProvider >
       <App />
     </MuiThemeProvider>
   </Provider>

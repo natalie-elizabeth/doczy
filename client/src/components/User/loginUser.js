@@ -11,7 +11,7 @@ import login from '../../actions/authActions';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/authActions';
 import loginValidate from '../../utils/validateLogin';
-import isEmpty from 'lodash/isEmpty';
+
 
 class LoginUser extends Component {
   constructor(props) {
@@ -43,19 +43,19 @@ class LoginUser extends Component {
   }
 
   isValid() {
-    // const { errors, isValid } = loginValidate(this.state);
-    // if (!isValid) {
-    //   this.setState({ errors });
+    const { errors, isValid } = loginValidate(this.state);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+    // let errors = {};
+    // if (!this.state.email) {
+    //   this.state.errors.email = "Email is required";
     // }
-    // return true;
-    let errors = {};
-    if (!this.state.email) {
-      this.state.errors.email = "Email is required";
-    }
-    if (!this.state.password) {
-      this.state.errors.email = "Password is required";
-    }
-    return isEmpty(errors);
+    // if (!this.state.password) {
+    //   this.state.errors.email = "Password is required";
+    // }
+    // return isEmpty(errors);
   }
 
   render() {
