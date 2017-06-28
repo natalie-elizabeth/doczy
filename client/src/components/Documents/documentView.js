@@ -11,56 +11,56 @@ import Header from '../common/Header';
 import { getUserFromToken } from '../../utils/tokenUtils';
 
 const styles = {
-    titleStyle: {
-        color: '#ffffff',
-        fontFamily: 'Roboto'
-    }
+  titleStyle: {
+    color: '#ffffff',
+    fontFamily: 'Roboto'
+  }
 };
 
 const DocumentView = props => (
-    <div>
-        <GridList
-            cellHeight="auto"
-            cols={1}
-        >
-            {getUserFromToken().userId === props.document.user_id ?
+  <div>
+    <GridList
+      cellHeight="auto"
+      cols={1}
+    >
+      {getUserFromToken().userId === props.document.user_id ?
 
-                <IconMenu
-                    style={{ float: 'right' }}
-                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                >
-                    <MenuItem
-                        primaryText="Edit Document"
-                        onTouchTap={props.onUpdate}
-                    />
-                    <MenuItem
-                        primaryText="Delete Document"
-                        onTouchTap={() => {
-                            props.deleteDocument(props.document.id)
-                                .then(() => {
-                                    props.listDocuments();
-                                });
-                        }
-                        }
-                    />
-                </IconMenu> : <span />
+        <IconMenu
+          style={{ float: 'right' }}
+          iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+        >
+          <MenuItem
+            primaryText="Edit Document"
+            onTouchTap={props.onUpdate}
+          />
+          <MenuItem
+            primaryText="Delete Document"
+            onTouchTap={() => {
+              props.deleteDocument(props.document.id)
+                .then(() => {
+                  props.listDocuments();
+                });
             }
-            <GridTile>
-                <h2>{props.document.title}</h2>
-                {props.document.content}
-                {/*{console.log(getUserFromToken().userId, props.document.user_id)}*/}
-                <Chip backgroundColor="#123c69" labelColor="#ffffff"> {props.document.access} </Chip> <br />
-            </GridTile>
-        </GridList>
-    </div>
+            }
+          />
+        </IconMenu> : <span />
+      }
+      <GridTile>
+        <h2>{props.document.title}</h2>
+        {props.document.content}
+        {console.log(getUserFromToken().userId, props.document.user_id)}
+        <Chip backgroundColor="#123c69" labelColor="#ffffff"> {props.document.access} </Chip> <br />
+      </GridTile>
+    </GridList>
+  </div>
 );
 
 Document.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    documents: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  documents: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default DocumentView;
