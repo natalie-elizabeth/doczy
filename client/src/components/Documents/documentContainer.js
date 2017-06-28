@@ -20,7 +20,7 @@ console.log('tokenUtil:', tokenUtils.getUserFromToken + '');
 
 const style = {
   position: 'fixed',
-  top: 100,
+  bottom: 100,
   left: 20,
   marginRight: 30,
 };
@@ -117,6 +117,7 @@ export class DocumentViewContainer extends React.Component {
       <div className="container">
         <div>
           {this.props.documentList.documents.map(document =>
+
             (<DocumentView
               key={document.id}
               document={document}
@@ -155,6 +156,7 @@ export class DocumentViewContainer extends React.Component {
             )}
         </Dialog>
       </div>
+
     );
   }
 }

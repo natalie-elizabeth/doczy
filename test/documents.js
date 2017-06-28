@@ -1,7 +1,7 @@
 const chaiHttp = require('chai-http');
 const chai = require('chai');
 const supertest = require('supertest');
-const request = require('supertes');
+const request = require('supertest');
 const should = require('chai').should;
 expect = require('chai').expect;
 const assert = chai.assert;
@@ -28,10 +28,35 @@ describe('/POST documents', () => {
 
   it('should return user logged in successfully', (done) => {
     const saltRounds = bcrypt.genSaltSync(10);
-
     const password = bcrypt.hashSync('issastrongpassword', saltRounds);
-
-    let findOneStub = sinon.stub(user, 'findOne').resolves({ password, id: 1, roleId: 1 });
+    let findOneStub = sinon.stub(User, 'findOne').resolves({ password, id: 1 });
+    request(app)
+      .post('/api/users/login')
+      .send({
+        userName: 'Gavilar',
+        password: 'IssaStRongPassword'
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        assert(res.body.message, 'You were successfully logged in');
+        assert.property(res.body, 'token');
+        token = res.body.token;
+        findOneStub.restore();
+        done();
+      });
+  });
+  it('should fail to add a document', (done) => {
+    let createStub = sinon.stub(Document, 'create').rejects();
+    request(app)
+      .post(endpoint)
+      .set('x-access-token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        createStub.restore();
+        done();
+      });
   });
 });
 
@@ -58,14 +83,14 @@ describe('Documents', () => {
       expect(response.statusMessage).toEqual('Cool');
     });
     done();
-  })
+  });
   it('should delete a document', (done) => {
     api.delete('/api/documents/:id', (error, response, body) => {
       expect(response.statusCode).toEqual(204);
       expect(response.statusMessage).toEqual('Cool');
     });
     done();
-  })
+  });
   it('should update a single document\'s information', (done) => {
     api.put('/api/documents/:id', (error, response, body) => {
       expect(expect(response.statusCode).to.equal(200));
