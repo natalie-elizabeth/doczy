@@ -43,7 +43,7 @@ If you want to change the API URL to a local server, simply edit `app.js` and ch
     - Delete and update document moreverticon (only shown to article's author)
 - Roles page:
     - CRUD roles
-- Profile page (URL: /#/@username, /#/@username/favorites )
+- Profile page 
     - Show basic user info
     - List of articles populated from author's created articles or author's favorited articles
 
