@@ -7,18 +7,18 @@ import RolesView from './rolesView';
 
 
 const RolesList = ({ roles, handleOpen, style }) => (
+  <div>
+    <Card>
+      {roles.map(role =>
+        <RolesView key={role.id} role={role} />
+      )}
+    </Card>
     <div>
-        <Card>
-            {roles.map(role =>
-                <RolesView key={role.id} role={role} />
-            )}
-        </Card>
-        <div>
-            <FloatingActionButton onClick={handleOpen} style={style}>
-                <ContentAdd />
-            </FloatingActionButton>
-        </div>
-    </div >
+      <FloatingActionButton onClick={handleOpen} style={style}>
+        <ContentAdd />
+      </FloatingActionButton>
+    </div>
+  </div >
 );
 RolesList.propTypes = {
     roles: PropTypes.array.isRequired,

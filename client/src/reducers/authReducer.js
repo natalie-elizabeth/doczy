@@ -31,11 +31,22 @@ const authReducer = (state = { isFetching: false, isAuthenticated: !!tokenUtils.
         isFetching: true,
         isSignedUp: false,
       });
-    case c.LOGOUT:
+    case c.SIGNUP_USER:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isSignedUp: false,
+      });
+    case c.SIGNUP_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuthenticated: false,
-        user: null
+        isSignedUp: true,
+        errorMessage: '',
+      });
+    case c.SIGNUP_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isSignedUp: false,
+        errorMessage: 'Server Error.'
       });
   }
 };
