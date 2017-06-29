@@ -40,7 +40,7 @@ If you want to change the API URL to a local server, simply edit `app.js` and ch
 - Settings page (URL: /#/settings )
 - Documents page to create/edit/view documents
 - Documents page 
-    - Delete and update document moreverticon (only shown to article's author)
+    - Delete and update document moreverticon (only shown to document's author)
 - Roles page:
     - CRUD roles
 - Profile page 
