@@ -8,7 +8,6 @@ import About from './About/about';
 import Login from './User/loginPage';
 import SignUp from './User/signUpPage';
 import DocumentViewContainer from './Documents/documentContainer';
-// import RolePage from './roles/rolePage';
 import Roles from './roles/createRole';
 import dashboard from './common/adminDashboard';
 import NotFoundComponent from './common/notFound';
