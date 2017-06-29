@@ -9,49 +9,77 @@ import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { updateUser } from '../../actions/authActions';
 import validateInput from '../../utils/validateUpdate';
+import * as userActions from '../../actions/authActions';
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      password: '',
-      errors: {}
+      user: {
+        username: '',
+        email: '',
+        password: '',
+        errors: {}
+      }
+
     };
     this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.onUsernameChange = this.onUsernameChange.bind(this);
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.onPasswordChange = this.onPasswordChange.bind(this);
   }
-  onChange(event) {
+  onUsernameChange(e) {
+    const User = this.state.user;
+    User.username = e.target.value;
+    this.setState({ user: User });
+  }
+  onEmailChange(e) {
+    const User = this.state.user;
+    User.email = e.target.value;
+    this.setState({ user: User });
+  }
+  onPasswordChange(e) {
+    const User = this.state.user;
+    Document.password = e.target.value;
+    this.setState({ user: User });
+  }
+  handleChange(e) {
+    const { name, value } = e.target;
     this.setState({
-      [event.target.name]: event.target.value
+      user: Object.assign({}, this.state.user, {
+        [name]: value
+      })
     });
   }
-  onSubmit(event) {
-    event.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.updateUser((this.state))
-        .then(() => {
-          console.log('hey');
-          this.context.router.history.push('/');
-
-        })
-        .catch(err => {
-          this.setState({ errors: err, isLoading: false });
-        });
+  updateUser(user) {
+    return e => {
+      this.setState({
+        user,
+        edit: true
+      });
+    };
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    if (this.state.edit) {
+      this.props.userActions.updateDocument(this.state.document);
     }
   }
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-    if (isValid) {
-      this.setState({ errors });
-    }
-    return isValid;
-  }
-
   render() {
     const { errors } = this.state;
+    const viewActions = [
+      <FlatButton
+        label="Cancel"
+        primary
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary
+        keyboardFocused
+        onTouchTap={this.handleSubmit}
+      />,
+    ];
     return (
       <div>
         <MuiThemeProvider>

@@ -4,17 +4,17 @@ const { Auth, isAdmin } = require('../../middleware/index');
 
 Router.route('/users')
   .post(User.create)
-  .get(User.seeall);
+  .get([Auth, isAdmin],User.seeall);
 
 
 Router.route('/users/login')
   .post(User.login);
 
 Router.route('/users/logout')
-  .post(User.logout);
+  .post(Auth, User.logout);
 
 Router.route('/search/users/')
-  .get(User.search);
+  .get([Auth, isAdmin], User.search);
 
 Router.route('/users/:id')
   .get(User.retrieve)
@@ -22,6 +22,6 @@ Router.route('/users/:id')
   .put(User.update);
 
 Router.route('/users/:id/documents')
-  .get(User.listall);
+  .get([Auth, isAdmin], User.listall);
 
 module.exports = Router;
