@@ -48,14 +48,6 @@ class LoginUser extends Component {
       this.setState({ errors });
     }
     return isValid;
-    // let errors = {};
-    // if (!this.state.email) {
-    //   this.state.errors.email = "Email is required";
-    // }
-    // if (!this.state.password) {
-    //   this.state.errors.email = "Password is required";
-    // }
-    // return isEmpty(errors);
   }
 
   render() {

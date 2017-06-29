@@ -9,11 +9,10 @@ const dashboard = () => (
     <Card className="container">
       <center><CardTitle title="Doczy" subtitle="All your documents in one place" />
         <Link to="/roles" className="nav-link">
-          <RaisedButton label="Create new roles" />&nbsp;&nbsp; </Link>
+          <RaisedButton label="Roles" />&nbsp;&nbsp; </Link>
         <Link to="/users" className="nav-link">
-          <RaisedButton label="View all users" />&nbsp;&nbsp; </Link>
-          <Link to="/role-page" className="nav-link">
-          <RaisedButton label="View roles" />&nbsp;&nbsp; </Link>
+          <RaisedButton label="Users" />&nbsp;&nbsp; </Link>
+
       </center>
     </Card>
     <br /><br />
