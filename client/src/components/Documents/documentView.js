@@ -48,8 +48,9 @@ const DocumentView = props => (
       }
       <GridTile>
         <h2>{props.document.title}</h2>
-        <Chip backgroundColor="#681140" labelColor="#ffffff"> {props.document.access} </Chip> <hr /> <br />
+        <Chip backgroundColor="#681140" labelColor="#ffffff"> {props.document.access} </Chip>  <br />
         {props.document.content}
+        <hr />
       </GridTile>
     </GridList>
   </div>

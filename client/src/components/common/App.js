@@ -9,7 +9,7 @@ import { APP_LOAD, REDIRECT } from '../../actions/actionTypes';
 const mapStateToProps = state => ({
   appLoaded: state.common.appLoaded,
   appName: state.common.appName,
-  currentUser: state.common.currentUser,
+  username: state.common.username,
   redirectTo: state.common.redirectTo
 });
 
@@ -43,7 +43,7 @@ class HeaderApp extends React.Component {
         <div>
           <Header
             appName={this.props.appName}
-            currentUser={this.props.currentUser} />
+            username={this.props.username} />
           {this.props.children}
         </div>
       );
@@ -52,7 +52,7 @@ class HeaderApp extends React.Component {
       <div>
         <Header
           appName={this.props.appName}
-          currentUser={this.props.currentUser} />
+          username={this.props.username} />
       </div>
     );
   }

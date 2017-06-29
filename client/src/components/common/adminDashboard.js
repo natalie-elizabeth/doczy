@@ -10,11 +10,8 @@ const dashboard = () => (
       <center><CardTitle title="Doczy" subtitle="All your documents in one place" />
         <Link to="/roles" className="nav-link">
           <RaisedButton label="Create new roles" />&nbsp;&nbsp; </Link>
-        <Link to="/role-page" className="nav-link">
-          <RaisedButton label="View roles" />&nbsp;&nbsp; </Link>
         <Link to="/users" className="nav-link">
           <RaisedButton label="View all users" />&nbsp;&nbsp; </Link>
-        <RaisedButton label="Delete Users" />
       </center>
     </Card>
     <br /><br />

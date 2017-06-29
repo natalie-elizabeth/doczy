@@ -12,6 +12,7 @@ import RoleViewContainer from './roles/roleContainer';
 import RolePage from './roles/rolePage';
 import dashboard from './common/adminDashboard';
 import NotFoundComponent from './common/notFound';
+import SettingsPage from '../components/common/settingsPage';
 
 
 export default class App extends Component {
@@ -31,6 +32,7 @@ export default class App extends Component {
             <Route path='/dashboard' component={dashboard} />
             <Route component={NotFoundComponent} path="/not-found" />
             <Route path='/role-page' component={RoleViewContainer} />
+            <Route path='/settings' component={SettingsPage}/>
 
           </div>
         </div>

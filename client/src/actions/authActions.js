@@ -126,7 +126,7 @@ export const updateUser = userData => (dispatch) => {
   dispatch(userUpdateRequest(userData));
   return (
     request
-      .put(`/api/user/${userData.id}`)
+      .put(`/api/users/${userData.id}`)
       .set('x-access-token', window.localStorage.getItem('token'))
       .send(userData)
       .then((response) => {
