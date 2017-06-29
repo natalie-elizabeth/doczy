@@ -48,10 +48,10 @@ export default function reducer(state = DOC_LIST, action) {
       });
 
     case c.DOCUMENT_UPDATE_FAILURE:
-      return {
+      return Object.assign({}, state, {
         error: action.error,
         loading: false,
-      };
+      });
     case c.DOCUMENT_ADD_REQUEST:
       return Object.assign({}, state, {
         error: null,

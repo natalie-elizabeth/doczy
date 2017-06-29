@@ -18,6 +18,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  devtool: 'cheap-eval-source-map',
   devServer: {
     contentBase: './client/src',
     historyApiFallback: true,
