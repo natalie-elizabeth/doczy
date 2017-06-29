@@ -36,28 +36,17 @@ export class RoleViewContainer extends React.Component {
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.onSetAccess = this.onSetAccess.bind(this);
-    this.onTitleChange = this.onTitleChange.bind(this);
-    this.onContentChange = this.onContentChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
   }
   componentWillMount() {
     this.props.roleActions.listRoles();
   }
-  onSetAccess(e, index, value) {
+
+  onNameChange(e) {
     const Role = this.state.role;
-    Role.access = value;
-    this.setState({ role: Role });
-  }
-  onTitleChange(e) {
-    const Role = this.state.role;
-    Role.title = e.target.value;
-    this.setState({ role: Role });
-  }
-  onContentChange(e) {
-    const Role = this.state.role;
-    Role.content = e.target.value;
+    Role.name = e.target.value;
     this.setState({ role: Role });
   }
 

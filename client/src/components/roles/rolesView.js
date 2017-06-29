@@ -47,18 +47,12 @@ const RolesView = props => (
         </IconMenu> : <span />
       }
       <GridTile>
-        <h2 fontFamily="Roboto">{props.role.title}</h2>
-        {props.role.content}
-        <Chip backgroundColor="#123c69" labelColor="#ffffff"> {props.role.access} </Chip> <br />
+        <h2 fontFamily="Roboto">{props.role.id}</h2>
+        {props.role.name}
       </GridTile>
     </GridList>
   </div>
 );
 
-// Role.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-//   roles: PropTypes.func.isRequired,
-//   onUpdate: PropTypes.func.isRequired,
-// };
 
 export default RolesView;

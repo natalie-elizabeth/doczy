@@ -1,6 +1,9 @@
 import request from 'superagent';
 import * as c from '../actions/actionTypes';
 import * as tokenUtils from '../utils/tokenUtils';
+import jwtDecode from 'jwt-decode';
+
+import { postEndpoint, getEndpoint, deleteEndpoint } from '../api/api';
 
 export const createUser = user => ({
   type: c.CREATE_USER, user
@@ -59,3 +62,93 @@ export const signupRequest = userData => (dispatch) => {
       })
   );
 };
+
+// user actions
+export const usersRequest = () => ({
+  type: c.USERS_REQUEST
+});
+
+export const usersSuccess = users => ({
+  type: c.USERS_SUCCESS,
+  users
+});
+
+export const usersFailure = users => ({
+  type: c.USERS_FAILURE,
+  users
+});
+
+export const listUsers = () => (dispatch) => {
+  dispatch(usersRequest());
+  return (
+    request
+      .get('/api/users')
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .then((response) => {
+        dispatch(usersSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(usersFailure(error));
+      })
+  );
+};
+
+
+export const userDeleteRequest = () => ({
+  type: c.USER_DELETE_REQUEST
+});
+
+export const usersDeleteSuccess = users => ({
+  type: c.USER_DELETE_SUCCESS,
+  users
+});
+
+export const userDeleteFailure = users => ({
+  type: c.USER_DELETE_FAILURE,
+  users
+});
+export const deleteUser = userId => (dispatch) => {
+  dispatch(userDeleteRequest());
+  return (
+    request
+      .delete(`/api/users/${userId}`)
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .then((response) => {
+        dispatch(usersDeleteSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(usersDeleteFailure(error.response));
+      })
+  );
+};
+
+export const updateUser = userData => (dispatch) => {
+  dispatch(userUpdateRequest(userData));
+  return (
+    request
+      .put(`/api/user/${userData.id}`)
+      .set('x-access-token', window.localStorage.getItem('token'))
+      .send(userData)
+      .then((response) => {
+        dispatch(userUpdateSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(userUpdateFailure(error.response));
+      })
+  );
+};
+
+export const userUpdateRequest = users => ({
+  type: c.USER_UPDATE_REQUEST,
+  users
+});
+
+export const userUpdateSuccess = user => ({
+  type: c.USER_UPDATE_SUCCESS,
+  user
+});
+
+export const userUpdateFailure = users => ({
+  type: c.USER_UPDATE_FAILURE,
+  users
+});
