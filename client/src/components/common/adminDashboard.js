@@ -12,6 +12,8 @@ const dashboard = () => (
           <RaisedButton label="Create new roles" />&nbsp;&nbsp; </Link>
         <Link to="/users" className="nav-link">
           <RaisedButton label="View all users" />&nbsp;&nbsp; </Link>
+          <Link to="/role-page" className="nav-link">
+          <RaisedButton label="View roles" />&nbsp;&nbsp; </Link>
       </center>
     </Card>
     <br /><br />

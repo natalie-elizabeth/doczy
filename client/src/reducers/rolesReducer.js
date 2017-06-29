@@ -20,7 +20,7 @@ export default function rolesReducer(state = ROLES_LIST, action) {
       });
     case c.ROLE_ADD_SUCCESS:
       return Object.assign({}, state, {
-        documents: [action.roles,
+        roles: [action.roles,
         ...state.roles],
         loading: false,
       });
@@ -32,10 +32,11 @@ export default function rolesReducer(state = ROLES_LIST, action) {
       });
     case c.ROLE_SUCCESS:
       return Object.assign({}, state, {
-        documents: action.documents,
+        roles: action.roles,
         error: null,
         loading: false,
       });
+
     case c.ROLE_FAILURE:
       return Object.assign({}, state, {
         error: action.error,
@@ -44,7 +45,7 @@ export default function rolesReducer(state = ROLES_LIST, action) {
     case c.ROLE_REQUEST:
       return Object.assign({}, state, {
         error: action.error,
-        loading: false,
+        loading: true,
       });
     case c.ROLE_DELETE_SUCCESS:
       return Object.assign({}, state, {

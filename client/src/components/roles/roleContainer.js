@@ -103,8 +103,8 @@ export class RoleViewContainer extends React.Component {
     return (
       <div className="container">
         <div>
+          {console.log(this.props.roleList.roles)}
           {this.props.roleList.roles.map(role =>
-
             (<RolesView
               key={role.id}
               role={role}
