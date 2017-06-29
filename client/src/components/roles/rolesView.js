@@ -16,13 +16,13 @@ const styles = {
   }
 };
 
-const DocumentView = props => (
+const RolesView = props => (
   <div>
     <GridList
       cellHeight="auto"
       cols={1}
     >
-      {getUserFromToken().userId === props.document.user_id ?
+      {getUserFromToken().userId === props.role.user_id ?
 
         <IconMenu
           style={{ float: 'right' }}
@@ -31,15 +31,15 @@ const DocumentView = props => (
           targetOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
           <MenuItem
-            primaryText="Edit Document"
+            primaryText="Edit Role"
             onTouchTap={props.onUpdate}
           />
           <MenuItem
-            primaryText="Delete Document"
+            primaryText="Delete Role"
             onTouchTap={() => {
-              props.deleteDocument(props.document.id)
+              props.deleteRole(props.role.id)
                 .then(() => {
-                  props.listDocuments();
+                  props.listRoles();
                 });
             }
             }
@@ -47,18 +47,18 @@ const DocumentView = props => (
         </IconMenu> : <span />
       }
       <GridTile>
-        <h2>{props.document.title}</h2>
-        {props.document.content}
-        <Chip backgroundColor="#123c69" labelColor="#ffffff"> {props.document.access} </Chip> <hr /> <br />
+        <h2 fontFamily="Roboto">{props.role.title}</h2>
+        {props.role.content}
+        <Chip backgroundColor="#123c69" labelColor="#ffffff"> {props.role.access} </Chip> <br />
       </GridTile>
     </GridList>
   </div>
 );
 
-Document.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  documents: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
-};
+// Role.propTypes = {
+//   dispatch: PropTypes.func.isRequired,
+//   roles: PropTypes.func.isRequired,
+//   onUpdate: PropTypes.func.isRequired,
+// };
 
-export default DocumentView;
+export default RolesView;

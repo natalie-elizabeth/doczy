@@ -7,8 +7,11 @@ import Home from './Home/home';
 import About from './About/about';
 import Login from './User/loginPage';
 import SignUp from './User/signUpPage';
-import DocumentContainer from './Documents/documentContainer';
+import DocumentViewContainer from './Documents/documentContainer';
+import RoleViewContainer from './roles/roleContainer';
 import RolePage from './roles/rolePage';
+import dashboard from './common/adminDashboard';
+import NotFoundComponent from './common/notFound';
 
 
 export default class App extends Component {
@@ -23,8 +26,12 @@ export default class App extends Component {
             <Route path='/about' component={About} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={SignUp} />
-            <Route path='/documents' component={DocumentContainer} />
-            {/*<Route path='/roles' component={RolePage} />*/}
+            <Route path='/documents' component={DocumentViewContainer} />
+            <Route path='/roles' component={RolePage} />
+            <Route path='/dashboard' component={dashboard} />
+            <Route component={NotFoundComponent} path="/not-found" />
+            <Route path='/role-page' component={RoleViewContainer} />
+
           </div>
         </div>
       </Router>

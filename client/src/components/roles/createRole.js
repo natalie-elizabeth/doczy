@@ -12,82 +12,84 @@ import validateInput from '../../utils/validateRole';
 
 
 class Roles extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      isLoading: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            isLoading: false,
+            errors: {}
+        };
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
     };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-  };
 
-  onChange(event) {
-    thi.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-  onSubmit(event) {
-    event.preventDefault();
-    if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
-      this.props.createRole((this.state))
-        .then(() => {
-          console.log('crushy');
-          this.context.router.history.push('/about');
-          console.log('are you here yet?');
-        })
-        .catch(err => {
-          this.setState({ errors: err, isLoading: false });
-
+    onChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
         });
     }
-  }
-  isValid() {
-    const { errors, isValid } = validateInput(this.state);
-    if (isValid) {
-      this.setState({ errors });
+    onSubmit(event) {
+        event.preventDefault();
+        if (this.isValid()) {
+            this.setState({ errors: {}, isLoading: true });
+            this.props.createRole((this.state))
+                .then(() => {
+                    console.log('crushy');
+                    this.context.router.history.push('/dashboard');
+                    console.log('are you here yet?');
+                })
+                .catch(err => {
+                    this.setState({ errors: err, isLoading: false });
+
+                });
+        }
     }
-    return isValid;
-  }
-  render() {
-    const { erros } = this.state;
-    return (
-      <div>
-        <MuiThemeProvider>
-          <center>
-            <Card className="container">
-              <form action="/" onSubmit={this.onSubmit} >
-                <h2 className="card-heading">Create new Roles</h2>
-                {errors.summary && <p className="error-message">{errors.summary}</p>}
+    isValid() {
+        const { errors, isValid } = validateInput(this.state);
+        if (isValid) {
+            this.setState({ errors });
+        }
+        return isValid;
+    }
+    render() {
+        const { errors } = this.state;
+        return (
+            <div>
+                <MuiThemeProvider>
+                    <center>
+                        <Card className="container">
+                            <form action="/" onSubmit={this.onSubmit} >
+                                <h2 className="card-heading">Create new Roles</h2>
+                                {errors.summary && <p className="error-message">{errors.summary}</p>}
 
-                <div className='row'>
-                  <div className="input-field col s6">
-                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
+                                <div className='row'>
+                                    <div className="input-field col s6">
+                                        <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
-                      floatingLabelText="Username"
-                      name="username"
-                      errorText={errors.username}
-                      onChange={this.onChange}
-                      value={this.state.username}
-                    />
-                  </div>
-                </div>
-                <br />
-                <div className="button-line">
-                  <RaisedButton type="submit" label="Create New Role" primary />
-                </div>
-              </form>
-            </Card>
-          </center>
-        </MuiThemeProvider>
+                                            floatingLabelText="Role Name"
+                                            name="name"
+                                            errorText={errors.name}
+                                            onChange={this.onChange}
+                                            value={this.state.name}
+                                        />
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="button-line">
+                                    <RaisedButton type="submit" label="Create New Role" primary />
+                                </div>
+                            </form>
+                            <br /><br /><br />
+                        </Card>
+                    </center>
+                </MuiThemeProvider>
 
-      </div >
-    );
-  }
+            </div >
+        );
+    }
 }
 Roles.contextTypes = {
-  router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 export default connect(null, { createRole })(Roles);
 

@@ -9,8 +9,8 @@ class LoggedInView extends React.Component {
 
   logout() {
     window.localStorage.removeItem('token');
-    this.context.router.history.push('/home');
-    // dispatch(logoutUser());
+    this.context.router.history.push('/');
+
   };
 
   render() {
@@ -28,6 +28,11 @@ class LoggedInView extends React.Component {
             <i className="ion-compose"></i>&nbsp;Documents
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to="dashboard" className="nav-link">
+            <i className="ion-compose"></i>&nbsp;Dashboard
+          </Link>
+        </li>
 
         <li className="nav-item">
           <Link to="settings" className="nav-link">
@@ -37,7 +42,7 @@ class LoggedInView extends React.Component {
 
 
         <li className="nav-item">
-          <Link to="logout" className="nav-link" onClick={this.logout}>
+          <Link to="/" className="nav-link" onClick={this.logout}>
             <button> <i className="ion-gear-a"></i>&nbsp;Logout </button>
           </Link>
         </li>

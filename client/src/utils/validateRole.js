@@ -11,3 +11,4 @@ const validateInput = (data) => {
     isValid: isEmpty(errors)
   };
 };
+export default validateInput;
