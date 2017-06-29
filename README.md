@@ -45,7 +45,7 @@ If you want to change the API URL to a local server, simply edit `app.js` and ch
     - CRUD roles
 - Profile page 
     - Show basic user info
-    - List of articles populated from author's created articles or author's favorited articles
+    - List of documents populated from author's created articles or author's favorited articles
 
 <br />
 
