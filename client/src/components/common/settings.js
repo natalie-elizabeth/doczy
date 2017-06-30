@@ -20,13 +20,12 @@ class Settings extends Component {
         email: '',
         password: '',
         errors: {}
-      }
-
+      },
     };
-    this.onSubmit = this.onSubmit.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
+
   }
   onUsernameChange(e) {
     const User = this.state.user;

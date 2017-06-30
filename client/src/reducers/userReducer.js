@@ -7,7 +7,7 @@ const USER_LIST = {
   searchFilter: '',
 };
 
-export default function reducer(state = USER_LIST, action) {
+export default function userReducer(state = USER_LIST, action) {
   switch (action.type) {
     case c.USERS_GET_SUCCESS:
       return Object.assign({}, state, {

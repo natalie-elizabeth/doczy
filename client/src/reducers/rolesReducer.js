@@ -48,8 +48,9 @@ export default function rolesReducer(state = ROLES_LIST, action) {
         loading: true,
       });
     case c.ROLE_DELETE_SUCCESS:
+      let newState = state.roles.filter(role => role.id !== action.roleId);
       return Object.assign({}, state, {
-        roles: state.roles.filter(id => id !== action.roleId),
+        roles: newState,
       });
     case c.ROLE_UPDATE_REQUEST:
       return Object.assign({}, state, {

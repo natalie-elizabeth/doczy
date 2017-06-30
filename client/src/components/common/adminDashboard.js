@@ -9,13 +9,13 @@ const dashboard = () => (
     <Card className="container">
       <center><CardTitle title="Doczy" subtitle="All your documents in one place" />
         <Link to="/roles" className="nav-link">
-          <RaisedButton label="Roles" />&nbsp;&nbsp; </Link>
+          <RaisedButton label="Roles" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </Link>
         <Link to="/users" className="nav-link">
           <RaisedButton label="Users" />&nbsp;&nbsp; </Link>
-
+        <br /><br />
       </center>
     </Card>
-    <br /><br />
+
 
   </div>
 );

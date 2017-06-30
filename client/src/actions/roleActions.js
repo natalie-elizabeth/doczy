@@ -73,7 +73,7 @@ export const deleteRole = roleId => (dispatch) => {
       .delete(`/api/roles/${roleId}`)
       .set('x-access-token', window.localStorage.getItem('token'))
       .then((response) => {
-        dispatch(roleDeleteSuccess(response.body));
+        dispatch(roleDeleteSuccess(roleId));
       })
       .catch((error) => {
         dispatch(roleDeleteFailure(error.response));
@@ -85,9 +85,9 @@ export const roleDeleteRequest = () => ({
   type: c.ROLE_DELETE_REQUEST
 });
 
-export const roleDeleteSuccess = roles => ({
+export const roleDeleteSuccess = roleId => ({
   type: c.ROLE_DELETE_SUCCESS,
-  roles
+  roleId
 });
 
 export const roleDeleteFailure = roles => ({

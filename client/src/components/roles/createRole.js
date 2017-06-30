@@ -42,7 +42,7 @@ class Roles extends Component {
       this.props.createRole((this.state))
         .then(() => {
           console.log('crushy');
-          this.context.router.history.push('/dashboard');
+          this.context.router.history.push('/roles');
           console.log('are you here yet?');
         })
         .catch(err => {
@@ -64,6 +64,7 @@ class Roles extends Component {
     let loading = this.props.loading;
     return (
       <div>
+
         <MuiThemeProvider>
           <center>
             <Card className="container" expanded initiallyExpanded>
@@ -95,7 +96,18 @@ class Roles extends Component {
             {
               loading ? <CircularProgress thickness={4} /> :
                 roles.map((role, index) => {
-                  return <li ksy={index}>{role.name}</li>;
+                  return <Card className="container">
+                    <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <RaisedButton onTouchTap={() => {
+                        { console.log('is this working?>>>>', role.id); }
+                        this.props.deleteRole(role.id)
+                          .then(() => {
+                            {/*this.props.listRoles();*/ }
+                            console.log('Role Deleted');
+                          });
+                      }
+                      }>Delete</RaisedButton> </p>  <br /></form>
+                  </Card>;
                 })
             }
 
