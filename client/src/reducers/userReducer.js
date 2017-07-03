@@ -29,6 +29,12 @@ export default function userReducer(state = USER_LIST, action) {
       return Object.assign({}, state, {
         users: state.users.filter(id => id !== action.userId),
       });
+
+    // case c.ROLE_DELETE_SUCCESS:
+    //   let newState = state.roles.filter(role => role.id !== action.roleId);
+    //   return Object.assign({}, state, {
+    //     roles: newState,
+    //   });
     case c.SET_USERS_SEARCH_FILTER:
       return Object.assign({}, state, {
         searchFilter: action.searchFilter,

@@ -88,12 +88,13 @@ export const documentsSearchFilter = searchFilter => ({
 });
 
 
-export const listDocuments = () => (dispatch) => {
+export const listDocuments = (limit, offset) => (dispatch) => {
   dispatch(documentsRequest());
   return (
     request
       .get('/api/documents')
       .set('x-access-token', window.localStorage.getItem('token'))
+      .send(limit, offset)
       .then((response) => {
         dispatch(documentsLoadSuccess(response.body));
       })

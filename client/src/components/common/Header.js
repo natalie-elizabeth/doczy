@@ -91,7 +91,7 @@ class Header extends React.Component {
             {this.props.appName}
           </Link>
           {
-            token ? <LoggedInView currentUser={this.props.currentUser} /> : <LoggedOutView currentUser={this.props.currentUser} />
+            token ? <LoggedInView currentUser={this.props.currentUser} {this.context.router.history.push('/') } /> : <LoggedOutView currentUser={this.props.currentUser} />
           }
         </div>
       </nav>

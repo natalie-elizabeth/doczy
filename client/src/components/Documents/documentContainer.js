@@ -13,6 +13,7 @@ import DocumentView from './documentView';
 import DocumentList from './documentList';
 import CreateDocument from './CreateForm';
 import DocumentEditForm from './editDocument';
+import Pagination from 'react-js-pagination';
 
 import * as tokenUtils from '../../utils/tokenUtils';
 
@@ -33,7 +34,9 @@ export class DocumentViewContainer extends React.Component {
       document: {
         title: '',
         content: '',
-        access: ''
+        access: '',
+        activePage: 1,
+        limit: 7,
       }
     };
     this.handleOpen = this.handleOpen.bind(this);
@@ -43,6 +46,7 @@ export class DocumentViewContainer extends React.Component {
     this.onContentChange = this.onContentChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePages = this.handlePages.bind(this);
   }
   componentWillMount() {
     this.props.documentActions.listDocuments();
@@ -65,6 +69,10 @@ export class DocumentViewContainer extends React.Component {
 
   handleOpen() {
     this.setState({ open: true, document: {} });
+  }
+  handlePages(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    this.props.documentActions.listDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
 
   handleClose() {
@@ -158,6 +166,13 @@ export class DocumentViewContainer extends React.Component {
               />
             )}
         </Dialog>
+        <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={3}
+          totalItemsCount={20}
+          pageRangeDisplayed={5}
+          onChange={this.handlePages}
+        />
       </div>
 
     );
