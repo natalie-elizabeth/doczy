@@ -12,7 +12,7 @@ export default (state = defaultState, action) => {
         ...state, {
           token: action.token || null,
           appLoaded: true,
-          currentUser: action.payload ? action.payload.user : null
+          currentUser: action.payload ? action.payload.username : null
         }
       ];
     case c.REDIRECT:

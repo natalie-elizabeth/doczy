@@ -48,28 +48,31 @@ describe('actions', () => {
     };
     expect(actions.loginUser(user)).toEqual(expectedAction);
   });
-  it('should create an action to log a user succesfully', () => {
-    const user = {
-      email: 'email',
-      password: 'password',
-    };
+  it('should login a user', () => {
+    const user = "Natalie Larhette";
     const expectedAction = {
-      type: c.LOGIN_SUCCESS,
-      user,
-      isFetching: false,
-      isAuthenticated: true,
+      type: c.LOGIN, user
     };
-    expect(actions.loginSuccessful(user)).toEqual(expectedAction);
+    expect(actions.loginUser(user)).toEqual(expectedAction);
   });
-  it('should craete an action on log in failure', () => {
-    const message = '';
-    const expectedAction = {
+  it('should create an action on failure to Login', () => {
+    const message = { text: 'login failed' };
+    const expected = {
       type: c.LOGIN_FAILURE,
-      message,
       isFetching: false,
       isAuthenticated: false,
+      message
     };
-    expect(actions.loginFailed(message)).toEqual(expectedAction);
   });
+  it('should create an action on login success', () => {
+    const message = { text: 'login success' };
+    const expected = {
+      type: c.LOGIN_SUCCESS,
+      isFetching: false,
+      isAuthenticated: true,
+      message
+    };
+  });
+
 });
 
