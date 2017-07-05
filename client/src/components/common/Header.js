@@ -93,6 +93,7 @@ class Header extends React.Component {
           {
             token ? <LoggedInView currentUser={this.props.currentUser} /> : <LoggedOutView currentUser={this.props.currentUser} />
           }
+
         </div>
       </nav>
     );

@@ -11,7 +11,12 @@ const mockStore = configureMockStore(middlewares);
 
 describe('actions', () => {
   it('should create a user', () => {
-    const user = "Natalie Larhette";
+    const user = {
+      firstname: "Natalie Larhette", lastname: "lastName",
+      username: "userName",
+      email: "email",
+      password: "password"
+    };
     const expectedAction = {
       type: c.CREATE_USER, user
     };
@@ -22,20 +27,6 @@ describe('actions', () => {
       type: c.LOGOUT,
     };
     expect(actions.logoutUser()).toEqual(expectedAction);
-  });
-  it('should create an action to signup a user', () => {
-    const user = {
-      username: 'username',
-      firstname: 'firstname',
-      lastname: "lastname",
-      email: "email",
-      password: "password"
-    };
-    const expectedAction = {
-      type: c.CREATE_USER,
-      user
-    };
-    expect(actions.createUser(user)).toEqual(expectedAction);
   });
   it('should create an action to Login a user', () => {
     const user = {
