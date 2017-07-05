@@ -70,22 +70,69 @@ describe('async actions', () => {
   afterEach(() => {
     nock.cleanAll();
   });
-  it('should create a new user on sign up', () => {
-    const response = {
-      firstname: "Katniss Everdeen", lastname: "lastname",
-      username: "username",
-      email: "email",
-      password: "password",
-      token: 'token'
-    };
-  });
-  nock(/^.*$/)
-    .post('/api/users')
-    .reply(201, response.body);
 
-  const expectedActions = [{
-    type: c.CREATE_USER,
-    user: response.body
-  }
-})
+  it.skip('should create a new user on user signup', () => {
+    const response = {
+      body: {
+        firstname: 'firstname',
+        lastname: 'lastname',
+        username: 'username',
+        email: 'email',
+        password: 'issastrongpassword'
+      }
+    };
+
+    nock(/^.*$/)
+      .post('/api/users')
+      .reply(201, response.body);
+
+    const expectedActions = [{
+      type: c.CREATE_USER,
+      user: response.body
+    }, {
+      type: c.SIGNUP_SUCCESS,
+      user: response.body,
+      isFetching: false,
+      isAuthenticated: false
+    }];
+
+    const store = mockStore({ user: [] });
+    console.log(store);
+
+    return store.dispatch(actions.signupRequest(response.body)).then(() => {
+      const actions = store.getActions();
+      console.log(actions);
+      expect(actions).toEqual(expectedActions);
+    });
+  });
+  it.skip('should login a user', () => {
+    const response = {
+      body: {
+        email: 'email',
+        password: 'issastrongpassword'
+      }
+    };
+
+    nock(/^.*$/)
+      .post('/api/users')
+      .reply(200, response.body);
+
+    const expectedActions = [{
+      type: c.CREATE_USER,
+      user: response.body
+    }, {
+      type: c.SIGNUP_SUCCESS,
+      user: response.body,
+      isFetching: false,
+      isAuthenticated: false
+    }];
+
+    const store = mockStore({ user: [] });
+
+    return store.dispatch(actions.loginUser(response.body)).then(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(expectedActions);
+    });
+  });
+});
 

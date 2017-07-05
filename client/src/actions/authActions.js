@@ -54,7 +54,6 @@ export const signupRequest = userData => (dispatch) => {
       .post('/api/users')
       .send(userData)
       .then((response) => {
-        window.localStorage.setItem('token', response.body.token);
         dispatch(signupSuccessful(response.body));
       })
       .catch((error) => {
@@ -65,7 +64,7 @@ export const signupRequest = userData => (dispatch) => {
 
 export const signupSuccessful = () => ({
   type: c.SIGNUP_SUCCESS,
-  isFetching: false,
+  isFetching: true,
   isAuthenticated: false
 });
 
