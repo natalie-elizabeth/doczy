@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 import * as actions from '../client/src/actions/docActions';
 import * as c from '../client/src/actions/actionTypes';
-import * as tokenUtils from '../client/src/utils/tokenUtils';
+
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
