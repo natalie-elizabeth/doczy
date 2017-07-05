@@ -12,8 +12,8 @@ const mockStore = configureMockStore(middlewares);
 describe('actions', () => {
   it('should create a user', () => {
     const user = {
-      firstname: "Natalie Larhette", lastname: "lastName",
-      username: "userName",
+      firstname: "Katniss Everdeen", lastname: "lastname",
+      username: "username",
       email: "email",
       password: "password"
     };
@@ -40,7 +40,7 @@ describe('actions', () => {
     expect(actions.loginUser(user)).toEqual(expectedAction);
   });
   it('should login a user', () => {
-    const user = "Natalie Larhette";
+    const user = "Katniss Everdeen";
     const expectedAction = {
       type: c.LOGIN, user
     };
@@ -64,6 +64,28 @@ describe('actions', () => {
       message
     };
   });
-
 });
+
+describe('async actions', () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
+  it('should create a new user on sign up', () => {
+    const response = {
+      firstname: "Katniss Everdeen", lastname: "lastname",
+      username: "username",
+      email: "email",
+      password: "password",
+      token: 'token'
+    };
+  });
+  nock(/^.*$/)
+    .post('/api/users')
+    .reply(201, response.body);
+
+  const expectedActions = [{
+    type: c.CREATE_USER,
+    user: response.body
+  }
+})
 

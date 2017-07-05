@@ -3,6 +3,8 @@ export const LOGIN = 'LOGIN';
 export const CREATE_USER = 'CREATE_USER';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 
 export const USERS_REQUEST = 'USERS_REQUEST';
 export const USERS_SUCCESS = 'USERS_SUCCESS';

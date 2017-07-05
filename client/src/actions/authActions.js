@@ -55,13 +55,25 @@ export const signupRequest = userData => (dispatch) => {
       .send(userData)
       .then((response) => {
         window.localStorage.setItem('token', response.body.token);
-        dispatch(loginSuccessful(response.body));
+        dispatch(signupSuccessful(response.body));
       })
       .catch((error) => {
-        dispatch(loginFailed(error.response));
+        dispatch(signupFailed(error.response));
       })
   );
 };
+
+export const signupSuccessful = () => ({
+  type: c.SIGNUP_SUCCESS,
+  isFetching: false,
+  isAuthenticated: false
+});
+
+export const signupFailed = message => ({
+  type: c.SIGNUP_FAILURE,
+  isFetching: false,
+  isAuthenticated: false,
+});
 
 // user actions
 export const usersRequest = () => ({
