@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
-const secretKey = process.env.SECRET_KEY;
+const secretKey = process.env.SECRET_KEY || 'some secret';
 
 const { User, Document } = require('../../models');
 

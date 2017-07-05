@@ -34,18 +34,19 @@ describe('/POST documents', () => {
       .post('/api/users/login')
       .send({
         userName: 'Gavilar',
-        password: 'IssaStRongPassword'
+        password: 'issastrongpassword'
       })
       .expect(200)
       .end((err, res) => {
         if (err) throw err;
-        assert(res.body.message, 'You were successfully logged in');
+        // assert(res.body.message, 'You were successfully logged in');
         assert.property(res.body, 'token');
         token = res.body.token;
         findOneStub.restore();
         done();
       });
   });
+
   it('should fail to add a document', (done) => {
     let createStub = sinon.stub(Document, 'create').rejects();
     request(app)
@@ -55,6 +56,48 @@ describe('/POST documents', () => {
       .end((err, res) => {
         if (err) throw err;
         createStub.restore();
+        done();
+      });
+  });
+  it('should fail to delete when document id not found', (done) => {
+    let findByIdStub = sinon.stub(Document, 'findById').resolves();
+    request(app)
+      .delete('/api/documents/1')
+      .set('x-access-token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+  it('should fail when update fails', (done) => {
+    let findByIdStub = sinon.stub(Document, 'findById').resolves({
+      update: () => new Promise((resolve, reject) => reject())
+    });
+
+    request(app)
+      .put('/api/documents/1')
+      .set('x-access-token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+
+  it('should update fields sucessfully', (done) => {
+    let findByIdStub = sinon.stub(Document, 'findById').resolves({
+      update: () => new Promise((resolve, reject) => resolve())
+    });
+    request(app)
+      .put('/api/documents/1')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
         done();
       });
   });

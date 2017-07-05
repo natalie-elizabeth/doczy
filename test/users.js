@@ -94,7 +94,7 @@ describe('/POST user', () => {
       .set('x-access-login', token)
       .accept('application/json')
       .end(function (err, res) {
-        expect(res.status).to.equal(400);
+        expect(res.status).to.equal(401);
         done();
       });
   }));
@@ -179,21 +179,21 @@ describe('Users', () => {
       expect(body).to.equal(true);
     });
     done();
-  })
+  });
   it('should Get all users', (done) => {
     api.get('/api/users', (error, response, body) => {
       expect(response.statusCode).toEqual(200);
       expect(response.statusMessage).toEqual('Cool');
     });
     done();
-  })
+  });
   it('should list a single user', (done) => {
     api.get('/api/users/:id', (error, response, body) => {
       expect(response.statusCode).toEqual(200);
       expect(response.statusMessage).toEqual('Cool');
     });
     done();
-  })
+  });
   it('should update a single user\'s information', (done) => {
     api.put('/api/users/:id', (error, response, body) => {
       expect(expect(response.statusCode).to.equal(200));
@@ -203,7 +203,7 @@ describe('Users', () => {
 
     });
     done();
-  })
+  });
   it('should delete a user', (done) => {
     api.delete('/api/user/:id', (error, response, body) => {
       expect(response.statusCode).toEqual(204);
