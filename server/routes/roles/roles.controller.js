@@ -6,7 +6,7 @@ class RoleController {
     const { name } = req.body;
 
     if (!name) {
-      return res.status(500).json({
+      return res.status(400).json({
         error: 'Missing required field',
         errors: ['Missing require field name']
       });

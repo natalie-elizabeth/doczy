@@ -101,6 +101,105 @@ describe('/POST documents', () => {
         done();
       });
   });
+  it('Should return all the documents', function (done) {
+    let findAllStub = sinon.stub(Document, 'findAll').resolves([{}, {}]);
+    request(app)
+      .get('/api/documents')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.deepEqual(res.body, [{}, {}]);
+        findAllStub.restore();
+        done();
+      });
+  });
+
+  it('Should  fail to return all the documents', function (done) {
+    let findAllStub = sinon.stub(Document, 'findAll').rejects([{}, {}]);
+    request(app)
+      .get('/api/documents')
+      .set('x-access-token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.deepEqual(res.body, [{}, {}]);
+        findAllStub.restore();
+        done();
+      });
+  });
+  it('should fail to retrieve one document', done => {
+    let findByIdStub = sinon.stub(Document, 'findById').resolves();
+    request(app)
+      .get('/api/documents/1')
+      .set('x-access-token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+
+
+  it('should delete a document successfully ', (done) => {
+    let findByIdStub = sinon.stub(Document, 'findById').resolves({
+      destroy: () => new Promise((resolve, reject) => {
+        resolve(true);
+      })
+    });
+    let destroyStub = sinon.stub(Document, 'destroy').resolves({});
+    request(app)
+      .delete('/api/documents/1')
+      .set('x-access-token', token)
+      .expect(204)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        destroyStub.restore();
+        done();
+      });
+  });
+  it('should retrieve one document by id', (done) => {
+    let findByIdStub = sinon.stub(Document, 'findById').resolves({ id: 1 });
+    request(app)
+      .get('/api/documents/1')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.deepEqual(res.body, { id: 1 });
+        findByIdStub.restore();
+        done();
+      });
+  });
+  it('should fail to delete when document id not found', (done) => {
+    let findByIdStub = sinon.stub(Document, 'findById').resolves();
+    request(app)
+      .delete('/api/documents/1')
+      .set('x-access-token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+
+  it('Should return all the documents with pagination', function (done) {
+    let findAllStub = sinon.stub(Document, 'findAll').resolves([{}, {}]);
+    request(app)
+      .get('/api/documents')
+      .query({ limit: 2, offset: 3 })
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.deepEqual(res.body, [{}, {}]);
+        findAllStub.restore();
+        done();
+      });
+  });
 });
 
 

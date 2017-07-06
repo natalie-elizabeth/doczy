@@ -4,8 +4,43 @@ const supertest = require('supertest');
 const should = require('chai').should;
 expect = require('chai').expect;
 chai.use(chaiHttp);
+const request = require('supertest');
+expect = require('chai').expect;
+const assert = chai.assert;
+chai.use(chaiHttp);
+const User = require('../server/models').User;
+const sinon = require('sinon');
+require('sinon-as-promised');
+const bcrypt = require('bcrypt-nodejs');
+const Role = require('../server/models').Role;
 
-api = supertest('http://localhost:3000');
+api = supertest('http://localhost:8080');
+const app = require('../app');
+
+let token = '';
+
+const testRole = {
+  name: 'Olga'
+};
+
+
+describe('actions', () => {
+  const endpoint = '/api/roles';
+
+  it('should fail to add a role', (done) => {
+    let createStub = sinon.stub(Role, 'create').rejects();
+    request(app)
+      .post(endpoint)
+      .set('x-access-token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        createStub.restore();
+        done();
+      });
+  });
+});
+
 
 describe('Roles', () => {
   it('should create user on /roles/POST', (done) => {
@@ -48,5 +83,7 @@ describe('Roles', () => {
 
     });
     done();
-  })
-})
+  });
+});
+
+
