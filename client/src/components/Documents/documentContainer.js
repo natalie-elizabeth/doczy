@@ -14,6 +14,7 @@ import DocumentList from './documentList';
 import CreateDocument from './CreateForm';
 import DocumentEditForm from './editDocument';
 import Pagination from 'react-js-pagination';
+import DocumentSearch from './documentSearch';
 
 import * as tokenUtils from '../../utils/tokenUtils';
 
@@ -124,6 +125,7 @@ export class DocumentViewContainer extends React.Component {
     return (
       <div className="container">
         <div>
+          <DocumentSearch />
           {console.log(this.props.documentList.documents)}
           {this.props.documentList.documents.map(document =>
 

@@ -69,6 +69,17 @@ class DocumentController {
   //     //   .then(documents => res.status(200).json(documents))
   //     //   .catch(error => res.status(404).json(error));
   //   }
+  static search(req, res) {
+    return Document
+      .findAll({
+        where: {
+          title: { $ilike: `%${req.query.q}%` }
+        }
+      })
+      .then(response => res.status(302).json(response))
+      .catch(error => res.status(400).json(error));
+  }
+
 
   static retrieve(req, res) {
     return Document

@@ -32,6 +32,7 @@ export default function reducer(state = DOC_LIST, action) {
       });
 
     case c.SET_DOCUMENTS_SEARCH_FILTER:
+      console.log('things like this>>>>', action.searchFilter);
       return Object.assign({}, state, {
         searchFilter: action.searchFilter,
       });

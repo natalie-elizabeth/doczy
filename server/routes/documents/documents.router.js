@@ -11,4 +11,7 @@ Router.route('/documents/:id')
   .put(Auth, Document.update)
   .delete(Auth, Document.delete);
 
+Router.route('/search/documents/')
+  .get(Auth, Document.search);
+
 module.exports = Router;

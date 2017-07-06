@@ -27,11 +27,22 @@ const testRole = {
 describe('actions', () => {
   const endpoint = '/api/roles';
 
-  it('should fail to add a role', (done) => {
-    let createStub = sinon.stub(Role, 'create').rejects();
+  it('should return all roles', (done => {
+    request(app)
+      .get('/api/roles')
+      .set('x-access-login', token)
+      .accept('application/json')
+      .end(function (err, res) {
+        expect(res.status).to.equal(401);
+        done();
+      });
+  }));
+  it('should fail when create fails', (done) => {
+    let createStub = sinon.stub(Role, 'create').rejects({});
+
     request(app)
       .post(endpoint)
-      .set('x-access-token', token)
+      .send(testRole)
       .expect(400)
       .end((err, res) => {
         if (err) throw err;

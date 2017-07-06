@@ -87,6 +87,14 @@ export const documentsSearchFilter = searchFilter => ({
   searchFilter
 });
 
+export const searchDocument = (title) => {
+  title = encodeURIComponent(title);
+  return (dispatch) => {
+    getEndpoint(`/api/search/documents?q=${title}`)
+      .set('x-access-token', tokenUtils.getAuthToken())
+      .end((err, res) => dispatch(documentsSearchFilter(res.body)));
+  };
+};
 
 export const listDocuments = (limit, offset) => (dispatch) => {
   dispatch(documentsRequest());
