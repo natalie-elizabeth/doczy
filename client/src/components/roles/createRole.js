@@ -11,7 +11,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as roleActions from '../../actions/roleActions';
 import validateInput from '../../utils/validateRole';
-
+import RoleEditForm from '../../components/roles/editRole';
 
 
 class Roles extends Component {
@@ -24,10 +24,18 @@ class Roles extends Component {
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    console.log('this.state.role.name');
+    console.log('@ here >>>>>>>>>>>', this.state);
   };
 
   componentDidMount() {
     this.props.listRoles();
+
+  }
+  onNameChange(event) {
+    const Name = this.state.name;
+    Name.name = event.target.value;
+    this.setState({ name: Name });
   }
 
   onChange(event) {
@@ -35,6 +43,22 @@ class Roles extends Component {
       [event.target.name]: event.target.value
     });
   }
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      name: Object.assign({}, this.state.name, {
+        [name]: value
+      })
+    });
+  }
+  updateRole(role) {
+    return e => {
+      this.setState({
+        name
+      });
+    };
+  }
+
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -99,7 +123,7 @@ class Roles extends Component {
                   return <Card className="container">
                     <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <RaisedButton onTouchTap={() => {
-                        {/*{ console.log('is this working?>>>>', role.id); }*/}
+                        {/*{ console.log('is this working?>>>>', role.id); }*/ }
                         if (confirm("Are you sure you want to delete this role?") === true) {
                           this.props.deleteRole(role.id)
                             .then(() => {
@@ -113,7 +137,16 @@ class Roles extends Component {
                         }
                       }
 
-                      }>Delete</RaisedButton> </p>  <br /></form>
+                      }>Delete</RaisedButton> </p>  <br />
+                      <RaisedButton onTouchTap={() => {
+                        console.log(">>>>>>>>>>>>> tell me you got here", role.id);
+                        this.props.updateRole(role.id)
+                          .then(() => {
+                            this.props.listRoles();
+                            console.log('you better work');
+                          });
+                      }}>Update</RaisedButton>
+                    </form>
                   </Card>;
                 })
             }

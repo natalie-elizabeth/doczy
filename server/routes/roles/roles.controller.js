@@ -3,16 +3,16 @@ const { User, Role } = require('../../models');
 class RoleController {
 
   static create(req, res) {
-    const { name } = req.body;
+    const { role_name } = req.body;
 
-    if (!name) {
+    if (!role_name) {
       return res.status(400).json({
         error: 'Missing required field',
         errors: ['Missing require field name']
       });
     }
 
-    return Role.create({ name })
+    return Role.create({ role_name })
       .then(role => res.status(201).json(role))
       .catch(error => {
         console.log(error);
