@@ -18,7 +18,7 @@ class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      role_name: '',
       isLoading: false,
       errors: {}
     };
@@ -101,10 +101,10 @@ class Roles extends Component {
                     <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="Role Name"
-                      name="name"
-                      errorText={errors.name}
+                      role_name="role name"
+                      errorText={errors.role_name}
                       onChange={this.onChange}
-                      value={this.state.name}
+                      value={this.state.role_name}
                     />
                   </div>
                 </div>
@@ -121,7 +121,7 @@ class Roles extends Component {
               loading ? <CircularProgress thickness={4} /> :
                 roles.map((role, index) => {
                   return <Card className="container">
-                    <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.role_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <RaisedButton onTouchTap={() => {
                         {/*{ console.log('is this working?>>>>', role.id); }*/ }
                         if (confirm("Are you sure you want to delete this role?") === true) {
