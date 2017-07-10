@@ -15,122 +15,129 @@ import validateInput from '../../utils/validateRole';
 
 
 class Roles extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            isLoading: false,
-            errors: {}
-        };
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      isLoading: false,
+      errors: {}
     };
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  };
 
-    componentDidMount() {
-        this.props.listRoles();
-    }
+  componentDidMount() {
+    this.props.listRoles();
+  }
 
-    onChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
+  onChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+  onSubmit(event) {
+    event.preventDefault();
+    if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.createRole((this.state))
+        .then(() => {
+          console.log('crushy');
+          this.context.router.history.push('/roles');
+          console.log('are you here yet?');
+        })
+        .catch(err => {
+          this.setState({ errors: err, isLoading: false });
+
         });
     }
-    onSubmit(event) {
-        event.preventDefault();
-        if (this.isValid()) {
-            this.setState({ errors: {}, isLoading: true });
-            this.props.createRole((this.state))
-                .then(() => {
-                    console.log('crushy');
-                    this.context.router.history.push('/roles');
-                    console.log('are you here yet?');
-                })
-                .catch(err => {
-                    this.setState({ errors: err, isLoading: false });
-
-                });
-        }
+  }
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+    if (isValid) {
+      this.setState({ errors });
     }
-    isValid() {
-        const { errors, isValid } = validateInput(this.state);
-        if (isValid) {
-            this.setState({ errors });
-        }
-        return isValid;
-    }
-    render() {
-        const { errors } = this.state;
-        let roles = this.props.roles;
-        let loading = this.props.loading;
-        return (
-            <div>
+    return isValid;
+  }
+  render() {
+    const { errors } = this.state;
+    let roles = this.props.roles;
+    let loading = this.props.loading;
+    return (
+      <div>
 
-                <MuiThemeProvider>
-                    <center>
-                        <Card className="container" expanded initiallyExpanded>
-                            <form action="/" onSubmit={this.onSubmit} >
-                                <h2 className="card-heading">Create new Roles</h2>
-                                {errors.summary && <p className="error-message">{errors.summary}</p>}
+        <MuiThemeProvider>
+          <center>
+            <Card className="container" expanded initiallyExpanded>
+              <form action="/" onSubmit={this.onSubmit} >
+                <h2 className="card-heading">Create new Roles</h2>
+                {errors.summary && <p className="error-message">{errors.summary}</p>}
 
-                                <div className='row'>
-                                    <div className="input-field col s6">
-                                        <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
+                <div className='row'>
+                  <div className="input-field col s6">
+                    <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
-                                            floatingLabelText="Role Name"
-                                            name="name"
-                                            errorText={errors.name}
-                                            onChange={this.onChange}
-                                            value={this.state.name}
-                                        />
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="button-line">
-                                    <RaisedButton type="submit" label="Create New Role" primary />
-                                </div>
-                            </form>
-                            <br /><br /><br />
-                        </Card>
-                        <br /><br /><hr />
+                      floatingLabelText="Role Name"
+                      name="name"
+                      errorText={errors.name}
+                      onChange={this.onChange}
+                      value={this.state.name}
+                    />
+                  </div>
+                </div>
+                <br />
+                <div className="button-line">
+                  <RaisedButton type="submit" label="Create New Role" primary />
+                </div>
+              </form>
+              <br /><br /><br />
+            </Card>
+            <br /><br /><hr />
 
-                        {
-                            loading ? <CircularProgress thickness={4} /> :
-                                roles.map((role, index) => {
-                                    return <Card className="container">
-                                        <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {
+              loading ? <CircularProgress thickness={4} /> :
+                roles.map((role, index) => {
+                  return <Card className="container">
+                    <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <RaisedButton onTouchTap={() => {
-                                                { console.log('is this working?>>>>', role.id); }
-                                                this.props.deleteRole(role.id)
-                                                    .then(() => {
-                                                        {/*this.props.listRoles();*/ }
-                                                        console.log('Role Deleted');
-                                                    });
-                                            }
-                                            }>Delete</RaisedButton> </p>  <br /></form>
-                                    </Card>;
-                                })
+                        {/*{ console.log('is this working?>>>>', role.id); }*/}
+                        if (confirm("Are you sure you want to delete this role?") === true) {
+                          this.props.deleteRole(role.id)
+                            .then(() => {
+                              this.props.listRoles();
+                              console.log('Role Deleted');
+                            });
+                          alert("Role deleted");
                         }
+                        else {
+                          alert("Role not deleted");
+                        }
+                      }
 
-                    </center>
-                </MuiThemeProvider>
+                      }>Delete</RaisedButton> </p>  <br /></form>
+                  </Card>;
+                })
+            }
 
-            </div >
-        );
-    }
+          </center>
+        </MuiThemeProvider>
+
+      </div >
+    );
+  }
 }
 Roles.contextTypes = {
-    router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
-    return {
-        roles: state.rolesReducer.roles,
-        loading: state.rolesReducer.loading
-    };
+  return {
+    roles: state.rolesReducer.roles,
+    loading: state.rolesReducer.loading
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(roleActions, dispatch);
+  return bindActionCreators(roleActions, dispatch);
 }
 
 
