@@ -94,7 +94,7 @@ export const listUsers = () => (dispatch) => {
   return (
     request
       .get('/api/users')
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', ft)
       .then((response) => {
         dispatch(usersSuccess(response.body));
       })
