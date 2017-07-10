@@ -33,9 +33,9 @@ class Roles extends Component {
 
   }
   onNameChange(event) {
-    const Name = this.state.name;
-    Name.name = event.target.value;
-    this.setState({ name: Name });
+    const Name = this.state.role_name;
+    Name.role_name = event.target.value;
+    this.setState({ role_name: Name });
   }
 
   onChange(event) {
@@ -46,7 +46,7 @@ class Roles extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({
-      name: Object.assign({}, this.state.name, {
+      role_name: Object.assign({}, this.state.role_name, {
         [name]: value
       })
     });
@@ -54,7 +54,7 @@ class Roles extends Component {
   updateRole(role) {
     return e => {
       this.setState({
-        name
+        role_name
       });
     };
   }

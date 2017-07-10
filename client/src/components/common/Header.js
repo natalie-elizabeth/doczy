@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as roleActions from '../../actions/roleActions';
+import * as tokenUtils from '../../utils/tokenUtils';
+
 
 class LoggedInView extends React.Component {
   constructor(props) {
@@ -14,8 +18,25 @@ class LoggedInView extends React.Component {
   };
 
   render() {
+    let dashboard;
+    const roleId = this.props.roleId;
+
+
+    if (roleId === 1) {
+      dashboard = (
+        <li className="nav-item">
+          <Link to="dashboard" className="nav-link">
+            <i className="ion-compose"></i>&nbsp;Dashboard
+          </Link>
+        </li>
+      );
+    }
+    else {
+      dashboard = '';
+    };
+
     return (
-      <ul className="nav navbar-nav pull-xs-right">
+      < ul className="nav navbar-nav pull-xs-right" >
 
         <li className="nav-item">
           <Link to="/" className="nav-link">
@@ -28,11 +49,8 @@ class LoggedInView extends React.Component {
             <i className="ion-compose"></i>&nbsp;Documents
           </Link>
         </li>
-        <li className="nav-item">
-          <Link to="dashboard" className="nav-link">
-            <i className="ion-compose"></i>&nbsp;Dashboard
-          </Link>
-        </li>
+
+        {dashboard}
 
         <li className="nav-item">
           <Link to="settings" className="nav-link">
@@ -47,10 +65,10 @@ class LoggedInView extends React.Component {
           </Link>
         </li>
 
-      </ul>
+      </ul >
     );
   }
-};
+}
 
 const LoggedOutView = props => {
   return (
@@ -91,7 +109,7 @@ class Header extends React.Component {
             {this.props.appName}
           </Link>
           {
-            token ? <LoggedInView currentUser={this.props.currentUser} /> : <LoggedOutView currentUser={this.props.currentUser} />
+            token ? <LoggedInView currentUser={this.props.currentUser} roleId={token.roleId} /> : <LoggedOutView currentUser={this.props.currentUser} />
           }
 
         </div>
@@ -99,6 +117,11 @@ class Header extends React.Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    roles: state.rolesReducer.roles,
+    loading: state.rolesReducer.loading
+  };
+}
 
-
-export default Header;
+export default connect(mapStateToProps)(Header);

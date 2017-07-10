@@ -124,9 +124,9 @@ export class DocumentViewContainer extends React.Component {
     ];
     return (
       <div className="container">
-        <DocumentSearch />
-        <div>
 
+        <div>
+          <DocumentSearch />
           {console.log(this.props.documentList.documents)}
           {this.props.documentList.documents.map(document =>
 
