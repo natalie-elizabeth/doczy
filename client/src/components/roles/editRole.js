@@ -10,9 +10,9 @@ export default function RoleEditForm(props) {
     <form>
       <TextField
         type="text"
-        name="name"
-        placeholder="Name"
-        defaultValue={props.role.name}
+        name="role_name"
+        placeholder="role name"
+        defaultValue={props.role.role_name}
         onChange={props.onChange}
         fullWidth
       />
@@ -23,7 +23,7 @@ export default function RoleEditForm(props) {
 RoleEditForm.propTypes = {
   role: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
+    role_name: PropTypes.string.isRequired
   }),
   onChange: PropTypes.func.isRequired
 };

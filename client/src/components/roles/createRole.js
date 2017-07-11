@@ -7,6 +7,10 @@ import { Card, CardText } from 'material-ui/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as roleActions from '../../actions/roleActions';
@@ -14,10 +18,17 @@ import validateInput from '../../utils/validateRole';
 import RoleEditForm from '../../components/roles/editRole';
 
 
+const style = {
+
+  marginTop: 30,
+  paddingTop: 40
+};
+
 class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       role_name: '',
       isLoading: false,
       errors: {}
@@ -30,7 +41,6 @@ class Roles extends Component {
 
   componentDidMount() {
     this.props.listRoles();
-
   }
 
   onChange(event) {
@@ -61,10 +71,62 @@ class Roles extends Component {
     }
     return isValid;
   }
+
+  // update
+  onRoleNameChange(event) {
+    const Role = this.state.role_name;
+    console.log('>>>>>', Role);
+    Role.role_name = e.target.value;
+    this.setState({ role_name: Role });
+  }
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      role_name: Object.assign({}, this.state.role_name, {
+        [name]: value
+      })
+    });
+  }
+
+  updateRole(role_name) {
+    return e => {
+      this.setState({
+        role_name
+      });
+    };
+  }
+  handleOpen() {
+    this.setState({ open: true, role_name: '' });
+  }
+  handleClose() {
+    this.setState({ open: false, edit: false });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.state.edit
+      ? this.props.updateRole(this.state.role_name)
+      : this.props.createRole(this.state.role_name);
+  }
+
   render() {
     const { errors } = this.state;
     let roles = this.props.roles;
+    console.log(roles);
     let loading = this.props.loading;
+    const viewActions = [
+      <FlatButton
+        label="Cancel"
+        primary
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary
+        keyboardFocused
+        onTouchTap={this.handleSubmit}
+      />,
+    ];
     return (
       <div>
 
@@ -116,15 +178,33 @@ class Roles extends Component {
                         }
                       }
 
-                      }>Delete</RaisedButton> </p>  <br />
+                      } style={{ style }}>Delete</RaisedButton>
                       <RaisedButton onTouchTap={() => {
+                        console.log('things change');
                         console.log(">>>>>>>>>>>>> tell me you got here", role.id);
+                        console.log('>>>>>>>>>>>>>>>>>>>>', this.props.updateRole());
+                        < RoleEditForm />;
+                        {/*<Dialog
+                            role_name="Create a new Role"
+                            actions={viewActions}
+                            modal={false}
+                            open={this.state.open}
+                            onRequestClose={this.handleClose}
+                          >
+                            {this.state.edit ? (
+                              <RoleEditForm
+                                role_name={this.state.role_name}
+                                onChange={this.handleChange}
+                              />
+                            ) : ''}
+                          </Dialog>;*/}
                         this.props.updateRole(role.id)
                           .then(() => {
                             this.props.listRoles();
                             console.log('you better work');
                           });
-                      }}>Update</RaisedButton>
+
+                      }}>Update</RaisedButton> </p>  <br />
                     </form>
                   </Card>;
                 })

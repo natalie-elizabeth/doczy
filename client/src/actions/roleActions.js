@@ -95,13 +95,13 @@ export const roleDeleteFailure = roles => ({
   roles
 });
 
-export const updateRole = roleData => (dispatch) => {
-  dispatch(rolesUpdateRequest(roleData));
+export const updateRole = roleId => (dispatch) => {
+  dispatch(rolesUpdateRequest(roleId));
   return (
     request
-      .put(`/api/roles/${roleData.id}`)
+      .put(`/api/roles/${roleId}`)
       .set('x-access-token', window.localStorage.getItem('token'))
-      .send(roleData)
+      .send(roleId)
       .then((response) => {
         dispatch(rolesUpdateSuccess(response.body));
       })

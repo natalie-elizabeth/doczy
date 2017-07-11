@@ -26,7 +26,7 @@ class UserList extends Component {
     }
     componentDidMount() {
         this.props.listUsers();
-        // console.log('Nnana>>>>>> ', this.props);
+        console.log('Nnana>>>>>> ', this.props);
     }
 
     render() {
