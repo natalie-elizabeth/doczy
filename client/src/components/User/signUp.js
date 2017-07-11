@@ -23,7 +23,7 @@ class SignUp extends Component {
       lastname: '',
       email: '',
       password: '',
-      role_id: 1,
+      role_id: 2,
       errors: {},
       isLoading: false
     };

@@ -101,9 +101,8 @@ const LoggedOutView = props => {
 class Header extends React.Component {
   render() {
     let token = tokenUtils.getAuthToken();
-    let decode = jwtDecode(token);
-    console.log(decode.roleId);
     console.log('Token>>>>>>>>>>>>>', token);
+
 
     return (
       <nav className="navbar navbar-inverse">
@@ -113,7 +112,7 @@ class Header extends React.Component {
             {this.props.appName}
           </Link>
           {
-            token ? <LoggedInView currentUser={this.props.currentUser} roleId={decode.roleId} /> : <LoggedOutView currentUser={this.props.currentUser} />
+            token ? <LoggedInView currentUser={this.props.currentUser} roleId={jwtDecode(token).roleId} /> : <LoggedOutView currentUser={this.props.currentUser} />
           }
 
         </div>

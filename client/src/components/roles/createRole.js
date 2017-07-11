@@ -32,33 +32,12 @@ class Roles extends Component {
     this.props.listRoles();
 
   }
-  onNameChange(event) {
-    const Name = this.state.role_name;
-    Name.role_name = event.target.value;
-    this.setState({ role_name: Name });
-  }
 
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      role_name: Object.assign({}, this.state.role_name, {
-        [name]: value
-      })
-    });
-  }
-  updateRole(role) {
-    return e => {
-      this.setState({
-        role_name
-      });
-    };
-  }
-
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -101,7 +80,7 @@ class Roles extends Component {
                     <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="Role Name"
-                      role_name="role name"
+                      name="role_name"
                       errorText={errors.role_name}
                       onChange={this.onChange}
                       value={this.state.role_name}

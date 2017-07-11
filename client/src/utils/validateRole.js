@@ -3,8 +3,8 @@ import isEmpty from 'lodash/isEmpty';
 
 const validateInput = (data) => {
   const errors = {};
-  if (Validator.isEmpty(data.name)) {
-    errors.name = 'Enter name';
+  if (Validator.isEmpty(data.role_name)) {
+    errors.role_name = 'Enter role name';
   }
   return {
     errors,
