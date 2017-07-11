@@ -31,10 +31,15 @@ class Roles extends Component {
       open: false,
       role_name: '',
       isLoading: false,
-      errors: {}
+      errors: {},
+      edittingRoleId: false,
+      newRoleValue: ''
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.editRole = this.editRole.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
     console.log('this.state.role.name');
     console.log('@ here >>>>>>>>>>>', this.state);
   };
@@ -109,24 +114,35 @@ class Roles extends Component {
       : this.props.createRole(this.state.role_name);
   }
 
+  editRole(index, event) {
+    this.setState({ edittingRoleId: index });
+    console.log('Index>>>', index);
+  }
+
+  handleChange() {
+    let newValue = this.refs.roleName.value;
+    console.log('New Value>>>>>', newValue);
+    this.setState({ newRoleValue: newValue });
+  }
+
   render() {
     const { errors } = this.state;
     let roles = this.props.roles;
-    console.log(roles);
+    // console.log(roles);
     let loading = this.props.loading;
-    const viewActions = [
-      <FlatButton
-        label="Cancel"
-        primary
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary
-        keyboardFocused
-        onTouchTap={this.handleSubmit}
-      />,
-    ];
+    // const viewActions = [
+    //   <FlatButton
+    //     label="Cancel"
+    //     primary
+    //     onTouchTap={this.handleClose}
+    //   />,
+    //   <FlatButton
+    //     label="Submit"
+    //     primary
+    //     keyboardFocused
+    //     onTouchTap={this.handleSubmit}
+    //   />,
+    // ];
     return (
       <div>
 
@@ -161,50 +177,41 @@ class Roles extends Component {
             {
               loading ? <CircularProgress thickness={4} /> :
                 roles.map((role, index) => {
+                  let roleName = role.role_name;
                   return <Card className="container">
-                    <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.role_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <RaisedButton onTouchTap={() => {
-                        {/*{ console.log('is this working?>>>>', role.id); }*/ }
-                        if (confirm("Are you sure you want to delete this role?") === true) {
-                          this.props.deleteRole(role.id)
+                    <form key={index} >
+                      <p>{role.id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        {this.state.edittingRoleId === index && role.role_name !== 'admin' ? <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> : <span onClick={(event) => this.editRole(index, event)}>{role.role_name}</span>}
+
+                        <RaisedButton onTouchTap={() => {
+                          {/*{ console.log('is this working?>>>>', role.id); }*/ }
+                          if (confirm("Are you sure you want to delete this role?") === true) {
+                            this.props.deleteRole(role.id)
+                              .then(() => {
+                                this.props.listRoles();
+                                console.log('Role Deleted');
+                              });
+                            alert("Role deleted");
+                          }
+                          else {
+                            alert("Role not deleted");
+                          }
+                        }
+
+                        } style={{ style }}>Delete</RaisedButton>
+                        <RaisedButton onTouchTap={() => {
+                          console.log('things change');
+                          console.log(">>>>>>>>>>>>> tell me you got here", role.id);
+                          console.log('>>>>>>>>>>>>>>>>>>>>', this.props.updateRole());
+                          this.state.edittingRoleId = index;
+                          this.props.updateRole(role.id)
                             .then(() => {
                               this.props.listRoles();
-                              console.log('Role Deleted');
+                              console.log('you better work');
                             });
-                          alert("Role deleted");
-                        }
-                        else {
-                          alert("Role not deleted");
-                        }
-                      }
 
-                      } style={{ style }}>Delete</RaisedButton>
-                      <RaisedButton onTouchTap={() => {
-                        console.log('things change');
-                        console.log(">>>>>>>>>>>>> tell me you got here", role.id);
-                        console.log('>>>>>>>>>>>>>>>>>>>>', this.props.updateRole());
-                        < RoleEditForm />;
-                        {/*<Dialog
-                            role_name="Create a new Role"
-                            actions={viewActions}
-                            modal={false}
-                            open={this.state.open}
-                            onRequestClose={this.handleClose}
-                          >
-                            {this.state.edit ? (
-                              <RoleEditForm
-                                role_name={this.state.role_name}
-                                onChange={this.handleChange}
-                              />
-                            ) : ''}
-                          </Dialog>;*/}
-                        this.props.updateRole(role.id)
-                          .then(() => {
-                            this.props.listRoles();
-                            console.log('you better work');
-                          });
-
-                      }}>Update</RaisedButton> </p>  <br />
+                        }}>Update</RaisedButton> </p>  <br />
                     </form>
                   </Card>;
                 })
@@ -222,6 +229,8 @@ Roles.contextTypes = {
 };
 
 function mapStateToProps(state) {
+
+  console.log(`ROLES WAS SET TO ${state.rolesReducer.roles}`);
   return {
     roles: state.rolesReducer.roles,
     loading: state.rolesReducer.loading

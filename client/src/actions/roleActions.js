@@ -96,6 +96,7 @@ export const roleDeleteFailure = roles => ({
 });
 
 export const updateRole = roleId => (dispatch) => {
+  console.log('Role ID>>>', roleId);
   dispatch(rolesUpdateRequest(roleId));
   return (
     request
@@ -106,6 +107,7 @@ export const updateRole = roleId => (dispatch) => {
         dispatch(rolesUpdateSuccess(response.body));
       })
       .catch((error) => {
+        console.log('error occurred');
         dispatch(rolesUpdateFailure(error.response));
       })
   );

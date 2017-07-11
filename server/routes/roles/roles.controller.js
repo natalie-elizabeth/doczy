@@ -82,7 +82,7 @@ class RoleController {
         }
         return role
           .update({
-            name: req.body.name || document.name
+            role_name: req.body.role_name || role.role_name
           })
           .then(() => res.status(200).send(role))
           .catch((error) => res.status(400).send(error));

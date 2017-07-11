@@ -171,8 +171,8 @@ export class DocumentViewContainer extends React.Component {
         </Dialog>
         <Pagination
           activePage={this.state.activePage}
-          itemsCountPerPage={3}
-          totalItemsCount={20}
+          itemsCountPerPage={7}
+          totalItemsCount={30}
           pageRangeDisplayed={5}
           onChange={this.handlePages}
         />
