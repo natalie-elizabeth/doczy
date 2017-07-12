@@ -100,12 +100,6 @@ class Roles extends Component {
       });
     };
   }
-  handleOpen() {
-    this.setState({ open: true, role_name: '' });
-  }
-  handleClose() {
-    this.setState({ open: false, edit: false });
-  }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -128,21 +122,8 @@ class Roles extends Component {
   render() {
     const { errors } = this.state;
     let roles = this.props.roles;
-    // console.log(roles);
     let loading = this.props.loading;
-    // const viewActions = [
-    //   <FlatButton
-    //     label="Cancel"
-    //     primary
-    //     onTouchTap={this.handleClose}
-    //   />,
-    //   <FlatButton
-    //     label="Submit"
-    //     primary
-    //     keyboardFocused
-    //     onTouchTap={this.handleSubmit}
-    //   />,
-    // ];
+
     return (
       <div>
 
@@ -205,6 +186,7 @@ class Roles extends Component {
                           console.log(">>>>>>>>>>>>> tell me you got here", role.id);
                           console.log('>>>>>>>>>>>>>>>>>>>>', this.props.updateRole());
                           this.state.edittingRoleId = index;
+                          console.log(this.state.edittingRoleId);
                           this.props.updateRole(role.id)
                             .then(() => {
                               this.props.listRoles();
