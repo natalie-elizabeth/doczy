@@ -72,9 +72,12 @@ class RoleController {
       .catch(error => res.status(400).send(error));
   }
   static update(req, res) {
+    console.log('Role ID>>>>>', req.params);
+    console.log('Role Name>>>>>', req.body.role_name);
     return Role
       .findById(req.params.id)
       .then(role => {
+        console.log('Role>>>>', role);
         if (!role) {
           return res.status(404).send({
             message: 'Role Not Found',
@@ -84,7 +87,10 @@ class RoleController {
           .update({
             role_name: req.body.role_name || role.role_name
           })
-          .then(() => res.status(200).send(role))
+          .then((data) => {
+            console.log('Updated>>>', data);
+            return res.status(200).send(role);
+          })
           .catch((error) => res.status(400).send(error));
       });
   }

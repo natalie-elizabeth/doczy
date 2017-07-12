@@ -60,10 +60,14 @@ export default function rolesReducer(state = ROLES_LIST, action) {
         loading: true,
       });
     case c.ROLE_UPDATE_SUCCESS:
-      let newestState = state.roles.filter(role => role.id === action.roleId ? action.roleId : role);
-      console.log('newstate:>>>>>>>>>>>>>>>>>>>>>>>>', newestState);
       return Object.assign({}, state, {
-        roles: state.roles.map(role => role.id === action.roleId ? action.roleId : role),
+        roles: state.roles.map(role => {
+          if (role.id === action.roleId) {
+            role.role_name = action.role_name;
+          }
+          console.log('Updated>>>>', role);
+          return role;
+        }),
         error: null,
         loading: true,
       });

@@ -109,12 +109,10 @@ class Roles extends Component {
 
   editRole(index, event) {
     this.setState({ edittingRoleId: index });
-    console.log('Index>>>', index);
   }
 
   handleChange() {
-    let newValue = this.state.role_name;
-    console.log('New Value>>>>>', newValue);
+    let newValue = this.refs.roleName.value;
     this.setState({ newRoleValue: newValue });
   }
 
@@ -164,7 +162,7 @@ class Roles extends Component {
 
                         {this.state.edittingRoleId === index && role.role_name !== 'admin' ?
                           <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> :
-                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer' }}>{role.role_name}</span>}
+                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingLeft: '5em' }}>{role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <RaisedButton onTouchTap={() => {
                           {/*{ console.log('is this working?>>>>', role.id); }*/ }
@@ -186,8 +184,9 @@ class Roles extends Component {
                           console.log('things change');
                           console.log(">>>>>>>>>>>>> tell me you got here", role.id);
                           this.state.edittingRoleId = index;
-                          this.props.updateRole(role.id)
+                          this.props.updateRole({ role_name: this.state.newRoleValue, id: role.id })
                             .then(() => {
+                              this.setState({ edittingRoleId: false });
                               this.props.listRoles();
                               console.log('you better work');
                             });
