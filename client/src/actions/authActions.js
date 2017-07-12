@@ -94,7 +94,7 @@ export const listUsers = () => (dispatch) => {
   return (
     request
       .get('/api/users')
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
         dispatch(usersSuccess(response.body));
       })
@@ -123,7 +123,7 @@ export const deleteUser = userId => (dispatch) => {
   return (
     request
       .delete(`/api/users/${userId}`)
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
         dispatch(usersDeleteSuccess(response.body));
       })
@@ -138,7 +138,7 @@ export const updateUser = userData => (dispatch) => {
   return (
     request
       .put(`/api/users/${userData.id}`)
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .send(userData)
       .then((response) => {
         dispatch(userUpdateSuccess(response.body));
