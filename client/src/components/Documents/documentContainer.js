@@ -114,6 +114,7 @@ export class DocumentViewContainer extends React.Component {
         label="Cancel"
         primary
         onTouchTap={this.handleClose}
+        className="waves-effect waves-light btn"
       />,
       <FlatButton
         label="Submit"

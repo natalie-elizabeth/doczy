@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import nock from 'nock';
 import * as actions from '../../client/src/actions/authActions';
 import * as c from '../../client/src/actions/actionTypes';
+// import * as tokenUtils from '../'
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -89,6 +90,43 @@ describe('actions', () => {
     const store = mockStore({});
 
     return store.dispatch(actions.listUsers()).then(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(expectedActions);
+    });
+  });
+  it('should update a user', () => {
+    const editFields = {
+      id: '1',
+      firstname: 'firstame',
+      lastname: 'lastname',
+      username: 'username',
+      email: 'email',
+      password: 'password'
+    };
+    const response = {
+      body: {
+        id: 1,
+        tfirstName: 'firstname',
+        lastName: 'lastname',
+        userName: 'username',
+        email: 'email',
+        password: 'password'
+      }
+    };
+    nock(/^.*$/)
+      .put('/api/users/' + editFields.id)
+      .reply(201, response.body);
+    const expectedActions = [{
+      type: c.USER_UPDATE_REQUEST,
+      users: editFields
+    }, {
+      type: c.USER_UPDATE_SUCCESS,
+      user: response.body,
+    }];
+
+    const store = mockStore({});
+
+    return store.dispatch(actions.updateUser(editFields)).then(() => {
       const actions = store.getActions();
       expect(actions).toEqual(expectedActions);
     });

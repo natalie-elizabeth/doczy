@@ -145,23 +145,40 @@ class UserController {
       message: 'You were logged out successfully'
     });
   }
-
   static search(req, res) {
-    if (req.query.q) {
-      return user.findAll({
-        where: {
-          $or: [
-            { firstname: { $like: `%${req.query.q}%` } },
-            { lastname: { $like: `%${req.query.q}%` } },
-            { username: { $like: `%${req.query.q}%` } },
-            { email: { $like: `%${req.query.q}%` } }
-          ]
-        }
-      })
-        .then(response => res.status(200).send(response))
-        .catch(error => res.status(400).send(error));
+    if (!req.query.q) {
+      return res.status(400).send({ message: 'please provide query' });
     }
+    return User.findAll({
+      where: {
+        $or: [
+          { firstName: { $like: `%${req.query.q}%` } },
+          { lastName: { $like: `%${req.query.q}%` } },
+          { userName: { $like: `%${req.query.q}%` } },
+          { email: { $like: `%${req.query.q}%` } }
+        ]
+      }
+    })
+      .then(response => res.status(200).send(response))
+      .catch(error => res.status(400).send(error));
+
   }
+  // static search(req, res) {
+  //   if (req.query.q) {
+  //     return user.findAll({
+  //       where: {
+  //         $or: [
+  //           { firstname: { $like: `%${req.query.q}%` } },
+  //           { lastname: { $like: `%${req.query.q}%` } },
+  //           { username: { $like: `%${req.query.q}%` } },
+  //           { email: { $like: `%${req.query.q}%` } }
+  //         ]
+  //       }
+  //     })
+  //       .then(response => res.status(200).send(response))
+  //       .catch(error => res.status(400).send(error));
+  //   }
+  // }
 }
 
 module.exports = UserController;
