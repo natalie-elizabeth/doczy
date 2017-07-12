@@ -3,7 +3,7 @@ const Role = require('./roles.controller');
 const { Auth, isAdmin } = require('../../middleware/index');
 
 Router.route('/roles')
-  .post(Role.create)
+  .post([Auth, isAdmin], Role.create)
   .get([Auth, isAdmin], Role.list);
 
 Router.route('/roles/:id')

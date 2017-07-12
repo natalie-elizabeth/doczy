@@ -101,7 +101,7 @@ const LoggedOutView = props => {
 class Header extends React.Component {
   render() {
     let token = tokenUtils.getAuthToken();
-    console.log('Token>>>>>>>>>>>>>', token);
+    // console.log('Token>>>>>>>>>>>>>', token);
 
 
     return (

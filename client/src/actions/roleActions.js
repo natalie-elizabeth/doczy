@@ -95,23 +95,24 @@ export const roleDeleteFailure = roles => ({
   roles
 });
 
+
 export const updateRole = roleId => (dispatch) => {
-  console.log('Role ID>>>', roleId);
   dispatch(rolesUpdateRequest(roleId));
   return (
     request
-      .put(`/api/roles/${roleId}`)
+      .put(`/api/roles/${roleId}`, console.log(roleId))
       .set('x-access-token', window.localStorage.getItem('token'))
       .send(roleId)
       .then((response) => {
         dispatch(rolesUpdateSuccess(response.body));
       })
       .catch((error) => {
-        console.log('error occurred');
         dispatch(rolesUpdateFailure(error.response));
       })
   );
 };
+
+
 
 export const rolesUpdateRequest = roles => ({
   type: c.ROLE_UPDATE_REQUEST,

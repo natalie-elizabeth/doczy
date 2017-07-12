@@ -40,8 +40,7 @@ class Roles extends Component {
     this.editRole = this.editRole.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
-    console.log('this.state.role.name');
-    console.log('@ here >>>>>>>>>>>', this.state);
+    // console.log('@ here >>>>>>>>>>>', this.state);
   };
 
   componentDidMount() {
@@ -114,7 +113,7 @@ class Roles extends Component {
   }
 
   handleChange() {
-    let newValue = this.refs.roleName.value;
+    let newValue = this.state.role_name;
     console.log('New Value>>>>>', newValue);
     this.setState({ newRoleValue: newValue });
   }
@@ -163,7 +162,9 @@ class Roles extends Component {
                     <form key={index} >
                       <p>{role.id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                        {this.state.edittingRoleId === index && role.role_name !== 'admin' ? <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> : <span onClick={(event) => this.editRole(index, event)}>{role.role_name}</span>}
+                        {this.state.edittingRoleId === index && role.role_name !== 'admin' ?
+                          <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> :
+                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer' }}>{role.role_name}</span>}
 
                         <RaisedButton onTouchTap={() => {
                           {/*{ console.log('is this working?>>>>', role.id); }*/ }
@@ -184,9 +185,7 @@ class Roles extends Component {
                         <RaisedButton onTouchTap={() => {
                           console.log('things change');
                           console.log(">>>>>>>>>>>>> tell me you got here", role.id);
-                          console.log('>>>>>>>>>>>>>>>>>>>>', this.props.updateRole());
                           this.state.edittingRoleId = index;
-                          console.log(this.state.edittingRoleId);
                           this.props.updateRole(role.id)
                             .then(() => {
                               this.props.listRoles();
@@ -211,8 +210,6 @@ Roles.contextTypes = {
 };
 
 function mapStateToProps(state) {
-
-  console.log(`ROLES WAS SET TO ${state.rolesReducer.roles}`);
   return {
     roles: state.rolesReducer.roles,
     loading: state.rolesReducer.loading

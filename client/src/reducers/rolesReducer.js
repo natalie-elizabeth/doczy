@@ -4,7 +4,9 @@ const ROLES_LIST = {
   roles: [],
   error: null,
   loading: false,
-  searchFilter: ''
+  searchFilter: '',
+  edittingRoleId: false,
+  newRoleValue: ''
 };
 
 export default function rolesReducer(state = ROLES_LIST, action) {
@@ -59,9 +61,9 @@ export default function rolesReducer(state = ROLES_LIST, action) {
       });
     case c.ROLE_UPDATE_SUCCESS:
       let newestState = state.roles.filter(role => role.id === action.roleId ? action.roleId : role);
-      console.log(newestState);
+      console.log('newstate:>>>>>>>>>>>>>>>>>>>>>>>>', newestState);
       return Object.assign({}, state, {
-        roles: newestState,
+        roles: state.roles.map(role => role.id === action.roleId ? action.roleId : role),
         error: null,
         loading: true,
       });
