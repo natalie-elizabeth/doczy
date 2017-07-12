@@ -1,5 +1,5 @@
-import reducer from '../client/src/reducers/documentReducer';
-import * as c from '../client/src/actions/actionTypes';
+import reducer from '../../client/src/reducers/documentReducer';
+import * as c from '../../client/src/actions/actionTypes';
 
 describe('documentReducer', () => {
   it('should return initial state', () => {
