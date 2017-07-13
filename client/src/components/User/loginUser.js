@@ -58,7 +58,7 @@ class LoginUser extends Component {
           <center>
             <Card className="container">
               <form onSubmit={this.onSubmit} className="col s12">
-                <h2 className="card-heading">Sign In</h2>
+                <h2 className="card-heading" style={{ fontSize: "48px", fontFamily: "Roboto", fontWeight: "bold", color: "#681039" }}>Sign In</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
                 <div className='row'>
                   <div className="input-field col s6">

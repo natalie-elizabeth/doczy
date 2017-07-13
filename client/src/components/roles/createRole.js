@@ -128,7 +128,7 @@ class Roles extends Component {
           <center>
             <Card className="container" expanded initiallyExpanded>
               <form action="/" onSubmit={this.onSubmit} >
-                <h2 className="card-heading">Create new Roles</h2>
+                <h2 className="card-heading" style={{ fontSize: "30px", fontFamily: "Roboto", fontWeight: "bold", color: "#681039" }}>Create new Roles</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
 
                 <div className='row'>
@@ -162,7 +162,7 @@ class Roles extends Component {
 
                         {this.state.edittingRoleId === index && role.role_name !== 'admin' ?
                           <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> :
-                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '20px' }}>
+                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingRight: '17em', marginTop: '10px', fontSize: '20px' }}>
                             {role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <RaisedButton onTouchTap={() => {

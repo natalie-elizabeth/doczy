@@ -38,7 +38,7 @@ class UserList extends Component {
       <div>
         <MuiThemeProvider>
           <Card className="container" expanded initiallyExpanded>
-            <center><h2 className="card-heading" style={{ fontWeight: 'bold' }}>Existing Users</h2></center>
+            <center><h2 className="card-heading" style={{ fontWeight: 'bold' }}>Existing Users</h2></center><br /><br />
             {
               loading ? <CircularProgress thickness={4} /> :
                 users.map((user, index) => {
@@ -52,7 +52,18 @@ class UserList extends Component {
                           console.log('Role Deleted');
                         });
                     }
-                    } style={{ alignItems: "left" }}>Delete</RaisedButton></p>  <br /></form>;
+                    } style={{ alignItems: "left" }}>Delete</RaisedButton>
+                                    <RaisedButton onTouchTap={() => {
+                                      { console.log('is this working?>>>>', user.id); }
+                                      this.props.deleteUser(user.id)
+                                        .then(() => {
+                                          { this.props.listUsers(); }
+                                          console.log('Role Deleted');
+                                        });
+                                    }
+                                    } style={{ alignItems: "left" }}>Update</RaisedButton>
+
+                    </p>  <br /></form>;
 
                 })
             }
