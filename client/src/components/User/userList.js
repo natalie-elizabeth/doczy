@@ -38,11 +38,12 @@ class UserList extends Component {
       <div>
         <MuiThemeProvider>
           <Card className="container" expanded initiallyExpanded>
-            <center><h2 className="card-heading">Existing Users</h2></center>
+            <center><h2 className="card-heading" style={{ fontWeight: 'bold' }}>Existing Users</h2></center>
             {
               loading ? <CircularProgress thickness={4} /> :
                 users.map((user, index) => {
-                  return <form key={index} ><p>{user.id}&nbsp;&nbsp;{user.username}{user.email}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  return <form key={index} ><p>{user.id}&nbsp;&nbsp;<span style={{ color: '#681140', fontWeight: 'bold', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '3em', marginTop: '10px', fontSize: '20px' }}>{user.username}</span>
+                    <span style={{ color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '15px' }}>{user.email}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <RaisedButton onTouchTap={() => {
                       { console.log('is this working?>>>>', user.id); }
                       this.props.deleteUser(user.id)
