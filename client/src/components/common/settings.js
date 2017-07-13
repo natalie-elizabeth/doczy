@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { updateUser } from '../../actions/authActions';
@@ -86,8 +87,6 @@ class Settings extends Component {
             <Card className="container">
               <form onSubmit={this.onSubmit}>
                 <h2 className="card-heading">Change your details</h2>
-                {errors.summary && <p className="error-message">{errors.summary}</p>}
-
                 <div className='row'>
                   <div className="input-field col s6">
                     <TextField

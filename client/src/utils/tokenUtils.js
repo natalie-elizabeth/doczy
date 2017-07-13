@@ -1,7 +1,5 @@
-import localStorage from 'localStorage';
 
-
-export const getAuthToken = () => localStorage.getItem('token');
+export const getAuthToken = () => window.localStorage.getItem('token');
 
 export const setAuthToken = token => window.localStorage.setItem('token', token);
 

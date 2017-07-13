@@ -158,11 +158,12 @@ class Roles extends Component {
                   let roleName = role.role_name;
                   return <Card className="container">
                     <form key={index} >
-                      <p>{role.id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <p><span style={{ alignItems: 'left', fontSize: '20px' }} >{role.id}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         {this.state.edittingRoleId === index && role.role_name !== 'admin' ?
                           <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> :
-                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingLeft: '5em' }}>{role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '20px' }}>
+                            {role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <RaisedButton onTouchTap={() => {
                           {/*{ console.log('is this working?>>>>', role.id); }*/ }
@@ -179,7 +180,7 @@ class Roles extends Component {
                           }
                         }
 
-                        } style={{ style }}>Delete</RaisedButton>
+                        } style={{ style }} danger>Delete</RaisedButton>
                         <RaisedButton onTouchTap={() => {
                           console.log('things change');
                           console.log(">>>>>>>>>>>>> tell me you got here", role.id);

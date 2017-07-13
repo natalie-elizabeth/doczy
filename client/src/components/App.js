@@ -13,6 +13,7 @@ import dashboard from './common/adminDashboard';
 import NotFoundComponent from './common/notFound';
 import SettingsPage from '../components/common/settingsPage';
 import UserList from '../components/User/userList';
+import Settings from '../components/common/settings';
 
 
 export default class App extends Component {
@@ -31,7 +32,7 @@ export default class App extends Component {
             <Route path='/roles' component={Roles} />
             <Route path='/dashboard' component={dashboard} />
             <Route component={NotFoundComponent} path="/not-found" />
-            <Route path='/settings' component={SettingsPage} />
+            <Route path='/settings' component={Settings} />
             <Route path='/users' component={UserList} />
           </div>
         </div>
