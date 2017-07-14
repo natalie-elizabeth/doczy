@@ -104,6 +104,31 @@ export const listUsers = () => (dispatch) => {
   );
 };
 
+export const listUsersDocuments = () => (dispatch) => {
+  dispatch(userDocumentsRequest());
+  return (
+    request
+      .get('api/users/:id/documents')
+      .set('x-access-token', tokenUtils.getAuthToken())
+      .then((response) => {
+        dispatch(userDocumentsSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(userDocumentFailure(error));
+      })
+
+  );
+};
+
+export const userDocumentRequest = () => ({
+  type: c.USER_DOCUMENT_REQUEST
+});
+export const userDocumentsSuccess = () => ({
+  type: c.USER_DOCUMENT_SUCCESS
+});
+export const userDocumentsFailure = () => ({
+  type: c.USER_DOCUMENT_FAILURE
+});
 
 export const userDeleteRequest = () => ({
   type: c.USER_DELETE_REQUEST

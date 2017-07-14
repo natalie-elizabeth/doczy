@@ -20,6 +20,7 @@ class UserList extends Component {
       email: '',
       password: '',
       role_id: 2,
+      documents: {},
       errors: {},
       isLoading: false
     };
@@ -42,9 +43,15 @@ class UserList extends Component {
             {
               loading ? <CircularProgress thickness={4} /> :
                 users.map((user, index) => {
-                  return <form key={index} ><p>{user.id}&nbsp;&nbsp;<span style={{ color: '#681140', fontWeight: 'bold', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '3em', marginTop: '10px', fontSize: '20px' }}>{user.username}</span>
-                    <span style={{ color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '15px' }}>{user.email}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <RaisedButton onTouchTap={() => {
+                  return <form key={index} ><p>{user.id}&nbsp;&nbsp;
+                    <span style={{ color: '#681140', fontWeight: 'bold', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '3em', marginTop: '10px', fontSize: '20px' }}>
+                      {user.username}</span>
+                    <span style={{ fontStyle: 'italic', color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '15px' }}>
+                      <li>{user.email}</li></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <span style={{ color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '15px' }}>
+                      {user.role_id}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <RaisedButton secondary={true} onTouchTap={() => {
                       { console.log('is this working?>>>>', user.id); }
                       this.props.deleteUser(user.id)
                         .then(() => {
@@ -52,18 +59,34 @@ class UserList extends Component {
                           console.log('Role Deleted');
                         });
                     }
-                    } style={{ alignItems: "left" }}>Delete</RaisedButton>
-                                    <RaisedButton onTouchTap={() => {
-                                      { console.log('is this working?>>>>', user.id); }
-                                      this.props.deleteUser(user.id)
-                                        .then(() => {
-                                          { this.props.listUsers(); }
-                                          console.log('Role Deleted');
-                                        });
-                                    }
-                                    } style={{ alignItems: "left" }}>Update</RaisedButton>
+                    } style={{ alignItems: "left" }}>Delete</RaisedButton> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <RaisedButton primary={true} onTouchTap={() => {
+                      { console.log('is this working?>>>>', user.id); }
+                      if (confirm("Are you sure you want to delete this role?") === true) {
+                        this.props.deleteUser(user.id)
+                          .then(() => {
+                            { this.props.listUsers(); }
+                            console.log('Role Deleted');
+                          });
+                        alert('User has been deleted from the system');
+                      }
+                      else {
+                        alert("User not deleted");
+                      }
+                    }
+                    }>Update</RaisedButton>
 
-                    </p>  <br /></form>;
+                  </p>  <br /></form>;
+                  <Grid>
+                    <Row is="nospace start">
+                      <Cell is="9 tablet-6 phone-3">
+                        <TextField />
+                      </Cell>
+                      <Cell is="middle 3 tablet-2 phone-1">
+                        <RaisedButton />
+                      </Cell>
+                    </Row>
+                  </Grid>;
 
                 })
             }

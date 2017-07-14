@@ -162,7 +162,7 @@ class Roles extends Component {
 
                         {this.state.edittingRoleId === index && role.role_name !== 'admin' ?
                           <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> :
-                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingRight: '17em', marginTop: '10px', fontSize: '20px' }}>
+                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingRight: '40em', marginTop: '10px', fontSize: '20px', fontStyle: "italic" }}>
                             {role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <RaisedButton onTouchTap={() => {

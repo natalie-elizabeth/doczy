@@ -29,12 +29,24 @@ export default function userReducer(state = USER_LIST, action) {
       return Object.assign({}, state, {
         users: state.users.filter(id => id !== action.userId),
       });
+    case c.USER_DOCUMENT_REQUEST:
+      return Object.assign({}, state, {
+        error: null,
+        loading: true
+      });
 
-    // case c.ROLE_DELETE_SUCCESS:
-    //   let newState = state.roles.filter(role => role.id !== action.roleId);
-    //   return Object.assign({}, state, {
-    //     roles: newState,
-    //   });
+    case c.USER_DOCUMENT_SUCCESS:
+      return Object.assign({}, state, {
+        error: null,
+        loading: true,
+      });
+
+    case c.USER_DOCUMENT_FAILURE:
+      return Object.assign({}, state, {
+        error: null,
+        loading: false
+      });
+
     case c.SET_USERS_SEARCH_FILTER:
       return Object.assign({}, state, {
         searchFilter: action.searchFilter,
