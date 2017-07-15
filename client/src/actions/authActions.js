@@ -159,10 +159,11 @@ export const deleteUser = userId => (dispatch) => {
 };
 
 export const updateUser = userData => (dispatch) => {
-  dispatch(userUpdateRequest(userData));
+  dispatch(userUpdateRequest(userData.id));
   return (
     request
-      .put(`/api/users/${userData.id}`)
+
+      .put(`/api/users/${userData.id}`, console.log('things>>>>>>>>>>>>>>>.', userData.id))
       .set('x-access-token', tokenUtils.getAuthToken())
       .send(userData)
       .then((response) => {

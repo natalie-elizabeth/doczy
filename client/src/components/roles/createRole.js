@@ -76,36 +76,7 @@ class Roles extends Component {
     return isValid;
   }
 
-  // update
-  onRoleNameChange(event) {
-    const Role = this.state.role_name;
-    console.log('>>>>>', Role);
-    Role.role_name = e.target.value;
-    this.setState({ role_name: Role });
-  }
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      role_name: Object.assign({}, this.state.role_name, {
-        [name]: value
-      })
-    });
-  }
 
-  updateRole(role_name) {
-    return e => {
-      this.setState({
-        role_name
-      });
-    };
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.state.edit
-      ? this.props.updateRole(this.state.role_name)
-      : this.props.createRole(this.state.role_name);
-  }
 
   editRole(index, event) {
     this.setState({ edittingRoleId: index });
@@ -162,7 +133,7 @@ class Roles extends Component {
 
                         {this.state.edittingRoleId === index && role.role_name !== 'admin' ?
                           <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> :
-                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingRight: '40em', marginTop: '10px', fontSize: '20px', fontStyle: "italic" }}>
+                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', paddingRight: '35em', marginTop: '10px', fontSize: '20px', fontStyle: "italic" }}>
                             {role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <RaisedButton onTouchTap={() => {

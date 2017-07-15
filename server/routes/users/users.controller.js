@@ -94,7 +94,8 @@ class UserController {
           .update({
             username: req.body.username || user.username,
             email: req.body.email || user.email,
-            password: req.body.password || user.password
+            password: req.body.password || user.password,
+            role_id: req.body.role_id || user.role_id
 
           })
           .then(() => res.status(200).send(user))
