@@ -58,10 +58,17 @@ export default function userReducer(state = USER_LIST, action) {
       });
     case c.USER_UPDATE_SUCCESS:
       return Object.assign({}, state, {
-        users: state.users.map(user => user.id === action.user.id ? action.user : user),
+        users: state.roles.map(user => {
+          if (user.id === action.user.id) {
+            user.role_id = action.role_id;
+          }
+          console.log('Updated>>>>', user);
+          return user;
+        }),
         error: null,
         loading: true,
       });
+
     case c.USER_UPDATE_FAILURE:
       return Object.assign({}, state, {
         error: action.error,

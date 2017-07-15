@@ -62,11 +62,11 @@ class UserList extends Component {
                   return <table key={index} ><p>{user.id}&nbsp;&nbsp;
                     <span style={{ color: '#681140', fontWeight: 'bold', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '3em', marginTop: '10px', fontSize: '20px' }}>
                       {user.username}</span>
-                    <span style={{ fontStyle: 'italic', color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '15px' }}>
+                    <span style={{ fontStyle: 'italic', color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '18px' }}>
                       {user.email}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {this.state.edittingRoleId === index && user.role_id !== 1 ?
                       <input type="text" defaultValue={roleID} ref="roleID" onChange={this.handleChange} /> :
-                      <span style={{ color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '15px' }}
+                      <span style={{ color: '#681140', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '20px' }}
                         onClick={(event) => this.editRole(index, event)}>
                         {user.role_id}</span>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p> <br />
 
