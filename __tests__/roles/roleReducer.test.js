@@ -32,6 +32,13 @@ describe('rolesReducer', () => {
     expect(reducer({}, action)).toEqual(expected);
   });
   it('should return initial state', () => {
-
-  })
+    expect(reducer(undefined, {})).toEqual({
+      roles: [],
+      error: null,
+      loading: false,
+      searchFilter: '',
+      edittingRoleId: false,
+      newRoleValue: ''
+    });
+  });
 });

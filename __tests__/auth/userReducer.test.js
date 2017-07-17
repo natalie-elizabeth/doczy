@@ -12,5 +12,13 @@ describe('User reducers', () => {
       newRoleValue: ''
     });
   });
-
+  it('should return success on update', () => {
+    const action = {
+      type: c.USER_UPDATE_SUCCESS
+    };
+    const expected = {
+      error: null,
+      loading: true
+    };
+  });
 });
