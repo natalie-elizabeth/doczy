@@ -10,11 +10,16 @@ const User = require('../server/models').User;
 const sinon = require('sinon');
 require('sinon-as-promised');
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.SECRET_KEY || 'some secret';
+
 const Document = require('../server/models').Document;
+
 
 api = supertest('http://localhost:8080');
 const app = require('../app');
 
+// const token = jwt.sign({ userId: 1, roleId: 1 }, secretKey, { expiresIn: '24h' });
 let token = '';
 
 const testDocument = {

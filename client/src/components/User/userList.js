@@ -73,7 +73,7 @@ class UserList extends Component {
                     <ul>   <RaisedButton secondary={true} onTouchTap={() => {
                       { console.log('is this working?>>>>', user.role_id); }
                       this.state.edittingRoleId = index;
-                      this.props.updateUser({ role_id: this.state.newRoleValue, id: user.role_id })
+                      this.props.updateUser({ role_id: this.state.newRoleValue, id: user.id })
                         .then(() => {
                           this.setState({ edittingRoleId: false });
                           this.props.listUsers();
