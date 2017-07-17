@@ -1,4 +1,4 @@
-const { User, Document } = require('../../models');
+const { User, Document, Role } = require('../../models');
 
 class DocumentController {
 
@@ -17,24 +17,68 @@ class DocumentController {
 
 
   static listall(req, res) {
-    let query = {};
-    if (req.query.limit && req.query.offset) {
-      query.limit = req.query.limit;
-      query.offset = req.query.offset;
-    }
-    if (req.roleId !== 1) {
-      query.where = {
-        access: 'public',
-        user_id: req.userId
+    const getDocuments = (query) => {
+      return Document.findAll({
+        offset: req.query.offset,
+        limit: req.query.limit,
+        query
+      })
+        .then(documents => res.status(200).json(documents))
+        .catch(error => res.status(404).json(error));
+    };
+    const searchQuery = (offset, limit, isPublic, roleId) => {
+      let query = {
+        where: {
+          $or: []
+        }
       };
+      if (offset) {
+        req.query.offset = offset;
+      }
+      if (limit) {
+        req.query.limit = limit;
+      }
+      if (isPublic) {
+        query.where.$or.push({ access: 'public' });
+      }
+      if (roleId) {
+        Role.findById(roleId)
+          .then((role) => {
+            query.where.$or.push({ access: role.role_name });
+            getDocuments(query);
+          });
+      } else {
+        getDocuments(query);
+      }
+    };
+    const allSearch = (isPublic) => {
+      let query = {};
+      if (isPublic) {
+        query.where = {
+          access: 'public'
+        };
+      }
+      return Document.findAll(query)
+        .then(document => res.status(200).send(document))
+        .catch(error => res.status(400).send(error));
+    };
+    if (req.roleId == 1) {
+      if (req.query.limit || req.query.offset) {
+        searchQuery(req.query.offset, req.query.limit);
+      } else {
+        allSearch();
+      }
+    } else {
+      if (req.query.limit || req.query.offset) {
+        searchQuery(req.query.offset, req.query.limit, true, req.roleId);
+      } else {
+        searchQuery(null, null, true, req.roleId);
 
+      }
     }
-    console.log(req.roleId);
-    return Document.findAll(query)
-      .then(documents => res.status(200).json(documents))
-      .catch(error => res.status(404).json(error));
+  };
 
-  }
+
   //   if(isPublic) {
   //     query.where = {
   //       access: 'public'

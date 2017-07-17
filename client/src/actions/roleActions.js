@@ -11,7 +11,7 @@ export const listRoles = () => (dispatch) => {
   return (
     request
       .get('/api/roles')
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
         dispatch(rolesLoadSuccess(response.body));
       })
@@ -40,7 +40,7 @@ export const createRole = roleData => (dispatch) => {
   return (
     request
       .post('/api/roles')
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .send(roleData)
       .then((response) => {
         dispatch(rolesAddSuccess(response.body));
@@ -71,7 +71,7 @@ export const deleteRole = roleId => (dispatch) => {
   return (
     request
       .delete(`/api/roles/${roleId}`)
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
         dispatch(roleDeleteSuccess(roleId));
       })
@@ -101,7 +101,7 @@ export const updateRole = roleData => (dispatch) => {
   return (
     request
       .put(`/api/roles/${roleData.id}`)
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .send(roleData)
       .then((response) => {
         dispatch(rolesUpdateSuccess(response.body));

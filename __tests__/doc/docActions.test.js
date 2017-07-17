@@ -111,4 +111,33 @@ describe('actions', () => {
       expect(actions).toEqual(expectedActions);
     });
   });
+
+  it('should list all documents', () => {
+    const response = {
+      body: {
+        documents: []
+      }
+    };
+
+    const limit = 3;
+    const offset = 0;
+
+    nock(/^.*$/)
+      .get(`/api/documents?limit=${limit}&offset=${offset}`)
+      .reply(200, response.body);
+
+    const expectedActions = [{
+      type: c.DOCUMENT_REQUEST
+    }, {
+      type: c.DOCUMENT_SUCCESS,
+      documents: response.body,
+    }];
+
+    const store = mockStore({});
+
+    return store.dispatch(actions.listDocuments(limit, offset)).then(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(expectedActions);
+    });
+  });
 });

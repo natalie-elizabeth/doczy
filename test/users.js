@@ -27,7 +27,7 @@ const userTest = {
 
 };
 
-describe('/POST user', () => {
+describe('POST user', () => {
   const endpoint = '/api/users';
 
   it('should fail when POST user is called without params', (done) => {
@@ -75,7 +75,6 @@ describe('/POST user', () => {
   });
   it('should create new user successfully', (done) => {
     let createStub = sinon.stub(User, 'create').resolves({ id: 1 });
-
     request(app)
       .post(endpoint)
       .send(userTest)
@@ -83,6 +82,8 @@ describe('/POST user', () => {
       .end((err, res) => {
         if (err) throw err;
         assert(res.body.firstname, userTest.firstname);
+        assert.property(res.body, 'token');
+        token = res.body.token;
         createStub.restore();
         done();
       });

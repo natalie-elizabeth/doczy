@@ -20,7 +20,7 @@ const app = require('../app');
 let token = '';
 
 const testRole = {
-  name: 'Olga'
+  role_name: 'Olga'
 };
 
 
@@ -47,6 +47,18 @@ describe('actions', () => {
       .end((err, res) => {
         if (err) throw err;
         createStub.restore();
+        done();
+      });
+  });
+  it('should fail to delete when role id is not found', (done) => {
+    let findByIdStub = sinon.stub(Role, 'findById').resolves();
+    request(app)
+      .delete('/api/roles/1')
+      .set('x-access-token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
         done();
       });
   });

@@ -39,5 +39,95 @@ describe('actions', () => {
     };
     expect(actions.roleDeleteSuccess()).toEqual(expectedAction);
   });
+  it('should fail to delete on delete failure', () => {
+    const action = {
+      type: c.ROLE_DELETE_FAILURE
+    };
+    expect(actions.roleDeleteFailure()).toEqual(action);
+  });
+  it('should update on update request', () => {
+    const expectedAction = {
+      type: c.ROLE_UPDATE_REQUEST
+    };
+    expect(actions.rolesUpdateRequest()).toEqual(expectedAction);
+  });
+  it('should fail to update on update success', () => {
+    const expectedAction = {
+      type: c.ROLE_UPDATE_SUCCESS
+    };
+    expect(actions.rolesUpdateSuccess()).toEqual(expectedAction);
+  });
 
+  it('should update on update failure', () => {
+    const expectedAction = {
+      type: c.ROLE_UPDATE_FAILURE
+    };
+    expect(actions.rolesUpdateFailure()).toEqual(expectedAction);
+  });
+  it('should create a new role on create role', () => {
+    const response = {
+      body: {
+        role_name: 'role_name'
+      }
+    };
+
+    nock(/^.*$/)
+      .post('/api/roles')
+      .reply(201, response.body);
+
+    const expectedActions = [{
+      type: c.ROLE_ADD_REQUEST,
+      roles: response.body
+    }, {
+      type: c.ROLE_ADD_SUCCESS,
+      roles: response.body,
+    }];
+
+    const store = mockStore({ role: [] });
+
+    return store.dispatch(actions.createRole(response.body)).then(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(expectedActions);
+    });
+  });
+  it('should update a role', () => {
+    const response = {
+      body: {
+        role_name: 'role_name'
+      }
+    };
+    nock(/^.*$/)
+      .put('/api/roles')
+      .reply()
+
+  });
+  it('should update a role', () => {
+    const editFields = {
+      id: '1',
+      role_name: 'role_name'
+    };
+    const response = {
+      body: {
+        id: 1,
+        role_name: 'role_name'
+      }
+    };
+    nock(/^.*$/)
+      .put('/api/roles/' + editFields.id)
+      .reply(201, response.body);
+    const expectedActions = [{
+      type: c.ROLE_UPDATE_REQUEST,
+      roles: editFields
+    }, {
+      type: c.ROLE_UPDATE_SUCCESS,
+      role: response.body,
+    }];
+
+    const store = mockStore({});
+
+    return store.dispatch(actions.updateRole(editFields)).then(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(expectedActions);
+    });
+  });
 });
