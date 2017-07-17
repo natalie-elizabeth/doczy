@@ -16,7 +16,14 @@
     "test:coverage": "jest --coverage"
   },
   "jest": {
-    "testRegex": "./__tests__/.*.jsx?$"
+    "testRegex": "./__tests__/.*.jsx?$",
+    "moduleNameMapper": {
+      "tokenUtils": "<rootDir>/__tests__/__mocks__/tokenUtils.mock.js"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/.*/__mocks__/",
+      "test-utils.js"
+    ]
   },
   "repository": {
     "type": "git",

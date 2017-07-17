@@ -163,7 +163,7 @@ export const updateUser = userData => (dispatch) => {
   return (
     request
 
-      .put(`/api/users/${userData.id}`, console.log('things>>>>>>>>>>>>>>>.', userData.id))
+      .put(`/api/users/${userData.id}`)
       .set('x-access-token', tokenUtils.getAuthToken())
       .send(userData)
       .then((response) => {

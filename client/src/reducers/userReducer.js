@@ -5,6 +5,8 @@ const USER_LIST = {
   error: null,
   loading: false,
   searchFilter: '',
+  edittingRoleId: false,
+  newRoleValue: ''
 };
 
 export default function userReducer(state = USER_LIST, action) {
