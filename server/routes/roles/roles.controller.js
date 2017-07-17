@@ -6,7 +6,7 @@ class RoleController {
     const { role_name } = req.body;
 
     if (!role_name) {
-      return res.status(400).json({
+      return res.status(403).json({
         error: 'Missing required field',
         errors: ['Missing require field name']
       });
@@ -23,7 +23,7 @@ class RoleController {
     return Role
       .all()
       .then(roles => res.status(201).send(roles))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(404).send(error));
 
   }
 
