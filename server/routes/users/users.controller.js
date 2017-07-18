@@ -84,22 +84,22 @@ class UserController {
   static update(req, res) {
     return User
       .findById(req.params.id)
-      .then(user => {
+      .then((user) => {
         if (!user) {
           return res.status(404).send({
             message: 'User Not Found',
           });
         }
-        return user
-          .update({
-            username: req.body.username || user.username,
-            email: req.body.email || user.email,
-            password: req.body.password || user.password,
-            role_id: req.body.role_id || user.role_id
-
+        user.update(req.body, { fields: Object.keys(req.body) })
+          .then((updatedUser) => {
+            res.status(201).send(updatedUser);
           })
-          .then(() => res.status(200).send(user))
-          .catch((error) => res.status(400).send(error));
+          .catch(error => {
+            res.status(400).send(error);
+          });
+      })
+      .catch(error => {
+        res.status(400).send(error);
       });
   }
 
@@ -117,6 +117,7 @@ class UserController {
           });
         }
         bcrypt.compare(req.body.password, user.password, (err, matched) => {
+          console.log(`SENT PASS: ${req.body.password}, ${user.password}`);
           if (err) {
             return res.status(401).json({
               message: 'Invalid credentials',
