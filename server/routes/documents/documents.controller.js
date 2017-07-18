@@ -16,105 +16,24 @@ class DocumentController {
   }
 
 
-  static listall(req, res) {
-    const getDocuments = (query) => {
-      return Document.findAll({
-        offset: req.query.offset,
-        limit: req.query.limit,
-        query
-      })
-        .then(documents => res.status(200).json(documents))
-        .catch(error => res.status(404).json(error));
-    };
-    const searchQuery = (offset, limit, isPublic, roleId) => {
-      let query = {
-        where: {
-          $or: []
-        }
-      };
-      if (offset) {
-        req.query.offset = offset;
-      }
-      if (limit) {
-        req.query.limit = limit;
-      }
-      if (isPublic) {
-        query.where.$or.push({ access: 'public' });
-      }
-      if (roleId) {
-        Role.findById(roleId)
-          .then((role) => {
-            query.where.$or.push({ access: role.role_name });
-            getDocuments(query);
-          });
-      } else {
-        getDocuments(query);
-      }
-    };
-    const allSearch = (isPublic) => {
-      let query = {};
-      if (isPublic) {
-        query.where = {
-          access: 'public'
-        };
-      }
-      return Document.findAll(query)
-        .then(document => res.status(200).send(document))
-        .catch(error => res.status(400).send(error));
-    };
-    if (req.roleId == 1) {
-      if (req.query.limit || req.query.offset) {
-        searchQuery(req.query.offset, req.query.limit);
-      } else {
-        allSearch();
-      }
-    } else {
-      if (req.query.limit || req.query.offset) {
-        searchQuery(req.query.offset, req.query.limit, true, req.roleId);
-      } else {
-        searchQuery(null, null, true, req.roleId);
+  static listAll(req, res) {
+    const { limit, offset, access } = req.query;
 
-      }
+    if (access !== 'public' && req.roleId !== 1) {
+      return res.json({
+        error: 'Nigger not you documenst'
+      });
     }
-  };
 
+    const filter = access || 'public';
 
-  //   if(isPublic) {
-  //     query.where = {
-  //       access: 'public'
-  //     };
-  //   }
-  //       return Document.findAll(query)
-  //   .then(response => res.status(200).send(response))
-  //   .catch(error => res.status(400).send(error));
-  //     };
-  // const roles = ['', 'admin', 'user', 'success', 'learning'];
-  // let query = {};
+    const query = { limit, offset, where: { access: filter } };
 
+    return Document.findAll(query)
+      .then(documents => res.status(200).json(documents))
+      .catch(error => res.status(500).json(error));
+  }
 
-
-  // if (req.roleId !== 2 && req.roleId !== 1) { // user - other roles have been defined
-  //   query.where = {
-  //     access: roles[req.roleId + 1] // careful with indexes
-  //   };
-  // }
-
-  // if (req.roleId == 1) { // user
-  //   query.where = {
-  //     user_id: req.userId,
-  //     access: 'public'
-  //   };
-  // }
-
-  // // if (req.query.limit || req.query.offset) {
-  // return Document.findAll(query)
-  //   .then(documents => res.status(200).json(documents))
-  //   .catch(error => res.status(404).json(error));
-  //     // }
-  //     // Document.all()
-  //     //   .then(documents => res.status(200).json(documents))
-  //     //   .catch(error => res.status(404).json(error));
-  //   }
   static search(req, res) {
     return Document
       .findAll({

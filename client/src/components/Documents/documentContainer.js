@@ -147,7 +147,7 @@ export class DocumentViewContainer extends React.Component {
           <Pagination
             activePage={this.state.activePage}
             itemsCountPerPage={this.state.limit}
-            totalItemsCount={10}
+            totalItemsCount={9}
             pageRangeDisplayed={5}
             onChange={this.handlePages}
           />˚q

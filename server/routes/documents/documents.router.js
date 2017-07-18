@@ -4,7 +4,7 @@ const { Auth, isAdmin } = require('../../middleware/index');
 
 Router.route('/documents')
   .post(Auth, Document.create)
-  .get(Auth, Document.listall);
+  .get(Auth, Document.listAll);
 
 Router.route('/documents/:id')
   .get(Auth, Document.retrieve)
