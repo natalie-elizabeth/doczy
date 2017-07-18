@@ -6,27 +6,26 @@ import _ from 'lodash';
 import * as docActions from '../../actions/docActions';
 
 
-class DocumentSearch extends React.Component {
+export class DocumentSearch extends React.Component {
   constructor(props, context) {
     super(props);
     this.searchDocument = this.searchDocument.bind(this);
     this.handleSearchInput = this.handleSearchInput.bind(this);
     this.apiCall = this.apiCall.bind(this);
     this.makeSearch = _.debounce(this.apiCall, 500);
-
   }
   searchDocument(searchFilter) {
     this.props.actions.searchDocument(searchFilter);
-    console.log('action>>>>>>>>>>', this.props.actions.searchDocument);
   }
+
   apiCall() {
     this.props.actions.searchDocument(this.state.searchFilter);
   }
-
   handleSearchInput(e) {
     this.setState({ searchFilter: e.target.value });
     this.makeSearch();
   }
+
 
   render() {
     return (

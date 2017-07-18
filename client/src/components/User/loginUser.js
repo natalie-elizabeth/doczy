@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,8 @@ import * as authActions from '../../actions/authActions';
 import loginValidate from '../../utils/validateLogin';
 
 
-class LoginUser extends Component {
+
+class LoginUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

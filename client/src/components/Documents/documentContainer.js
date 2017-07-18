@@ -130,8 +130,9 @@ export class DocumentViewContainer extends React.Component {
 
         <div>
           <DocumentSearch />
-          {console.log('articles>>>>>>>>>>', this.props.documentList.documents)}
+          {console.log("docs after search", this.props.documentList)}
           {this.props.documentList.documents.map(document =>
+
 
             (<DocumentView
               key={document.id}
