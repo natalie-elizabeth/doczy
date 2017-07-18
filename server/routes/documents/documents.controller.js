@@ -18,20 +18,21 @@ class DocumentController {
 
   static listAll(req, res) {
     const { limit, offset, access } = req.query;
-
-    if (access !== 'public' && req.roleId !== 1) {
-      return res.json({
-        error: 'Nigger not you documenst'
+    console.log('User ID>>>>', req.userId, req.roleId);
+    let roleName;
+    Role.findOne({
+      where: {
+        id: req.roleId
+      }
+    }).then(role => {
+      roleName = role.role_name;
+      return new Promise((resolve, reject) => (resolve(roleName))).then(roleName => {
+        const query = { limit, offset, where: { $or: [{ access: 'public' }, { access: roleName }, { user_id: req.userId }] } };
+        return Document.findAll(query)
+          .then(documents => res.status(200).json(documents))
+          .catch(error => res.status(500).json(error));
       });
-    }
-
-    const filter = access || 'public';
-
-    const query = { limit, offset, where: { access: filter } };
-
-    return Document.findAll(query)
-      .then(documents => res.status(200).json(documents))
-      .catch(error => res.status(500).json(error));
+    });
   }
 
   static search(req, res) {
@@ -41,7 +42,10 @@ class DocumentController {
           title: { $ilike: `%${req.query.q}%` }
         }
       })
-      .then(response => res.status(302).json(response))
+      .then(response => {
+        res.status(200).json(response);
+      }
+      )
       .catch(error => res.status(400).json(error));
   }
 

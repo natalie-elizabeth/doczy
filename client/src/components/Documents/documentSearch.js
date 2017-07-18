@@ -15,12 +15,11 @@ export class DocumentSearch extends React.Component {
     this.makeSearch = _.debounce(this.apiCall, 500);
   }
   searchDocument(searchFilter) {
-    console.log('state>>>>>>>>>>>>.', this.props);
-    this.props.docActions.searchDocument(searchFilter);
-
+    this.props.searchDocument(searchFilter);
   }
 
   apiCall() {
+    console.log('>>>>>>>>>>>>>>>>', this.state.searchFilter);
     this.props.searchDocument(this.state.searchFilter);
   }
   handleSearchInput(event) {
@@ -42,14 +41,9 @@ export class DocumentSearch extends React.Component {
     );
   }
 }
-// DocumentSearch.propTypes = {
-//   actions: PropTypes.object.isRequired
-// };
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(docActions, dispatch);
-  console.log('things>>>>>>>>>>>', docActions);
 }
-// const mapDispatchToProps = dispatch => ({
-//   actions: bindActionCreators(docActions, dispatch)
-// });
+
 export default connect(null, mapDispatchToProps)(DocumentSearch);

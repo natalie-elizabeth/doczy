@@ -87,7 +87,7 @@ export const documentsSearchFilterSuccess = searchFilter => ({
   searchFilter
 });
 
-export const documentsSearchFilterRequest = searchFilter => ({
+export const documentsSearchFilterRequest = () => ({
   type: types.SET_DOCUMENTS_SEARCH_FILTER_REQUEST,
 });
 
@@ -98,15 +98,18 @@ export const documentsSearchFilterfailure = searchFilter => ({
 
 
 export const searchDocument = title => (dispatch) => {
+  console.log('Search Title>>>>>', title);
   dispatch(documentsSearchFilterRequest());
   return (
     request
-      .get(`/api/search/documents?q=${title}`)
+      .get('/api/search/documents/?q=' + title)
       .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
+        console.log('response>>>>>>>>>>>>.', response);
         dispatch(documentsSearchFilterSuccess(response.body));
       })
       .catch((error) => {
+        console.log('error>>>>>>>>>>>>>>>.', error);
         dispatch(documentsSearchFilterfailure(error.response));
         throw error;
       })

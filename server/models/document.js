@@ -16,7 +16,11 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: true
       }
     },
-    access: DataTypes.ENUM('private', 'public', 'role')
+    access: {
+      type: DataTypes.STRING,
+      allowNull: false,
+
+    }
   }, {
       tableName: 'documents',
       underscored: true,

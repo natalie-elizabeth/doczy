@@ -131,8 +131,7 @@ export class DocumentViewContainer extends React.Component {
         <div>
           <DocumentSearch />
           {console.log("docs after search", this.props.documentList)}
-          {this.props.documentList.documents.map(document =>
-
+          {this.props.documentList.documents && this.props.documentList.documents.length ? (this.props.documentList.documents.map(document =>
 
             (<DocumentView
               key={document.id}
@@ -143,7 +142,7 @@ export class DocumentViewContainer extends React.Component {
 
 
             />)
-          )}
+          )) : 'No Documents Available'}
           <Pagination
             activePage={this.state.activePage}
             itemsCountPerPage={this.state.limit}
