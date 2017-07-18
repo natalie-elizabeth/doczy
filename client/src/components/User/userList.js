@@ -68,7 +68,7 @@ class UserList extends Component {
                       <input type="text" defaultValue={roleID} ref="roleID" onChange={this.handleChange} /> :
                       <span style={{ color: '#681140', fontFamily: 'Roboto', fontWeight: 'bold', cursor: 'pointer', paddingRight: '10em', marginTop: '10px', fontSize: '20px' }}
                         onClick={(event) => this.editRole(index, event)}>
-                        <Card> {user.role_id}</Card></span>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p> <br />
+                        {user.role_id}</span>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p> <br />
 
                     <ul>   <RaisedButton secondary={true} onTouchTap={() => {
                       { console.log('is this working?>>>>', user.role_id); }

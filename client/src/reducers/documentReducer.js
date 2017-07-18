@@ -31,11 +31,12 @@ export default function reducer(state = DOC_LIST, action) {
         documents: state.documents.filter(id => id !== action.documentId),
       });
 
-    case c.SET_DOCUMENTS_SEARCH_FILTER:
-      console.log('things like this>>>>', action.searchFilter);
+    case c.SET_DOCUMENTS_SEARCH_FILTER_SUCCESS:
       return Object.assign({}, state, {
-        searchFilter: action.searchFilter,
+        documents: action.searchFilter,
       });
+
+
     case c.DOCUMENT_UPDATE_REQUEST:
       return Object.assign({}, state, {
         error: null,
@@ -65,6 +66,7 @@ export default function reducer(state = DOC_LIST, action) {
         loading: false,
       });
 
+    case c.SET_DOCUMENTS_SEARCH_FILTER_FAILURE:
     case c.DOCUMENT_GET_FAILURE:
     case c.DOCUMENT_ADD_FAILURE:
       return Object.assign({}, state, {
@@ -72,6 +74,7 @@ export default function reducer(state = DOC_LIST, action) {
         loading: false,
       });
 
+    case c.SET_DOCUMENTS_SEARCH_FILTER_REQUEST:
     case c.DOCUMENT_GET_REQUEST:
       return {
         documents: null,

@@ -32,12 +32,14 @@ export class DocumentViewContainer extends React.Component {
     super(props, context);
     this.state = {
       open: false,
+      activePage: 1,
+      limit: 7,
+      offset: 0,
       document: {
         title: '',
         content: '',
         access: '',
-        activePage: 1,
-        limit: 7,
+
       }
     };
     this.handleOpen = this.handleOpen.bind(this);
@@ -50,7 +52,7 @@ export class DocumentViewContainer extends React.Component {
     this.handlePages = this.handlePages.bind(this);
   }
   componentWillMount() {
-    this.props.documentActions.listDocuments();
+    this.props.documentActions.listDocuments(this.state.limit, this.state.offset);
   }
   onSetAccess(e, index, value) {
     const Document = this.state.document;
@@ -71,10 +73,6 @@ export class DocumentViewContainer extends React.Component {
   handleOpen() {
     this.setState({ open: true, document: {} });
   }
-  handlePages(pageNumber) {
-    this.setState({ activePage: pageNumber });
-    this.props.documentActions.listDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
-  }
 
   handleClose() {
     this.setState({ open: false, edit: false });
@@ -87,6 +85,10 @@ export class DocumentViewContainer extends React.Component {
         [name]: value
       })
     });
+  }
+  handlePages(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    this.props.documentActions.listDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
 
   updateDocument(document) {
@@ -128,7 +130,7 @@ export class DocumentViewContainer extends React.Component {
 
         <div>
           <DocumentSearch />
-          {console.log(this.props.documentList.documents)}
+          {console.log('articles>>>>>>>>>>', this.props.documentList.documents)}
           {this.props.documentList.documents.map(document =>
 
             (<DocumentView
@@ -141,6 +143,13 @@ export class DocumentViewContainer extends React.Component {
 
             />)
           )}
+          <Pagination
+            activePage={this.state.activePage}
+            itemsCountPerPage={this.state.limit}
+            totalItemsCount={10}
+            pageRangeDisplayed={5}
+            onChange={this.handlePages}
+          />˚q
           <div>
             <FloatingActionButton onClick={this.handleOpen} backgroundColor="#681140" style={style}>
               <ContentAdd />
@@ -170,13 +179,7 @@ export class DocumentViewContainer extends React.Component {
               />
             )}
         </Dialog>
-        <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={7}
-          totalItemsCount={30}
-          pageRangeDisplayed={5}
-          onChange={this.handlePages}
-        />
+
       </div>
 
     );

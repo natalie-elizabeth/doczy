@@ -82,18 +82,35 @@ export const documentsDeleteFailure = documents => ({
   documents
 });
 
-export const documentsSearchFilter = searchFilter => ({
-  type: types.SET_DOCUMENTS_SEARCH_FILTER,
+export const documentsSearchFilterSuccess = searchFilter => ({
+  type: types.SET_DOCUMENTS_SEARCH_FILTER_SUCCESS,
   searchFilter
 });
 
-export const searchDocument = (title) => {
-  title = encodeURIComponent(title);
-  return (dispatch) => {
-    getEndpoint(`/api/search/documents?q=${title}`)
+export const documentsSearchFilterRequest = searchFilter => ({
+  type: types.SET_DOCUMENTS_SEARCH_FILTER_REQUEST,
+});
+
+export const documentsSearchFilterfailure = searchFilter => ({
+  type: types.SET_DOCUMENTS_SEARCH_FILTER_FAILURE,
+  searchFilter
+});
+
+
+export const searchDocument = title => (dispatch) => {
+  dispatch(documentsSearchFilterRequest());
+  return (
+    request
+      .get(`/api/search/documents?q=${title}`)
       .set('x-access-token', tokenUtils.getAuthToken())
-      .end((err, res) => dispatch(documentsSearchFilter(res.body)));
-  };
+      .then((response) => {
+        dispatch(documentsSearchFilterSuccess(response.body));
+      })
+      .catch((error) => {
+        dispatch(documentsSearchFilterfailure(error.response));
+        throw error;
+      })
+  );
 };
 
 export const listDocuments = (limit, offset) => (dispatch) => {
