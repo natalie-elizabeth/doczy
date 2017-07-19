@@ -44,9 +44,11 @@ class LoginUser extends React.Component {
     event.preventDefault();
     if (this.isValid()) {
       // this.setState({ errors: {}, isLoading: true });
-      this.props.authActions.login({ email: this.state.email, password: this.state.password }).then((res) => {
-        this.context.router.history.push('/documents');
-      })
+      this.props.authActions.login({ email: this.state.email, password: this.state.password })
+        .then((res) => {
+          this.context.router.history.push('/documents');
+          location.reload();
+        })
         .catch(err => this.setState({ errors: err, isLoading: false }));
       this.setState({ snackBarOpen: true });
       this.handleClose();
@@ -70,7 +72,7 @@ class LoginUser extends React.Component {
           <center>
             <Card className="container">
               <form onSubmit={this.onSubmit} className="col s12">
-                <h2 className="card-heading" style={{ fontSize: "48px", fontFamily: "Roboto", fontWeight: "bold", color: "#681039" }}>Sign In</h2>
+                <h2 className="card-heading" style={{ fontSize: "48px", fontFamily: "Roboto", fontWeight: "bold", color: "black" }}>Sign In</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
                 <div className='row'>
                   <div className="input-field col s6">
@@ -80,7 +82,7 @@ class LoginUser extends React.Component {
                       name="email"
                       errorText={errors.email}
                       onChange={this.onChange}
-                      value={this.state.name}
+                      value={this.state.email}
                     />
                   </div>
                 </div>

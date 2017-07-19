@@ -59,15 +59,16 @@ class LoggedInView extends React.Component {
           </Link>
         </li>
 
-
+        {/* <li className="nav-item">
+          <DocumentSearch />
+        </li> */}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <li className="nav-item">
           <Link to="/" className="nav-link" onClick={this.logout} style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             <button> <i className="ion-gear-a"></i>&nbsp;Logout </button>
           </Link>
         </li>
-        <li className="nav-item">
-          <DocumentSearch />
-        </li>
+
       </ul >
     );
   }
@@ -110,9 +111,9 @@ class Header extends React.Component {
       <nav className="navbar navbar-inverse">
         <div className="container">
 
-          <Link to="/" className="navbar-brand" style={{ paddingRight: "7em", fontFamily: "Roboto", fontSize: "40px", color: "#ffffff" }}>
+          <Link to="/" className="navbar-brand" style={{ paddingRight: "5em", fontFamily: "Roboto", fontSize: "40px", color: "#ffffff" }}>
             {this.props.appName}
-          </Link>
+          </Link> <br /><br />
           {
             token ? <LoggedInView currentUser={this.props.currentUser} roleId={jwtDecode(token).roleId} /> : <LoggedOutView currentUser={this.props.currentUser} />
           }

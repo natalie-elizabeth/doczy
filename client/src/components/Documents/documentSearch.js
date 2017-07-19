@@ -19,7 +19,7 @@ export class DocumentSearch extends React.Component {
   }
 
   apiCall() {
-    console.log('>>>>>>>>>>>>>>>>', this.state.searchFilter);
+    // console.log('>>>>>>>>>>>>>>>>', this.state.searchFilter);
     this.props.searchDocument(this.state.searchFilter);
   }
   handleSearchInput(event) {
@@ -31,11 +31,13 @@ export class DocumentSearch extends React.Component {
   render() {
     return (
       <div className="search-wrapper card" style={{ marginLeft: '80%' }}>
+
+        <i className="material-icons" style={{ color: "#ffffff" }}>search</i>
         <input
           id="search"
           onChange={this.handleSearchInput}
         />
-        <i className="material-icons">search</i>
+
       </div>
 
     );

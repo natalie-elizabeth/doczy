@@ -12,6 +12,7 @@ import { signupRequest } from '../../actions/authActions';
 import validateInput from '../../utils/validateSignup';
 
 
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -24,6 +25,7 @@ class SignUp extends Component {
       lastname: '',
       email: '',
       password: '',
+      confirm: '',
       role_id: 2,
       errors: {},
       isLoading: false,
@@ -47,7 +49,7 @@ class SignUp extends Component {
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
+      // this.setState({ errors: {}, isLoading: true });
       this.props.signupRequest((this.state))
         .then(() => {
           console.log('hey');
@@ -55,7 +57,7 @@ class SignUp extends Component {
 
         })
         .catch(err => {
-          this.setState({ errors: err, isLoading: false });
+          this.setState({ errors: err.response.data, isLoading: false });
         });
       this.setState({ snackBarOpen: true });
       this.handleClose();
@@ -66,7 +68,7 @@ class SignUp extends Component {
 
   isValid() {
     const { errors, isValid } = validateInput(this.state);
-    if (isValid) {
+    if (!isValid) {
       this.setState({ errors });
     }
     return isValid;
@@ -80,7 +82,7 @@ class SignUp extends Component {
           <center>
             <Card className="container">
               <form action="/" onSubmit={this.onSubmit} className="col s12">
-                <h2 className="card-heading">Sign Up</h2>
+                <h2 className="card-heading" style={{ fontFamily: "Roboto", color: "black", fontStyle: "bold", fontSize: "48px" }} >Sign Up</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
 
                 <div className='row'>
