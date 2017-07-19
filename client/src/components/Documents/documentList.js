@@ -8,9 +8,9 @@ import { Card, CardText } from 'material-ui/Card';
 const DocumentList = ({ documents, handleOpen, style }) => (
   <div>
     <Card>
-      {documents.map(document =>
+      <div style={{ fontFamily: "Roboto", fontSize: "15px" }}> {documents.map(document =>
         <DocumentView key={document.id} document={document} />
-      )}
+      )}</div>
     </Card>
     <div>
       <FloatingActionButton onClick={handleOpen} style={style}>

@@ -34,7 +34,7 @@ export class DocumentViewContainer extends React.Component {
     this.state = {
       open: false,
       activePage: 1,
-      limit: 7,
+      limit: 3,
       offset: 0,
       document: {
         title: '',
@@ -57,9 +57,9 @@ export class DocumentViewContainer extends React.Component {
   componentWillMount() {
     this.props.documentActions.listDocuments(this.state.limit, this.state.offset);
   }
-  onSetAccess(event, value) {
+  onSetAccess(event, index, value) {
     const Document = this.state.document;
-    Document.access = event.target.value;
+    Document.access = value;
     this.setState({ document: Document });
   }
   onTitleChange(event) {
@@ -137,7 +137,7 @@ export class DocumentViewContainer extends React.Component {
       <div className="container">
 
         <div>
-          <DocumentSearch />
+          {/* <DocumentSearch /> */}
           {console.log("docs after search", this.props.documentList)}
           {this.props.documentList.documents && this.props.documentList.documents.length ? (this.props.documentList.documents.map(document =>
 
@@ -151,13 +151,7 @@ export class DocumentViewContainer extends React.Component {
 
             />)
           )) : 'No Documents Available'}
-          <Pagination
-            activePage={this.state.activePage}
-            itemsCountPerPage={this.state.limit}
-            totalItemsCount={9}
-            pageRangeDisplayed={5}
-            onChange={this.handlePages}
-          />˚q
+
           <div>
             <FloatingActionButton onClick={this.handleOpen} backgroundColor="#681140" style={style}>
               <ContentAdd />

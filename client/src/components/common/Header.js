@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as roleActions from '../../actions/roleActions';
 import * as tokenUtils from '../../utils/tokenUtils';
 import jwtDecode from 'jwt-decode';
-
+import DocumentSearch from '../Documents/documentSearch';
 
 class LoggedInView extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class LoggedInView extends React.Component {
     if (roleId === 1) {
       dashboard = (
         <li className="nav-item">
-          <Link to="dashboard" className="nav-link">
+          <Link to="dashboard" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             <i className="ion-compose"></i>&nbsp;Dashboard
           </Link>
         </li>
@@ -40,13 +40,13 @@ class LoggedInView extends React.Component {
       < ul className="nav navbar-nav pull-xs-right" >
 
         <li className="nav-item">
-          <Link to="/" className="nav-link">
+          <Link to="/" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             Home
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link to="documents" className="nav-link">
+          <Link to="documents" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             <i className="ion-compose"></i>&nbsp;Documents
           </Link>
         </li>
@@ -54,18 +54,20 @@ class LoggedInView extends React.Component {
         {dashboard}
 
         <li className="nav-item">
-          <Link to="settings" className="nav-link">
+          <Link to="settings" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             <i className="ion-gear-a"></i>&nbsp;Settings
           </Link>
         </li>
 
 
         <li className="nav-item">
-          <Link to="/" className="nav-link" onClick={this.logout}>
+          <Link to="/" className="nav-link" onClick={this.logout} style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             <button> <i className="ion-gear-a"></i>&nbsp;Logout </button>
           </Link>
         </li>
-
+        <li className="nav-item">
+          <DocumentSearch />
+        </li>
       </ul >
     );
   }
@@ -77,18 +79,18 @@ const LoggedOutView = props => {
       <ul className="nav navbar-nav pull-xs-right">
 
         <li className="nav-item">
-          <Link to="/" className="nav-link">
+          <Link to="/" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             Home
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/login" className="nav-link">
+          <Link to="/login" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             Sign in
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link to="/signup" className="nav-link">
+          <Link to="/signup" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
             Sign up
           </Link>
         </li>
@@ -108,7 +110,7 @@ class Header extends React.Component {
       <nav className="navbar navbar-inverse">
         <div className="container">
 
-          <Link to="/" className="navbar-brand">
+          <Link to="/" className="navbar-brand" style={{ paddingRight: "7em", fontFamily: "Roboto", fontSize: "40px", color: "#ffffff" }}>
             {this.props.appName}
           </Link>
           {

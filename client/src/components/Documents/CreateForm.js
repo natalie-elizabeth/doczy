@@ -28,23 +28,23 @@ const CreateDocument = props => (
       rows={2}
       rowsMax={10}
     /><br /> <br />
-    <TextField
+    {/* <TextField
       name="access"
       type="text"
       placeholder="Access"
       onChange={props.onSetAccess}
       defaultValue={props.document.access}
       fullWidth
-    />
-    {/* <SelectField
+    /> */}
+    <SelectField
       floatingLabelText="Access"
       value={props.document.access}
-    onChange={props.onSetAccess}
+      onChange={props.onSetAccess}
     >
       <MenuItem value={'public'} primaryText="Public" />
-    <MenuItem value={'private'} primaryText="Private" />
-    <MenuItem value={'role'} primaryText="Role" />
-    </SelectField> */}
+      <MenuItem value={'private'} primaryText="Private" />
+      <MenuItem value={'role'} primaryText="Role" />
+    </SelectField>
   </div >
 );
 
