@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Snackbar from 'material-ui/Snackbar';
 import login from '../../actions/authActions';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/authActions';
@@ -21,17 +22,24 @@ class LoginUser extends React.Component {
       email: '',
       password: '',
       errors: {},
-      isLoading: false
+      isLoading: false,
+      snackBarOpen: false
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.isValid = this.isValid.bind(this);
+    this.closeSnackBar = this.closeSnackBar.bind(this);
+
   };
   onChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  closeSnackBar() {
+    this.setState({ snackBarOpen: false });
+  }
+
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
@@ -40,6 +48,9 @@ class LoginUser extends React.Component {
         this.context.router.history.push('/documents');
       })
         .catch(err => this.setState({ errors: err, isLoading: false }));
+      this.setState({ snackBarOpen: true });
+      this.handleClose();
+
     }
   }
 
@@ -90,6 +101,12 @@ class LoginUser extends React.Component {
                 <div className="button-line">
                   <RaisedButton type="submit" label="Sign in" primary />
                 </div>
+                <Snackbar
+                  open={this.state.snackBarOpen}
+                  message="Login successful"
+                  autoHideDuration={2000}
+                  onRequestClose={this.closeSnackBar}
+                />
                 <CardText>Dont have an account? <Link to={'/signup'}>Register</Link></CardText>
               </form>
             </Card>

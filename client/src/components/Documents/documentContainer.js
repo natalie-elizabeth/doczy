@@ -8,6 +8,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Snackbar from 'material-ui/Snackbar';
 import * as documentActions from '../../actions/docActions';
 import DocumentView from './documentView';
 import DocumentList from './documentList';
@@ -39,6 +40,7 @@ export class DocumentViewContainer extends React.Component {
         title: '',
         content: '',
         access: '',
+        snackBarOpen: false
 
       }
     };
@@ -50,23 +52,24 @@ export class DocumentViewContainer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePages = this.handlePages.bind(this);
+    this.closeSnackBar = this.closeSnackBar.bind(this);
   }
   componentWillMount() {
     this.props.documentActions.listDocuments(this.state.limit, this.state.offset);
   }
-  onSetAccess(e, index, value) {
+  onSetAccess(event, value) {
     const Document = this.state.document;
-    Document.access = value;
+    Document.access = event.target.value;
     this.setState({ document: Document });
   }
-  onTitleChange(e) {
+  onTitleChange(event) {
     const Document = this.state.document;
-    Document.title = e.target.value;
+    Document.title = event.target.value;
     this.setState({ document: Document });
   }
-  onContentChange(e) {
+  onContentChange(event) {
     const Document = this.state.document;
-    Document.content = e.target.value;
+    Document.content = event.target.value;
     this.setState({ document: Document });
   }
 
@@ -78,21 +81,25 @@ export class DocumentViewContainer extends React.Component {
     this.setState({ open: false, edit: false });
   }
 
-  handleChange(e) {
-    const { name, value } = e.target;
+  handleChange(event) {
+    const { name, value } = event.target;
     this.setState({
       document: Object.assign({}, this.state.document, {
         [name]: value
       })
     });
   }
+  closeSnackBar() {
+    this.setState({ snackBarOpen: false });
+  }
+
   handlePages(pageNumber) {
     this.setState({ activePage: pageNumber });
     this.props.documentActions.listDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
 
   updateDocument(document) {
-    return e => {
+    return event => {
       this.setState({
         document,
         edit: true,
@@ -101,13 +108,14 @@ export class DocumentViewContainer extends React.Component {
     };
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     this.state.edit
       ? this.props.documentActions.updateDocument(this.state.document)
       : this.props.documentActions.createDocument(this.state.document);
-
+    this.setState({ snackBarOpen: true });
     this.handleClose();
+
   }
 
   render() {
@@ -179,7 +187,12 @@ export class DocumentViewContainer extends React.Component {
               />
             )}
         </Dialog>
-
+        <Snackbar
+          open={this.state.snackBarOpen}
+          message="Document Saved"
+          autoHideDuration={2000}
+          onRequestClose={this.closeSnackBar}
+        />
       </div>
 
     );
