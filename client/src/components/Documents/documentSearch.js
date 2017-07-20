@@ -32,7 +32,7 @@ export class DocumentSearch extends React.Component {
     return (
       <div className="search-wrapper card" style={{ marginLeft: '80%' }}>
 
-        <i className="material-icons" style={{ color: "#ffffff" }}>search</i>
+        <i className="material-icons" style={{ color: "black" }}>search</i>
         <input
           id="search"
           onChange={this.handleSearchInput}

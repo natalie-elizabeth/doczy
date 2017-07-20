@@ -3,16 +3,29 @@ const { User, Document, Role } = require('../../models');
 class DocumentController {
 
   static create(req, res) {
-    Document.create({
-      user_id: req.userId,
-      content: req.body.content,
-      title: req.body.title,
-      access: req.body.access
-    })
-      .then(doc => res.status(201).json(doc))
-      .catch(error => {
-        res.status(400).json(error);
-      });
+    Role.findOne({
+      where: {
+        id: req.roleId
+      }
+    }).then(role => {
+      let roleName = role.role_name;
+      console.log('>>>>>>>>>>>>>>>>>.', roleName);
+      let access = (req.body.access.toLowerCase() === 'role') ? roleName : req.body.access;
+      const documentInfo = {
+        user_id: req.userId,
+        content: req.body.content,
+        title: req.body.title,
+        access
+      };
+
+      Document.create(documentInfo)
+        .then(doc => res.status(201).json(doc))
+        .catch(error => {
+          res.status(400).json(error);
+        });
+    });
+
+
   }
 
 

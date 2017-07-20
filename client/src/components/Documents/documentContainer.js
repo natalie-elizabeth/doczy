@@ -137,7 +137,8 @@ export class DocumentViewContainer extends React.Component {
       <div className="container">
 
         <div>
-          {/* <DocumentSearch /> */}
+          <div style={{ marginLeft: '30px' }}> <DocumentSearch /> </div>
+          <hr />
           {console.log("docs after search", this.props.documentList)}
           {this.props.documentList.documents && this.props.documentList.documents.length ? (this.props.documentList.documents.map(document =>
 

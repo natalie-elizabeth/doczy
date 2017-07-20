@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, CardActions, CardTitle, CardMedia, CardText } from 'material-ui/Card';
@@ -9,14 +9,17 @@ import AppBar from 'material-ui/AppBar';
 import CreateIcon from 'material-ui/svg-icons/content/create';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/authActions';
 import { getUserFromToken } from '../../utils/tokenUtils';
 import DocumentList from '../Documents/documentList';
-import { bindActionCreators } from 'redux';
 
-export class UserProfile extends Component {
+
+
+export class OwnProfile extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       errors: {},
       isEditing: false,
@@ -30,14 +33,13 @@ export class UserProfile extends Component {
   componentWillMount() {
     let user = getUserFromToken();
     this.setState({ user: user });
-    console.log(">>>>>>>>>>>user", user);
-    console.log("this.props>>>>>>>>", this.props.user);
   }
+
   editUserToggle() {
     this.setState({ isEditing: !this.state.isEditing });
   }
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     const hasErrors = Object.keys(this.state.errors).some(key => !!this.state.errors[key]);
     if (hasErrors) {
       return;
@@ -47,22 +49,22 @@ export class UserProfile extends Component {
     });
     this.props.updateUser(updatedUser);
   }
-  handleChange(e) {
-    e.preventDefault();
+  handleChange(event) {
+    event.preventDefault();
     let editedUser = this.state.editedUser;
     this.setState({
       editedUser: Object.assign({}, editedUser, {
-        [e.target.name]: e.target.value
+        [event.target.name]: event.target.value
       })
     });
   }
+
   canEdit(user) {
     return true;
   }
   render() {
     let user = this.props.user;
-    console.log('user>>>>>>>>>>>>>', user);
-    if (user) {
+    if (!user) {
       return (
         <CircularProgress />
       );
@@ -85,14 +87,14 @@ export class UserProfile extends Component {
                 </CardActions> : <span />}
             </Card> :
             <Card style={{ maxWidth: 350, marginTop: 30 }}>
-              <CardMedia overlay={<CardTitle title={user.username} />} />
+              <CardMedia overlay={<CardTitle title={user.userName} />} />
               <CardText>
                 <TextField
                   hintText="Username"
                   floatingLabelText="Username"
                   name="userName"
                   onChange={this.handleChange}
-                  defaultValue={user.username}
+                  defaultValue={user.userName}
 
                 /><br />
                 <TextField
@@ -128,7 +130,7 @@ export class UserProfile extends Component {
           }
         </div>
         <div className="col-md-8 col-sm-8" >
-          {/* <DocumentList documents={user.documents} /> */}
+          <DocumentList documents={user.documents} />
 
         </div>
       </div>
@@ -141,7 +143,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(authActions, dispatch);
+  return bindActionCreators(userActions, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(OwnProfile);

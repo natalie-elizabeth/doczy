@@ -14,6 +14,7 @@ import NotFoundComponent from './common/notFound';
 import SettingsPage from '../components/common/settingsPage';
 import UserList from '../components/User/userList';
 import Settings from '../components/common/settings';
+import OwnProfile from '../components/common/userProfile';
 
 
 export default class App extends Component {
@@ -32,7 +33,7 @@ export default class App extends Component {
             <Route path='/roles' component={Roles} />
             <Route path='/dashboard' component={dashboard} />
             <Route component={NotFoundComponent} path="/not-found" />
-            {/* <Route path='/settings' component={Settings} /> */}
+            <Route path='/settings' component={UserProfile} />
             <Route path='/users' component={UserList} />
           </div>
         </div>

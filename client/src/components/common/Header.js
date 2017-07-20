@@ -37,39 +37,37 @@ class LoggedInView extends React.Component {
     };
 
     return (
-      < ul className="nav navbar-nav pull-xs-right" >
+      <div>
+        < ul className="nav navbar-nav pull-xs-right" >
 
-        <li className="nav-item">
-          <Link to="/" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
-            Home
+          <li className="nav-item">
+            <Link to="/" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
+              Home
           </Link>
-        </li>
+          </li>
 
-        <li className="nav-item">
-          <Link to="documents" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
-            <i className="ion-compose"></i>&nbsp;Documents
+          <li className="nav-item">
+            <Link to="documents" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
+              <i className="ion-compose"></i>&nbsp;Documents
           </Link>
-        </li>
+          </li>
 
-        {dashboard}
+          {dashboard}
 
-        <li className="nav-item">
-          <Link to="settings" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
-            <i className="ion-gear-a"></i>&nbsp;Settings
+          <li className="nav-item">
+            <Link to="settings" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
+              <i className="ion-gear-a"></i>&nbsp;Settings
           </Link>
-        </li>
+          </li>
 
-        {/* <li className="nav-item">
-          <DocumentSearch />
-        </li> */}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <li className="nav-item">
-          <Link to="/" className="nav-link" onClick={this.logout} style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
-            <button> <i className="ion-gear-a"></i>&nbsp;Logout </button>
-          </Link>
-        </li>
-
-      </ul >
+          <li className="nav-item">
+            <Link to="/" className="nav-link" onClick={this.logout} style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
+              <button> <i className="ion-gear-a"></i>&nbsp;Logout </button>
+            </Link>
+          </li>
+        </ul >
+        <p style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff", paddingRight: "20px" }}> Welcome </p>
+      </div>
     );
   }
 }
