@@ -106,7 +106,7 @@ class Header extends React.Component {
 
 
     return (
-      <nav className="navbar navbar-inverse">
+      <nav className="navbar navbar-inverse ">
         <div className="container">
 
           <Link to="/" className="navbar-brand" style={{ paddingRight: "5em", fontFamily: "Roboto", fontSize: "40px", color: "#ffffff" }}>
