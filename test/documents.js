@@ -38,7 +38,7 @@ describe('/POST documents', () => {
     request(app)
       .post('/api/users/login')
       .send({
-        userName: 'Gavilar',
+        username: 'Gavilar',
         password: 'issastrongpassword'
       })
       .expect(200)

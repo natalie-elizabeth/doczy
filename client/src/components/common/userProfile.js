@@ -33,6 +33,7 @@ export class OwnProfile extends React.Component {
   componentWillMount() {
     let user = getUserFromToken();
     this.setState({ user: user });
+    console.log('this guy>>>>>>>>>>>>>>>', user);
   }
 
   editUserToggle() {
@@ -41,6 +42,7 @@ export class OwnProfile extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const hasErrors = Object.keys(this.state.errors).some(key => !!this.state.errors[key]);
+    console.log('errors >>>>>>>>>>>>.', hasErrors);
     if (hasErrors) {
       return;
     }
@@ -62,8 +64,10 @@ export class OwnProfile extends React.Component {
   canEdit(user) {
     return true;
   }
+
   render() {
     let user = this.props.user;
+    console.log('this guy>>>>>>>>>>>>>>>', user);
     if (!user) {
       return (
         <CircularProgress />
@@ -143,7 +147,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(userActions, dispatch);
+  return bindActionCreators(authActions, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnProfile);

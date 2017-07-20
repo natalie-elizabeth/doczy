@@ -33,7 +33,7 @@ export default class App extends Component {
             <Route path='/roles' component={Roles} />
             <Route path='/dashboard' component={dashboard} />
             <Route component={NotFoundComponent} path="/not-found" />
-            <Route path='/settings' component={UserProfile} />
+            <Route path='/settings' component={OwnProfile} />
             <Route path='/users' component={UserList} />
           </div>
         </div>

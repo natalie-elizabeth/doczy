@@ -137,6 +137,7 @@ export class DocumentViewContainer extends React.Component {
       <div className="container">
 
         <div>
+          {/* <p style={{ fontFamily: "Roboto", fontSize: "20px", color: "black", paddingRight: "20px", fontStyle: "italic" }}> Welcome </p> */}
           <div style={{ marginLeft: '30px' }}> <DocumentSearch /> </div>
           <hr />
           {console.log("docs after search", this.props.documentList)}
@@ -151,7 +152,7 @@ export class DocumentViewContainer extends React.Component {
 
 
             />)
-          )) : 'No Documents Available'}
+          )) : <p style={{ fontSize: "20px" }}>No Documents Available</p>}
 
           <div>
             <FloatingActionButton onClick={this.handleOpen} backgroundColor="#681140" style={style}>

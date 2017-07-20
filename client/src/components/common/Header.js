@@ -66,7 +66,7 @@ class LoggedInView extends React.Component {
             </Link>
           </li>
         </ul >
-        <p style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff", paddingRight: "20px" }}> Welcome </p>
+
       </div>
     );
   }
