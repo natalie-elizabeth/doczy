@@ -106,28 +106,7 @@ describe('actions', () => {
       });
   });
 
-  it('should return that  user is logged in', (done) => {
 
-    const saltRounds = bcrypt.genSaltSync(10);
-    const password = bcrypt.hashSync('issastrongpassword', saltRounds);
-    let findOneStub = sinon.stub(User, 'findOne').resolves({ password, id: 1, roleId: 1 });
-
-    request(app)
-      .post('/api/user/login')
-      .send({
-        username: 'Gavilar',
-        password: 'issastrongpassword'
-      })
-      .expect(200)
-      .end((err, res) => {
-        if (err) throw err;
-        assert(res.body.message, 'You were successfully logged in');
-        assert.property(res.body, 'token');
-        token = res.body.token;
-        findOneStub.restore();
-        done();
-      });
-  });
 
 });
 

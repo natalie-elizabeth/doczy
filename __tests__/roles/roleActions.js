@@ -98,7 +98,7 @@ describe('actions', () => {
     };
     nock(/^.*$/)
       .put('/api/roles')
-      .reply()
+      .reply();
 
   });
   it('should update a role', () => {
@@ -125,7 +125,54 @@ describe('actions', () => {
 
     const store = mockStore({});
 
-    return store.dispatch(actions.updateRole(editFields)).then(() => {
+    return store.dispatch(actions.updateRole(re)).then(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(expectedActions);
+    });
+  });
+  it('should list all available roles', () => {
+    const response = {
+      body: {
+        roles: []
+      }
+    };
+
+    nock(/^.*$/)
+      .get('/api/roles')
+      .reply(200, response.body);
+
+    const expectedActions = [{
+      type: c.ROLE_REQUEST
+    }, {
+      type: c.ROLE_SUCCESS,
+      roles: response.body,
+    }];
+
+    const store = mockStore({});
+
+    return store.dispatch(actions.listRoles()).then(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(expectedActions);
+    });
+  });
+  it('should delete a role', () => {
+    const response = {
+      body: {}
+    };
+    const roleId = 1;
+    nock(/^.*$/)
+      .delete(`/api/roles/${roleId}`)
+      .reply(204, response.body);
+
+    const expectedActions = [{
+      type: c.ROLE_DELETE_REQUEST
+    }, {
+      type: c.ROLE_DELETE_SUCCESS,
+      roles: response.body,
+    }];
+
+    const store = mockStore({});
+    return store.dispatch(actions.deleteRole(response)).then(() => {
       const actions = store.getActions();
       expect(actions).toEqual(expectedActions);
     });
