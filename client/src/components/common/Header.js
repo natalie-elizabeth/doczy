@@ -54,11 +54,11 @@ class LoggedInView extends React.Component {
 
           {dashboard}
 
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="settings" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
               <i className="ion-gear-a"></i>&nbsp;Settings
           </Link>
-          </li>
+          </li> */}
 
           <li className="nav-item">
             <Link to="/" className="nav-link" onClick={this.logout} style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>

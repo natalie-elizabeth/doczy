@@ -51,7 +51,7 @@ export class DocumentViewContainer extends React.Component {
     this.onContentChange = this.onContentChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePages = this.handlePages.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
     this.closeSnackBar = this.closeSnackBar.bind(this);
   }
   componentWillMount() {
@@ -93,7 +93,7 @@ export class DocumentViewContainer extends React.Component {
     this.setState({ snackBarOpen: false });
   }
 
-  handlePages(pageNumber) {
+  handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
     this.props.documentActions.listDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
@@ -153,6 +153,15 @@ export class DocumentViewContainer extends React.Component {
 
             />)
           )) : <p style={{ fontSize: "20px" }}>No Documents Available</p>}
+          <div className="paginitaion" >
+            <Pagination
+              activePage={this.state.activePage}
+              itemsCountPerPage={this.state.limit}
+              totalItemsCount={10}
+              pageRangeDisplayed={3}
+              onChange={this.handlePageChange}
+            />
+          </div>
 
           <div>
             <FloatingActionButton onClick={this.handleOpen} backgroundColor="#681140" style={style}>

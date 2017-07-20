@@ -19,21 +19,18 @@ import DocumentList from '../Documents/documentList';
 export class OwnProfile extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       errors: {},
       isEditing: false,
-      user: {},
-      editedUser: {}
+      editedUser: {},
+      user: getUserFromToken() || {}
     };
     this.editUserToggle = this.editUserToggle.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentWillMount() {
-    let user = getUserFromToken();
-    this.setState({ user: user });
-    console.log('this guy>>>>>>>>>>>>>>>', user);
+
   }
 
   editUserToggle() {
@@ -67,7 +64,7 @@ export class OwnProfile extends React.Component {
 
   render() {
     let user = this.props.user;
-    console.log('this guy>>>>>>>>>>>>>>>', user);
+    console.log('this guy---->>>>>>>>>>>>>>>', user);
     if (!user) {
       return (
         <CircularProgress />
@@ -142,12 +139,15 @@ export class OwnProfile extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.authReducer.user
-});
+const mapStateToProps = state => {
+  console.log('state', state);
+  return { user: state.user };
+};
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(authActions, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnProfile);
+
+

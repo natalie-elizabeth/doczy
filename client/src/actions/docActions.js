@@ -120,7 +120,7 @@ export const listDocuments = (limit, offset) => (dispatch) => {
   dispatch(documentsRequest());
   return (
     request
-      .get('/api/documents')
+      .get(`/api/documents?limit=${limit}&offset=${offset}`)
       .set('x-access-token', tokenUtils.getAuthToken())
       .send(limit, offset)
       .then((response) => {
