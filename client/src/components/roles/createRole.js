@@ -40,7 +40,6 @@ class Roles extends Component {
     this.editRole = this.editRole.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
-    // console.log('@ here >>>>>>>>>>>', this.state);
   };
 
   componentDidMount() {
@@ -58,9 +57,7 @@ class Roles extends Component {
       this.setState({ errors: {}, isLoading: true });
       this.props.createRole((this.state))
         .then(() => {
-          console.log('crushy');
           this.context.router.history.push('/roles');
-          console.log('are you here yet?');
         })
         .catch(err => {
           this.setState({ errors: err, isLoading: false });
@@ -91,7 +88,6 @@ class Roles extends Component {
     const { errors } = this.state;
     let roles = this.props.roles;
     let loading = this.props.loading;
-    console.log('>>>>>>>>>....', roles);
     return (
       <div>
 
@@ -138,13 +134,10 @@ class Roles extends Component {
                             {role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <RaisedButton secondary={true} onTouchTap={() => {
-                          {/* console.log('is this working?>>>>', role.id); */ }
-
                           if (confirm("Are you sure you want to delete this role?") === true) {
                             this.props.deleteRole(role.id)
                               .then(() => {
                                 this.props.listRoles();
-                                console.log('Role Deleted');
                               });
                             alert("Role deleted");
                           }
@@ -155,14 +148,11 @@ class Roles extends Component {
 
                         } style={{ style }} danger>Delete</RaisedButton> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <RaisedButton primary={true} onTouchTap={() => {
-                          console.log('things change');
-                          console.log(">>>>>>>>>>>>> tell me you got here", role.id);
                           this.state.edittingRoleId = index;
                           this.props.updateRole({ role_name: this.state.newRoleValue, id: role.id })
                             .then(() => {
                               this.setState({ edittingRoleId: false });
                               this.props.listRoles();
-                              console.log('you better work');
                             });
 
                         }}>Update</RaisedButton> <br /><br /> </p>

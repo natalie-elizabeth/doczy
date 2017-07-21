@@ -19,7 +19,6 @@ export class DocumentSearch extends React.Component {
   }
 
   apiCall() {
-    // console.log('>>>>>>>>>>>>>>>>', this.state.searchFilter);
     this.props.searchDocument(this.state.searchFilter);
   }
   handleSearchInput(event) {

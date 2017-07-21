@@ -19,8 +19,6 @@ import DocumentSearch from './documentSearch';
 
 import * as tokenUtils from '../../utils/tokenUtils';
 
-console.log('tokenUtil:', tokenUtils.getUserFromToken + '');
-
 const style = {
   position: 'fixed',
   top: 70,
@@ -137,10 +135,8 @@ export class DocumentViewContainer extends React.Component {
       <div className="container">
 
         <div>
-          {/* <p style={{ fontFamily: "Roboto", fontSize: "20px", color: "black", paddingRight: "20px", fontStyle: "italic" }}> Welcome </p> */}
           <div style={{ marginLeft: '30px' }}> <DocumentSearch /> </div>
           <hr />
-          {console.log("docs after search", this.props.documentList)}
           {this.props.documentList.documents && this.props.documentList.documents.length ? (this.props.documentList.documents.map(document =>
 
             (<DocumentView
