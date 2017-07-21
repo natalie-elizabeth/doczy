@@ -54,12 +54,6 @@ class LoggedInView extends React.Component {
 
           {dashboard}
 
-          {/* <li className="nav-item">
-            <Link to="settings" className="nav-link" style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
-              <i className="ion-gear-a"></i>&nbsp;Settings
-          </Link>
-          </li> */}
-
           <li className="nav-item">
             <Link to="/" className="nav-link" onClick={this.logout} style={{ fontFamily: "Roboto", fontSize: "20px", color: "#ffffff" }}>
               <button> <i className="ion-gear-a"></i>&nbsp;Logout </button>
@@ -102,7 +96,6 @@ const LoggedOutView = props => {
 class Header extends React.Component {
   render() {
     let token = tokenUtils.getAuthToken();
-    // console.log('Token>>>>>>>>>>>>>', token);
 
 
     return (
@@ -113,7 +106,7 @@ class Header extends React.Component {
             {this.props.appName}
           </Link> <br /><br />
           {
-            token ? <LoggedInView currentUser={this.props.currentUser} roleId={jwtDecode(token).roleId} /> : <LoggedOutView currentUser={this.props.currentUser} />
+            token ? <LoggedInView roleId={jwtDecode(token).roleId} /> : <LoggedOutView />
           }
 
         </div>

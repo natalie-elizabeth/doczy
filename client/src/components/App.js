@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Header from './common/Header';
-import HeaderApp from './common/App';
+import HeaderApp from './common/headerApp';
 import Home from './Home/home';
 import Login from './User/loginPage';
 import SignUp from './User/signUpPage';
@@ -10,10 +9,7 @@ import DocumentViewContainer from './Documents/documentContainer';
 import Roles from './roles/createRole';
 import dashboard from './common/adminDashboard';
 import NotFoundComponent from './common/notFound';
-import SettingsPage from '../components/common/settingsPage';
 import UserList from '../components/User/userList';
-import Settings from '../components/common/settings';
-import OwnProfile from '../components/common/userProfile';
 
 
 export default class App extends Component {
@@ -31,7 +27,6 @@ export default class App extends Component {
             <Route path='/roles' component={Roles} />
             <Route path='/dashboard' component={dashboard} />
             <Route component={NotFoundComponent} path="/not-found" />
-            <Route path='/settings' component={OwnProfile} />
             <Route path='/users' component={UserList} />
           </div>
         </div>
