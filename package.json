@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": " webpack -p && node ./bin/www",
     "start:dev": "NODE_PATH=./server nodemon ./bin/www",
     "ssh:app": "docker exec -it $(docker ps | grep docker_api | awk '{ print $1}') bash",
     "ssh:db": "docker exec -it $(docker ps | grep postgres | awk '{ print $1}') bash",
