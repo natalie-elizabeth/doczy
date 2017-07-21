@@ -32,7 +32,6 @@ class UserList extends Component {
   }
   componentDidMount() {
     this.props.listUsers();
-    console.log('Nnana>>>>>> ', this.props);
   }
   editRole(index, event) {
     this.setState({ edittingRoleId: index });
@@ -40,7 +39,6 @@ class UserList extends Component {
 
   handleChange() {
     let newValue = this.refs.roleID.value;
-    console.log('newValue>>>>>>>>>>>>>>>>>>>>', newValue);
     this.setState({ newRoleValue: newValue });
   }
 
@@ -48,7 +46,6 @@ class UserList extends Component {
     const { errors } = this.state;
     let users = this.props.users;
     let loading = this.props.loading;
-    console.log('things ', users, loading);
     return (
       <div>
         <MuiThemeProvider>
@@ -58,7 +55,6 @@ class UserList extends Component {
               loading ? <CircularProgress thickness={4} /> :
                 users.map((user, index) => {
                   let roleID = user.role_id;
-                  console.log(roleID);
                   return <table key={index} ><p>{user.id}&nbsp;&nbsp;
                     <span style={{ color: '#681140', fontWeight: 'bold', fontFamily: 'Roboto', cursor: 'pointer', paddingRight: '3em', marginTop: '10px', fontSize: '20px' }}>
                       {user.username}</span>
@@ -71,23 +67,19 @@ class UserList extends Component {
                         {user.role_id}</span>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p> <br />
 
                     <ul>   <RaisedButton secondary={true} onTouchTap={() => {
-                      { console.log('is this working?>>>>', user.role_id); }
                       this.state.edittingRoleId = index;
                       this.props.updateUser({ role_id: this.state.newRoleValue, id: user.id })
                         .then(() => {
                           this.setState({ edittingRoleId: false });
                           this.props.listUsers();
-                          console.log('you better work');
                         });
                     }
                     } style={{ alignItems: "left" }}>Update</RaisedButton> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <RaisedButton primary={true} onTouchTap={() => {
-                        { console.log('is this working?>>>>', user.id); }
                         if (confirm("Are you sure you want to delete this role?") === true) {
                           this.props.deleteUser(user.id)
                             .then(() => {
                               { this.props.listUsers(); }
-                              console.log('Role Deleted');
                             });
                           alert('User has been deleted from the system');
                         }
