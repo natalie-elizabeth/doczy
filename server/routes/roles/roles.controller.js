@@ -6,16 +6,12 @@ class RoleController {
     const { role_name } = req.body;
 
     if (!role_name) {
-      return res.status(403).json({
-        error: 'Missing required field',
-        errors: ['Missing require field name']
-      });
+      return res.status(400).json({ message: 'Missing required field name' });
     }
 
     return Role.create({ role_name })
       .then(role => res.status(201).json(role))
       .catch(error => {
-        console.log(error);
         res.status(400).json(error);
       });
   }
@@ -72,12 +68,9 @@ class RoleController {
       .catch(error => res.status(400).send(error));
   }
   static update(req, res) {
-    console.log('Role ID>>>>>', req.params);
-    console.log('Role Name>>>>>', req.body.role_name);
     return Role
       .findById(req.params.id)
       .then(role => {
-        console.log('Role>>>>', role);
         if (!role) {
           return res.status(404).send({
             message: 'Role Not Found',
@@ -88,7 +81,6 @@ class RoleController {
             role_name: req.body.role_name || role.role_name
           })
           .then((data) => {
-            console.log('Updated>>>', data);
             return res.status(200).send(role);
           })
           .catch((error) => res.status(400).send(error));

@@ -9,7 +9,6 @@ class DocumentController {
       }
     }).then(role => {
       let roleName = role.role_name;
-      console.log('>>>>>>>>>>>>>>>>>.', roleName);
       let access = (req.body.access.toLowerCase() === 'role') ? roleName : req.body.access;
       const documentInfo = {
         user_id: req.userId,
@@ -19,7 +18,7 @@ class DocumentController {
       };
 
       Document.create(documentInfo)
-        .then(doc => res.status(201).json(doc))
+        .then(document => res.status(201).json(document))
         .catch(error => {
           res.status(400).json(error);
         });
@@ -31,7 +30,6 @@ class DocumentController {
 
   static listAll(req, res) {
     const { limit, offset, access } = req.query;
-    console.log('User ID>>>>', req.userId, req.roleId);
     let roleName;
     Role.findOne({
       where: {
@@ -43,7 +41,7 @@ class DocumentController {
         const query = { limit, offset, where: { $or: [{ access: 'public' }, { access: roleName }, { user_id: req.userId }] } };
         return Document.findAll(query)
           .then(documents => res.status(200).json(documents))
-          .catch(error => res.status(500).json(error));
+          .catch(error => res.status(404).json(error));
       });
     });
   }
@@ -66,13 +64,13 @@ class DocumentController {
   static retrieve(req, res) {
     return Document
       .findById(req.params.id)
-      .then(doc => {
-        if (!doc) {
+      .then(document => {
+        if (!document) {
           res.status(404).send({
             message: 'Document Not Found'
           });
         }
-        return res.status(200).json(doc);
+        return res.status(200).json(document);
       });
   }
 
@@ -95,7 +93,6 @@ class DocumentController {
     return Document
       .findById(req.params.id)
       .then(document => {
-        console.log(">>>>>>>>>>>>>>>>>>>>> ", document);
         if (!document) {
           return res.status(404).send({
             message: 'Document Not Found',

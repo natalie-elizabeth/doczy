@@ -117,7 +117,6 @@ class UserController {
           });
         }
         bcrypt.compare(req.body.password, user.password, (err, matched) => {
-          console.log(`SENT PASS: ${req.body.password}, ${user.password}`);
           if (err) {
             return res.status(401).json({
               message: 'Invalid credentials',
@@ -135,7 +134,6 @@ class UserController {
         });
       })
       .catch((error) => {
-        console.log(error);
         res.status(401).send({
           message: 'invalid'
         });
