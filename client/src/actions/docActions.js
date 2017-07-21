@@ -1,98 +1,104 @@
 
 import request from 'superagent';
 import jwtDecode from 'jwt-decode';
-import * as types from './actionTypes';
+import {
+  CLOSE_DOCUMENT, DOCUMENT_REQUEST, DOCUMENT_SUCCESS, DOCUMENT_FAILURE, DOCUMENT_ADD_REQUEST,
+  DOCUMENT_ADD_SUCCESS, DOCUMENT_ADD_FAILURE, DOCUMENT_GET_REQUEST, DOCUMENT_GET_SUCCESS, DOCUMENT_GET_FAILURE,
+  DOCUMENT_UPDATE_REQUEST, DOCUMENT_UPDATE_SUCCESS, DOCUMENT_UPDATE_FAILURE, DOCUMENT_DELETE_REQUEST,
+  DOCUMENT_DELETE_SUCCESS, DOCUMENT_DELETE_FAILURE, SET_DOCUMENTS_SEARCH_FILTER_SUCCESS,
+  SET_DOCUMENTS_SEARCH_FILTER_REQUEST, SET_DOCUMENTS_SEARCH_FILTER_FAILURE
+} from './actionTypes';
 import * as tokenUtils from '../utils/tokenUtils';
 
 import { postEndpoint, getEndpoint, deleteEndpoint } from '../api/api';
 
 export const closeDocument = () => ({
-  type: types.CLOSE_DOCUMENT
+  type: CLOSE_DOCUMENT
 });
 
 export const documentsRequest = () => ({
-  type: types.DOCUMENT_REQUEST
+  type: DOCUMENT_REQUEST
 });
 
 export const documentsLoadSuccess = documents => ({
-  type: types.DOCUMENT_SUCCESS,
+  type: DOCUMENT_SUCCESS,
   documents
 });
 
 export const documentsLoadFailure = documents => ({
-  type: types.DOCUMENT_FAILURE,
+  type: DOCUMENT_FAILURE,
   documents
 });
 
 export const documentsAddRequest = documents => ({
-  type: types.DOCUMENT_ADD_REQUEST,
+  type: DOCUMENT_ADD_REQUEST,
   documents
 });
 
 export const documentsAddSuccess = documents => ({
-  type: types.DOCUMENT_ADD_SUCCESS,
+  type: DOCUMENT_ADD_SUCCESS,
   documents
 });
 
 export const documentsAddFailure = documents => ({
-  type: types.DOCUMENT_ADD_FAILURE,
+  type: DOCUMENT_ADD_FAILURE,
   documents
 });
 
 export const documentsGetRequest = () => ({
-  type: types.DOCUMENT_GET_REQUEST
+  type: DOCUMENT_GET_REQUEST
 });
 
 export const documentsGetSuccess = documents => ({
-  type: types.DOCUMENT_GET_SUCCESS,
+  type: DOCUMENT_GET_SUCCESS,
   documents
 });
 
 export const documentsGetFailure = documents => ({
-  type: types.DOCUMENT_GET_FAILURE,
+  type: DOCUMENT_GET_FAILURE,
   documents
 });
 
 export const documentsUpdateRequest = documents => ({
-  type: types.DOCUMENT_UPDATE_REQUEST,
+  type: DOCUMENT_UPDATE_REQUEST,
   documents
 });
 
 export const documentsUpdateSuccess = document => ({
-  type: types.DOCUMENT_UPDATE_SUCCESS,
+  type: DOCUMENT_UPDATE_SUCCESS,
   document
 });
 
 export const documentsUpdateFailure = documents => ({
-  type: types.DOCUMENT_UPDATE_FAILURE,
+  type: DOCUMENT_UPDATE_FAILURE,
   documents
 });
 
 export const documentsDeleteRequest = () => ({
-  type: types.DOCUMENT_DELETE_REQUEST
+  type: DOCUMENT_DELETE_REQUEST
 });
 
 export const documentsDeleteSuccess = documents => ({
-  type: types.DOCUMENT_DELETE_SUCCESS,
+  type: DOCUMENT_DELETE_SUCCESS,
   documents
 });
 
 export const documentsDeleteFailure = documents => ({
-  type: types.DOCUMENT_DELETE_FAILURE,
+  type: DOCUMENT_DELETE_FAILURE,
   documents
 });
 
 export const documentsSearchFilterSuccess = searchFilter => ({
-  type: types.SET_DOCUMENTS_SEARCH_FILTER_SUCCESS,
+  type: SET_DOCUMENTS_SEARCH_FILTER_SUCCESS,
   searchFilter
 });
 
 export const documentsSearchFilterRequest = () => ({
-  type: types.SET_DOCUMENTS_SEARCH_FILTER_REQUEST,
+  type: SET_DOCUMENTS_SEARCH_FILTER_REQUEST,
 });
 
 export const documentsSearchFilterfailure = searchFilter => ({
-  type: types.SET_DOCUMENTS_SEARCH_FILTER_FAILURE,
+  type: SET_DOCUMENTS_SEARCH_FILTER_FAILURE,
   searchFilter
 });
 

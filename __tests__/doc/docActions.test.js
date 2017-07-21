@@ -58,6 +58,18 @@ describe('actions', () => {
     };
     expect(actions.documentsDeleteFailure()).toEqual(action);
   });
+  it('should get a document on document get success', () => {
+    const expectedAction = {
+      type: c.DOCUMENT_GET_SUCCESS
+    };
+    expect(actions.documentsGetSuccess()).toEqual(expectedAction);
+  });
+  it('should get a document on document get request', () => {
+    const expectedAction = {
+      type: c.DOCUMENT_GET_REQUEST
+    };
+    expect(actions.documentsGetRequest()).toEqual(expectedAction);
+  });
 
   // update
   it('should update a document on document update request', () => {
@@ -112,7 +124,7 @@ describe('actions', () => {
     });
   });
 
-  it('should list all documents', () => {
+  it('should list all available documents', () => {
     const response = {
       body: {
         documents: []

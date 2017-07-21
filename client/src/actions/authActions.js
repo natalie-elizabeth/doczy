@@ -1,12 +1,17 @@
 import request from 'superagent';
-import * as c from '../actions/actionTypes';
+import {
+  LOGIN_SUCCESS, LOGIN_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILURE,
+  USERS_REQUEST, USERS_SUCCESS, USERS_FAILURE, USER_DOCUMENT_REQUEST,
+  USER_DOCUMENT_SUCCESS, USER_DOCUMENT_FAILURE, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAILURE,
+  USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAILURE, CREATE_USER, LOGIN
+} from './actionTypes.js';
 import * as tokenUtils from '../utils/tokenUtils';
 import jwtDecode from 'jwt-decode';
 
 import { postEndpoint, getEndpoint, deleteEndpoint } from '../api/api';
 
 export const createUser = user => ({
-  type: c.CREATE_USER, user
+  type: CREATE_USER, user
 });
 
 export const logoutUser = () => ({ type: c.LOGOUT });
@@ -16,7 +21,7 @@ export const logout = () => (dispatch) => {
 };
 
 export const loginSuccessful = user => ({
-  type: c.LOGIN_SUCCESS,
+  type: LOGIN_SUCCESS,
   isFetching: false,
   isAuthenticated: true,
   token: user.token,
@@ -24,13 +29,13 @@ export const loginSuccessful = user => ({
 });
 
 export const loginFailed = message => ({
-  type: c.LOGIN_FAILURE,
+  type: LOGIN_FAILURE,
   isFetching: false,
   isAuthenticated: false,
 
 });
 
-export const loginUser = user => ({ type: c.LOGIN, user });
+export const loginUser = user => ({ type: LOGIN, user });
 
 export const login = userData => (dispatch) => {
   dispatch(loginUser(userData));
@@ -48,6 +53,7 @@ export const login = userData => (dispatch) => {
       })
   );
 };
+
 export const signupRequest = userData => (dispatch) => {
   dispatch(createUser(userData));
   return (
@@ -64,29 +70,29 @@ export const signupRequest = userData => (dispatch) => {
 };
 
 export const signupSuccessful = () => ({
-  type: c.SIGNUP_SUCCESS,
+  type: SIGNUP_SUCCESS,
   isFetching: true,
   isAuthenticated: false
 });
 
 export const signupFailed = message => ({
-  type: c.SIGNUP_FAILURE,
+  type: SIGNUP_FAILURE,
   isFetching: false,
   isAuthenticated: false,
 });
 
 // user actions
 export const usersRequest = () => ({
-  type: c.USERS_REQUEST
+  type: USERS_REQUEST
 });
 
 export const usersSuccess = users => ({
-  type: c.USERS_SUCCESS,
+  type: USERS_SUCCESS,
   users
 });
 
 export const usersFailure = users => ({
-  type: c.USERS_FAILURE,
+  type: USERS_FAILURE,
   users
 });
 
@@ -122,28 +128,31 @@ export const listUsersDocuments = () => (dispatch) => {
 };
 
 export const userDocumentRequest = () => ({
-  type: c.USER_DOCUMENT_REQUEST
+  type: USER_DOCUMENT_REQUEST
 });
+
 export const userDocumentsSuccess = () => ({
-  type: c.USER_DOCUMENT_SUCCESS
+  type: USER_DOCUMENT_SUCCESS
 });
+
 export const userDocumentsFailure = () => ({
-  type: c.USER_DOCUMENT_FAILURE
+  type: USER_DOCUMENT_FAILURE
 });
 
 export const userDeleteRequest = () => ({
-  type: c.USER_DELETE_REQUEST
+  type: USER_DELETE_REQUEST
 });
 
 export const usersDeleteSuccess = users => ({
-  type: c.USER_DELETE_SUCCESS,
+  type: USER_DELETE_SUCCESS,
   users
 });
 
 export const userDeleteFailure = users => ({
-  type: c.USER_DELETE_FAILURE,
+  type: USER_DELETE_FAILURE,
   users
 });
+
 export const deleteUser = userId => (dispatch) => {
   dispatch(userDeleteRequest());
   return (
@@ -177,16 +186,16 @@ export const updateUser = userData => (dispatch) => {
 };
 
 export const userUpdateRequest = users => ({
-  type: c.USER_UPDATE_REQUEST,
+  type: USER_UPDATE_REQUEST,
   users
 });
 
 export const userUpdateSuccess = user => ({
-  type: c.USER_UPDATE_SUCCESS,
+  type: USER_UPDATE_SUCCESS,
   user
 });
 
 export const userUpdateFailure = users => ({
-  type: c.USER_UPDATE_FAILURE,
+  type: USER_UPDATE_FAILURE,
   users
 });

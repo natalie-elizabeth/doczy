@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import { postEndpoint, getEndpoint, deleteEndpoint } from '../api/api';
 
 
+
 export const listRoles = () => (dispatch) => {
   dispatch(rolesRequest());
   return (
@@ -73,7 +74,7 @@ export const deleteRole = roleId => (dispatch) => {
       .delete(`/api/roles/${roleId}`)
       .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
-        dispatch(roleDeleteSuccess(roleId));
+        dispatch(roleDeleteSuccess(response.body));
       })
       .catch((error) => {
         dispatch(roleDeleteFailure(error.response));

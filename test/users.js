@@ -7,6 +7,9 @@ const expect = require('chai').expect;
 const sinon = require('sinon');
 require('sinon-as-promised');
 const assert = chai.assert;
+const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.SECRET_KEY || 'some secret';
 
 const User = require('../server/models').User;
 const app = require('../app');
@@ -60,6 +63,62 @@ describe('POST user', () => {
       });
   });
 
+  it('should not login an invalid user', done => {
+    let findOneStub = sinon.stub(User, 'findOne').rejects();
+
+    request(app)
+      .post('/api/users/login')
+      .send({
+        email: 'john.doe@gmail.com',
+        password: 'issastrongpassword'
+      })
+      .expect(401)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.equal(res.body.message, "invalid");
+        findOneStub.restore();
+        done();
+      });
+  });
+
+  it('should fail when user not found', done => {
+    let findOneStub = sinon.stub(User, 'findOne').resolves();
+
+    request(app)
+      .post('/api/users/login')
+      .send({
+        email: 'john.doe@gmail.com',
+        password: 'issastrongpassword'
+      })
+      .expect(403)
+      .end((err, res) => {
+        if (err) throw err;
+        assert.equal(res.body.message, "Invalid user");
+        findOneStub.restore();
+        done();
+      });
+  });
+
+  it('Should fail with wrong password and email combination', (done) => {
+    const saltRounds = bcrypt.genSaltSync(10);
+    const password = bcrypt.hashSync('issaStrongPassword', saltRounds);
+    let findOneStub = sinon.stub(User, 'findOne').resolves({ password, id: 1 });
+
+    request(app)
+      .post('/api/users/login')
+      .send({
+        email: 'stuff',
+        password: 'wrongpassword'
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        assert(res.body.message, "password or email is incorrect");
+        findOneStub.restore();
+        done();
+      });
+  });
+
   it('should fail when create fails', (done) => {
     let createStub = sinon.stub(User, 'create').rejects({});
 
@@ -76,14 +135,11 @@ describe('POST user', () => {
   it('should create new user successfully', (done) => {
     let createStub = sinon.stub(User, 'create').resolves({ id: 1 });
     request(app)
-      .post(endpoint)
+      .post('/api/users')
       .send(userTest)
       .expect(201)
       .end((err, res) => {
         if (err) throw err;
-        assert(res.body.firstname, userTest.firstname);
-        assert.property(res.body, 'token');
-        token = res.body.token;
         createStub.restore();
         done();
       });
@@ -99,6 +155,7 @@ describe('POST user', () => {
         done();
       });
   }));
+
 
   // deletion tests
   it('should successfully delete a user', (done) => {
@@ -170,7 +227,76 @@ describe('POST user', () => {
         done();
       });
   });
+  it('should fail to retrieve one user when error occurs', done => {
+    let findByIdStub = sinon.stub(User, 'findById').rejects();
+    request(app)
+      .get('/api/users/1')
+      .set('x-access-token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+  it('should fail to retrieve one user', done => {
+    let findByIdStub = sinon.stub(User, 'findById').resolves();
+    request(app)
+      .get('/api/users/1')
+      .set('x-access-token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+  it('should fail to retrieve all available users', done => {
+    let findAllStub = sinon.stub(User, 'findAll').rejects();
+    request(app)
+      .get('/api/users')
+      .set('x-access-token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        findAllStub.restore();
+        done();
+      });
+  });
+  it('should update fields sucessfully', (done) => {
+    let findByIdStub = sinon.stub(User, 'findById').resolves({
+      update: () => new Promise((resolve, reject) => resolve({}))
+    });
+    // let updateStub = sinon.stub(user, 'update').resolves({});
+    request(app)
+      .put('/api/users/1')
+      .set('x-access-token', token)
+      .expect(201)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        // updateStub.restore();
+        done();
+      });
+  });
+
+  it('should  fail when update fails', (done) => {
+    let findByIdStub = sinon.stub(User, 'findById').resolves({});
+    let updateStub = sinon.stub(User, 'update').rejects({});
+    request(app)
+      .put('/api/users/1')
+      .set('x-access-token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        updateStub.restore();
+        done();
+      });
+  });
+
 });
+
 
 describe('Users', () => {
   it('should create user on /users/POST', (done) => {

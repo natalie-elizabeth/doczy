@@ -90,17 +90,7 @@ describe('actions', () => {
       expect(actions).toEqual(expectedActions);
     });
   });
-  it('should update a role', () => {
-    const response = {
-      body: {
-        role_name: 'role_name'
-      }
-    };
-    nock(/^.*$/)
-      .put('/api/roles')
-      .reply();
 
-  });
   it('should update a role', () => {
     const editFields = {
       id: '1',
@@ -125,7 +115,7 @@ describe('actions', () => {
 
     const store = mockStore({});
 
-    return store.dispatch(actions.updateRole(re)).then(() => {
+    return store.dispatch(actions.updateRole()).then(() => {
       const actions = store.getActions();
       expect(actions).toEqual(expectedActions);
     });
@@ -155,6 +145,7 @@ describe('actions', () => {
       expect(actions).toEqual(expectedActions);
     });
   });
+
   it('should delete a role', () => {
     const response = {
       body: {}
@@ -172,7 +163,7 @@ describe('actions', () => {
     }];
 
     const store = mockStore({});
-    return store.dispatch(actions.deleteRole(response)).then(() => {
+    return store.dispatch(actions.deleteRole(roleId)).then(() => {
       const actions = store.getActions();
       expect(actions).toEqual(expectedActions);
     });
