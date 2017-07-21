@@ -15,8 +15,6 @@ import CircularProgress from 'material-ui/CircularProgress';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as roleActions from '../../actions/roleActions';
 import validateInput from '../../utils/validateRole';
-import RoleEditForm from '../../components/roles/editRole';
-
 
 const style = {
 
