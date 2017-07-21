@@ -44,7 +44,6 @@ export const login = userData => (dispatch) => {
       .post('/api/users/login')
       .send(userData)
       .then((response) => {
-        console.log(`THIS WAS THE RESPONSE ${JSON.stringify(response.body)}`);
         window.localStorage.setItem('token', response.body.token);
         dispatch(loginSuccessful(response.body));
       })
