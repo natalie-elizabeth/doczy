@@ -160,6 +160,7 @@ export const updateDocument = documentData => (dispatch) => {
       .send(documentData)
       .then((response) => {
         dispatch(documentsUpdateSuccess(response.body));
+
       })
       .catch((error) => {
         dispatch(documentsUpdateFailure(error.response));
@@ -175,6 +176,7 @@ export const deleteDocument = documentId => (dispatch) => {
       .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
         dispatch(documentsDeleteSuccess(response.body));
+        location.reload();
       })
       .catch((error) => {
         dispatch(documentsDeleteFailure(error.response));
