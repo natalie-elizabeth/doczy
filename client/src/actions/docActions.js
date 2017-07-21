@@ -104,18 +104,15 @@ export const documentsSearchFilterfailure = searchFilter => ({
 
 
 export const searchDocument = title => (dispatch) => {
-  console.log('Search Title>>>>>', title);
   dispatch(documentsSearchFilterRequest());
   return (
     request
       .get('/api/search/documents/?q=' + title)
       .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
-        console.log('response>>>>>>>>>>>>.', response);
         dispatch(documentsSearchFilterSuccess(response.body));
       })
       .catch((error) => {
-        console.log('error>>>>>>>>>>>>>>>.', error);
         dispatch(documentsSearchFilterfailure(error.response));
         throw error;
       })
@@ -140,7 +137,6 @@ export const listDocuments = (limit, offset) => (dispatch) => {
 
 export const createDocument = documentData => (dispatch) => {
   dispatch(documentsAddRequest(documentData));
-  console.log('token: ', tokenUtils.getAuthToken());
   return (
     request
       .post('/api/documents')
@@ -150,7 +146,6 @@ export const createDocument = documentData => (dispatch) => {
         dispatch(documentsAddSuccess(response.body));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(documentsAddFailure(error.response));
       })
   );
@@ -167,7 +162,6 @@ export const updateDocument = documentData => (dispatch) => {
         dispatch(documentsUpdateSuccess(response.body));
       })
       .catch((error) => {
-        console.log('error>>>', error);
         dispatch(documentsUpdateFailure(error.response));
       })
   );
