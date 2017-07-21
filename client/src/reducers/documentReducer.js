@@ -1,4 +1,8 @@
-import * as c from '../actions/actionTypes';
+import {
+  DOCUMENT_GET_SUCCESS, DOCUMENT_SUCCESS, DOCUMENT_FAILURE, DOCUMENT_DELETE_SUCCESS, SET_DOCUMENTS_SEARCH_FILTER_SUCCESS,
+  DOCUMENT_UPDATE_REQUEST, DOCUMENT_UPDATE_SUCCESS, DOCUMENT_UPDATE_FAILURE, DOCUMENT_ADD_REQUEST, DOCUMENT_ADD_SUCCESS,
+  DOCUMENT_GET_FAILURE, DOCUMENT_ADD_FAILURE, DOCUMENT_GET_REQUEST, SET_DOCUMENTS_SEARCH_FILTER_FAILURE, SET_DOCUMENTS_SEARCH_FILTER_REQUEST
+} from '../actions/actionTypes';
 
 const DOC_LIST = {
   documents: [],
@@ -9,73 +13,73 @@ const DOC_LIST = {
 
 export default function reducer(state = DOC_LIST, action) {
   switch (action.type) {
-    case c.DOCUMENT_GET_SUCCESS:
+    case DOCUMENT_GET_SUCCESS:
       return Object.assign({}, state, {
         documents: [...state.documents, action.documents],
         error: null,
         loading: false,
       });
-    case c.DOCUMENT_SUCCESS:
+    case DOCUMENT_SUCCESS:
       return Object.assign({}, state, {
         documents: action.documents,
         error: null,
         loading: false,
       });
-    case c.DOCUMENT_FAILURE:
+    case DOCUMENT_FAILURE:
       return Object.assign({}, state, {
         error: action.error,
         loading: false,
       });
-    case c.DOCUMENT_DELETE_SUCCESS:
+    case DOCUMENT_DELETE_SUCCESS:
       return Object.assign({}, state, {
         documents: state.documents.filter(id => id !== action.documentId),
       });
 
-    case c.SET_DOCUMENTS_SEARCH_FILTER_SUCCESS:
+    case SET_DOCUMENTS_SEARCH_FILTER_SUCCESS:
       return Object.assign({}, state, {
         documents: action.searchFilter,
       });
 
 
-    case c.DOCUMENT_UPDATE_REQUEST:
+    case DOCUMENT_UPDATE_REQUEST:
       return Object.assign({}, state, {
         error: null,
         loading: true,
       });
-    case c.DOCUMENT_UPDATE_SUCCESS:
+    case DOCUMENT_UPDATE_SUCCESS:
       return Object.assign({}, state, {
         documents: state.documents.map(doc => doc.id === action.document.id ? action.document : doc),
         error: null,
         loading: true,
       });
 
-    case c.DOCUMENT_UPDATE_FAILURE:
+    case DOCUMENT_UPDATE_FAILURE:
       return Object.assign({}, state, {
         error: action.error,
         loading: false,
       });
-    case c.DOCUMENT_ADD_REQUEST:
+    case DOCUMENT_ADD_REQUEST:
       return Object.assign({}, state, {
         error: null,
         loading: true,
       });
-    case c.DOCUMENT_ADD_SUCCESS:
+    case DOCUMENT_ADD_SUCCESS:
       return Object.assign({}, state, {
         documents: [action.documents,
         ...state.documents],
         loading: false,
       });
 
-    case c.SET_DOCUMENTS_SEARCH_FILTER_FAILURE:
-    case c.DOCUMENT_GET_FAILURE:
-    case c.DOCUMENT_ADD_FAILURE:
+    case SET_DOCUMENTS_SEARCH_FILTER_FAILURE:
+    case DOCUMENT_GET_FAILURE:
+    case DOCUMENT_ADD_FAILURE:
       return Object.assign({}, state, {
         error: action.error,
         loading: false,
       });
 
-    case c.SET_DOCUMENTS_SEARCH_FILTER_REQUEST:
-    case c.DOCUMENT_GET_REQUEST:
+    case SET_DOCUMENTS_SEARCH_FILTER_REQUEST:
+    case DOCUMENT_GET_REQUEST:
       return {
         documents: null,
         error: null,

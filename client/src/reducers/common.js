@@ -1,4 +1,4 @@
-import * as c from '../actions/actionTypes';
+import { APP_LOAD, REDIRECT } from '../actions/actionTypes';
 
 const defaultState = {
   appName: 'Doczy',
@@ -7,7 +7,7 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case c.APP_LOAD:
+    case APP_LOAD:
       return [
         ...state, {
           token: action.token || null,
@@ -15,10 +15,9 @@ export default (state = defaultState, action) => {
           currentUser: action.payload ? action.payload.username : null
         }
       ];
-    case c.REDIRECT:
+    case REDIRECT:
       return [...state, { redirectTo: null }];
-    case c.LOGOUT:
-      return [...state, { redirectTo: '/', token: null, currentUser: null }];
+
     default:
       return state;
   }

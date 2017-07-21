@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HeaderApp from './common/headerApp';
 import Home from './Home/home';
-import Login from './User/loginPage';
-import SignUp from './User/signUpPage';
+import LoginUser from './User/loginUser';
+import SignUp from './User/signUp';
 import DocumentViewContainer from './Documents/documentContainer';
 import Roles from './roles/createRole';
 import dashboard from './common/adminDashboard';
@@ -21,7 +21,7 @@ export default class App extends Component {
           <br />
           <div className='container'>
             <Route exact path='/' component={Home} />
-            <Route path='/login' component={Login} />
+            <Route path='/login' component={LoginUser} />
             <Route path='/signup' component={SignUp} />
             <Route path='/documents' component={DocumentViewContainer} />
             <Route path='/roles' component={Roles} />

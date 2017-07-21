@@ -132,13 +132,12 @@ export class DocumentViewContainer extends React.Component {
       />,
     ];
     return (
-      <div className="container">
+      < div className="container" >
 
         <div>
           <div style={{ marginLeft: '30px' }}> <DocumentSearch /> </div>
           <hr />
           {this.props.documentList.documents && this.props.documentList.documents.length ? (this.props.documentList.documents.map(document =>
-
             (<DocumentView
               key={document.id}
               document={document}
@@ -194,7 +193,7 @@ export class DocumentViewContainer extends React.Component {
           autoHideDuration={2000}
           onRequestClose={this.closeSnackBar}
         />
-      </div>
+    </div >
 
     );
   }
