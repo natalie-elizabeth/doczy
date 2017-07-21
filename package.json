@@ -4,16 +4,18 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": " webpack -p && node ./bin/www",
+    "start": "node ./bin/www ",
     "start:dev": "NODE_PATH=./server nodemon ./bin/www",
     "ssh:app": "docker exec -it $(docker ps | grep docker_api | awk '{ print $1}') bash",
     "ssh:db": "docker exec -it $(docker ps | grep postgres | awk '{ print $1}') bash",
     "migrations": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "start:dev:server": "webpack-dev-server --progress",
+    "seed": "sequelize db:seed:all",
     "build": "webpack -p",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test": "nyc --reporter=html --reporter=text mocha  --recursive -t 10000 && cat ./coverage/lcov.info | codecov",
     "test:jest": "jest",
+    "postinstall": " npm run build && npm run seed",
     "test:coverage": "jest --coverage"
   },
   "jest": {
