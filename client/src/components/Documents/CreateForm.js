@@ -28,14 +28,7 @@ const CreateDocument = props => (
       rows={2}
       rowsMax={10}
     /><br /> <br />
-    {/* <TextField
-      name="access"
-      type="text"
-      placeholder="Access"
-      onChange={props.onSetAccess}
-      defaultValue={props.document.access}
-      fullWidth
-    /> */}
+
     <SelectField
       floatingLabelText="Access"
       value={props.document.access}
