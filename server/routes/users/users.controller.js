@@ -34,8 +34,8 @@ class UserController {
 
   }
 
-
   static listall(req, res) {
+
     return User
       .findAll({
         include: [{

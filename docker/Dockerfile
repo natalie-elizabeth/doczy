@@ -15,6 +15,6 @@ RUN mkdir -p /usr/src && cp -a /tmp/node_modules /usr/src/
 WORKDIR /usr/src
 ADD . /usr/src
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["yarn","start:dev"]
