@@ -1,26 +1,28 @@
 const chaiHttp = require('chai-http');
 const chai = require('chai');
 const supertest = require('supertest');
-const should = require('chai').should;
-expect = require('chai').expect;
-chai.use(chaiHttp);
 const request = require('supertest');
-expect = require('chai').expect;
-const assert = chai.assert;
-chai.use(chaiHttp);
-const User = require('../server/models').User;
+const should = require('chai').should;
+const expect = require('chai').expect;
 const sinon = require('sinon');
 require('sinon-as-promised');
+const assert = chai.assert;
+const User = require('../server/models').User;
 const bcrypt = require('bcrypt-nodejs');
 const Role = require('../server/models').Role;
-
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.SECRET_KEY || 'some secret';
 api = supertest('http://localhost:8080');
 const app = require('../app');
 
-let token = '';
+chai.use(chaiHttp);
 
+
+const token = jwt.sign({ userId: 1, roleId: 1 }, secretKey, { expiresIn: '24h' });
+
+let role = 1;
 const testRole = {
-  name: 'Olga'
+  role_name: 'Olga'
 };
 
 
@@ -42,6 +44,7 @@ describe('actions', () => {
 
     request(app)
       .post(endpoint)
+      .set('x-access-token', token)
       .send(testRole)
       .expect(400)
       .end((err, res) => {
@@ -50,6 +53,61 @@ describe('actions', () => {
         done();
       });
   });
+  it('should fail to delete when role id is not found', (done) => {
+    let findByIdStub = sinon.stub(Role, 'findById').resolves();
+    request(app)
+      .delete('/api/roles/1')
+      .set('x-access-token', token)
+      .expect(404)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+  it('should fail when update fails', (done) => {
+    let findByIdStub = sinon.stub(Role, 'findById').resolves({
+      update: () => new Promise((resolve, reject) => reject())
+    });
+
+    request(app)
+      .put('/api/roles/1')
+      .set('x-access-token', token)
+      .expect(400)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+  it('should update fields sucessfully', (done) => {
+    let findByIdStub = sinon.stub(Role, 'findById').resolves({
+      update: () => new Promise((resolve, reject) => resolve())
+    });
+    request(app)
+      .put('/api/roles/1')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err, res) => {
+        if (err) throw err;
+        findByIdStub.restore();
+        done();
+      });
+  });
+  it('should fail to delete', (done) => {
+    let findByIdStub = sinon.stub(Role, 'findById').rejects();
+    request(app)
+      .delete('/api/roles/1')
+      .set('x-access-token', token)
+      .expect(400)
+      .end(function (err, res) {
+        findByIdStub.restore();
+        done();
+      });
+  });
+
+
+
 });
 
 
@@ -85,7 +143,7 @@ describe('Roles', () => {
       expect(response.statusMessage).toEqual('OK');
     });
     done();
-  })
+  });
   it('should update a single role', (done) => {
     api.put('/api/roles/:id', (error, response, body) => {
       expect(expect(response.statusCode).to.equal(200));

@@ -3,19 +3,15 @@ const { User, Role } = require('../../models');
 class RoleController {
 
   static create(req, res) {
-    const { name } = req.body;
+    const { role_name } = req.body;
 
-    if (!name) {
-      return res.status(400).json({
-        error: 'Missing required field',
-        errors: ['Missing require field name']
-      });
+    if (!role_name) {
+      return res.status(400).json({ message: 'Missing required field name' });
     }
 
-    return Role.create({ name })
+    return Role.create({ role_name })
       .then(role => res.status(201).json(role))
       .catch(error => {
-        console.log(error);
         res.status(400).json(error);
       });
   }
@@ -23,7 +19,7 @@ class RoleController {
     return Role
       .all()
       .then(roles => res.status(201).send(roles))
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(404).send(error));
 
   }
 
@@ -82,9 +78,11 @@ class RoleController {
         }
         return role
           .update({
-            name: req.body.name || document.name
+            role_name: req.body.role_name || role.role_name
           })
-          .then(() => res.status(200).send(role))
+          .then((data) => {
+            return res.status(200).send(role);
+          })
           .catch((error) => res.status(400).send(error));
       });
   }

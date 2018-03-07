@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = {
-    name: {
+    role_name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,

@@ -38,7 +38,7 @@ const CreateDocument = props => (
       <MenuItem value={'private'} primaryText="Private" />
       <MenuItem value={'role'} primaryText="Role" />
     </SelectField>
-  </div>
+  </div >
 );
 
 export default CreateDocument;

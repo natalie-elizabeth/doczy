@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { signupRequest } from '../../actions/authActions';
 import validateInput from '../../utils/validateSignup';
+
 
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -23,12 +25,16 @@ class SignUp extends Component {
       lastname: '',
       email: '',
       password: '',
+      confirm: '',
       role_id: 2,
       errors: {},
-      isLoading: false
+      isLoading: false,
+      snackBarOpen: false
+
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.closeSnackBar = this.closeSnackBar.bind(this);
 
   };
   onChange(event) {
@@ -36,11 +42,14 @@ class SignUp extends Component {
       [event.target.name]: event.target.value
     });
   }
+  closeSnackBar() {
+    this.setState({ snackBarOpen: false });
+  }
 
   onSubmit(event) {
     event.preventDefault();
     if (this.isValid()) {
-      this.setState({ errors: {}, isLoading: true });
+      // this.setState({ errors: {}, isLoading: true });
       this.props.signupRequest((this.state))
         .then(() => {
           console.log('hey');
@@ -48,14 +57,18 @@ class SignUp extends Component {
 
         })
         .catch(err => {
-          this.setState({ errors: err, isLoading: false });
+          this.setState({ errors: err.response.data, isLoading: false });
         });
+      this.setState({ snackBarOpen: true });
+      this.handleClose();
+
     }
+
   }
 
   isValid() {
     const { errors, isValid } = validateInput(this.state);
-    if (isValid) {
+    if (!isValid) {
       this.setState({ errors });
     }
     return isValid;
@@ -69,7 +82,7 @@ class SignUp extends Component {
           <center>
             <Card className="container">
               <form action="/" onSubmit={this.onSubmit} className="col s12">
-                <h2 className="card-heading">Sign Up</h2>
+                <h2 className="card-heading" style={{ fontFamily: "Roboto", color: "black", fontStyle: "bold", fontSize: "48px" }} >Sign Up</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
 
                 <div className='row'>
@@ -149,6 +162,12 @@ class SignUp extends Component {
                 <div className="button-line">
                   <RaisedButton type="submit" label="Create New Account" primary />
                 </div>
+                <Snackbar
+                  open={this.state.snackBarOpen}
+                  message="Sign up successful"
+                  autoHideDuration={2000}
+                  onRequestClose={this.closeSnackBar}
+                />
                 <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
               </form>
             </Card>

@@ -34,8 +34,8 @@ class UserController {
 
   }
 
-
   static listall(req, res) {
+
     return User
       .findAll({
         include: [{
@@ -84,21 +84,22 @@ class UserController {
   static update(req, res) {
     return User
       .findById(req.params.id)
-      .then(user => {
+      .then((user) => {
         if (!user) {
           return res.status(404).send({
             message: 'User Not Found',
           });
         }
-        return user
-          .update({
-            username: req.body.username || user.username,
-            email: req.body.email || user.email,
-            password: req.body.password || user.password
-
+        user.update(req.body, { fields: Object.keys(req.body) })
+          .then((updatedUser) => {
+            res.status(201).send(updatedUser);
           })
-          .then(() => res.status(200).send(user))
-          .catch((error) => res.status(400).send(error));
+          .catch(error => {
+            res.status(400).send(error);
+          });
+      })
+      .catch(error => {
+        res.status(400).send(error);
       });
   }
 
@@ -133,7 +134,6 @@ class UserController {
         });
       })
       .catch((error) => {
-        console.log(error);
         res.status(401).send({
           message: 'invalid'
         });
@@ -145,23 +145,40 @@ class UserController {
       message: 'You were logged out successfully'
     });
   }
-
   static search(req, res) {
-    if (req.query.q) {
-      return user.findAll({
-        where: {
-          $or: [
-            { firstname: { $like: `%${req.query.q}%` } },
-            { lastname: { $like: `%${req.query.q}%` } },
-            { username: { $like: `%${req.query.q}%` } },
-            { email: { $like: `%${req.query.q}%` } }
-          ]
-        }
-      })
-        .then(response => res.status(200).send(response))
-        .catch(error => res.status(400).send(error));
+    if (!req.query.q) {
+      return res.status(400).send({ message: 'please provide query' });
     }
+    return User.findAll({
+      where: {
+        $or: [
+          { firstName: { $like: `%${req.query.q}%` } },
+          { lastName: { $like: `%${req.query.q}%` } },
+          { userName: { $like: `%${req.query.q}%` } },
+          { email: { $like: `%${req.query.q}%` } }
+        ]
+      }
+    })
+      .then(response => res.status(200).send(response))
+      .catch(error => res.status(400).send(error));
+
   }
+  // static search(req, res) {
+  //   if (req.query.q) {
+  //     return user.findAll({
+  //       where: {
+  //         $or: [
+  //           { firstname: { $like: `%${req.query.q}%` } },
+  //           { lastname: { $like: `%${req.query.q}%` } },
+  //           { username: { $like: `%${req.query.q}%` } },
+  //           { email: { $like: `%${req.query.q}%` } }
+  //         ]
+  //       }
+  //     })
+  //       .then(response => res.status(200).send(response))
+  //       .catch(error => res.status(400).send(error));
+  //   }
+  // }
 }
 
 module.exports = UserController;

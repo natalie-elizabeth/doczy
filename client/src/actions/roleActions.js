@@ -1,9 +1,13 @@
 import request from 'superagent';
-import * as c from '../actions/actionTypes';
+import {
+  ROLE_REQUEST, ROLE_SUCCESS, ROLE_FAILURE, ROLE_ADD_FAILURE, ROLE_ADD_SUCCESS, ROLE_DELETE_REQUEST,
+  ROLE_ADD_REQUEST, ROLE_DELETE_FAILURE, ROLE_DELETE_SUCCESS, ROLE_UPDATE_REQUEST, ROLE_UPDATE_FAILURE, ROLE_UPDATE_SUCCESS
+} from './actionTypes';
 import * as tokenUtils from '../utils/tokenUtils';
 
 import jwtDecode from 'jwt-decode';
 import { postEndpoint, getEndpoint, deleteEndpoint } from '../api/api';
+
 
 
 export const listRoles = () => (dispatch) => {
@@ -11,7 +15,7 @@ export const listRoles = () => (dispatch) => {
   return (
     request
       .get('/api/roles')
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
         dispatch(rolesLoadSuccess(response.body));
       })
@@ -22,16 +26,16 @@ export const listRoles = () => (dispatch) => {
 };
 
 export const rolesRequest = () => ({
-  type: c.ROLE_REQUEST
+  type: ROLE_REQUEST
 });
 
 export const rolesLoadSuccess = roles => ({
-  type: c.ROLE_SUCCESS,
+  type: ROLE_SUCCESS,
   roles
 });
 
 export const rolesLoadFailure = roles => ({
-  type: c.ROLE_FAILURE,
+  type: ROLE_FAILURE,
   roles
 });
 
@@ -40,7 +44,7 @@ export const createRole = roleData => (dispatch) => {
   return (
     request
       .post('/api/roles')
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .send(roleData)
       .then((response) => {
         dispatch(rolesAddSuccess(response.body));
@@ -52,17 +56,17 @@ export const createRole = roleData => (dispatch) => {
 };
 
 export const roleAddRequest = roles => ({
-  type: c.ROLE_ADD_REQUEST,
+  type: ROLE_ADD_REQUEST,
   roles
 });
 
 export const rolesAddSuccess = roles => ({
-  type: c.ROLE_ADD_SUCCESS,
+  type: ROLE_ADD_SUCCESS,
   roles
 });
 
 export const rolesAddFailure = roles => ({
-  type: c.ROLE_ADD_FAILURE,
+  type: ROLE_ADD_FAILURE,
   roles
 });
 
@@ -71,9 +75,9 @@ export const deleteRole = roleId => (dispatch) => {
   return (
     request
       .delete(`/api/roles/${roleId}`)
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .then((response) => {
-        dispatch(roleDeleteSuccess(roleId));
+        dispatch(roleDeleteSuccess(response.body));
       })
       .catch((error) => {
         dispatch(roleDeleteFailure(error.response));
@@ -82,25 +86,26 @@ export const deleteRole = roleId => (dispatch) => {
 };
 
 export const roleDeleteRequest = () => ({
-  type: c.ROLE_DELETE_REQUEST
+  type: ROLE_DELETE_REQUEST
 });
 
 export const roleDeleteSuccess = roleId => ({
-  type: c.ROLE_DELETE_SUCCESS,
+  type: ROLE_DELETE_SUCCESS,
   roleId
 });
 
 export const roleDeleteFailure = roles => ({
-  type: c.ROLE_DELETE_FAILURE,
+  type: ROLE_DELETE_FAILURE,
   roles
 });
 
+
 export const updateRole = roleData => (dispatch) => {
-  dispatch(rolesUpdateRequest(roleData));
+  dispatch(rolesUpdateRequest(roleData.id));
   return (
     request
       .put(`/api/roles/${roleData.id}`)
-      .set('x-access-token', window.localStorage.getItem('token'))
+      .set('x-access-token', tokenUtils.getAuthToken())
       .send(roleData)
       .then((response) => {
         dispatch(rolesUpdateSuccess(response.body));
@@ -111,17 +116,19 @@ export const updateRole = roleData => (dispatch) => {
   );
 };
 
+
+
 export const rolesUpdateRequest = roles => ({
-  type: c.ROLE_UPDATE_REQUEST,
+  type: ROLE_UPDATE_REQUEST,
   roles
 });
 
 export const rolesUpdateSuccess = roles => ({
-  type: c.ROLE_UPDATE_SUCCESS,
+  type: ROLE_UPDATE_SUCCESS,
   roles
 });
 
 export const rolesUpdateFailure = roles => ({
-  type: c.ROLE_UPDATE_FAILURE,
+  type: ROLE_UPDATE_FAILURE,
   roles
 });

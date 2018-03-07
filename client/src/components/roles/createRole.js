@@ -7,23 +7,37 @@ import { Card, CardText } from 'material-ui/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import CircularProgress from 'material-ui/CircularProgress';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as roleActions from '../../actions/roleActions';
 import validateInput from '../../utils/validateRole';
 
+const style = {
 
+  marginTop: 30,
+  paddingTop: 40
+};
 
 class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      open: false,
+      role_name: '',
       isLoading: false,
-      errors: {}
+      errors: {},
+      edittingRoleId: false,
+      newRoleValue: ''
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.editRole = this.editRole.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
   };
 
   componentDidMount() {
@@ -41,9 +55,7 @@ class Roles extends Component {
       this.setState({ errors: {}, isLoading: true });
       this.props.createRole((this.state))
         .then(() => {
-          console.log('crushy');
           this.context.router.history.push('/roles');
-          console.log('are you here yet?');
         })
         .catch(err => {
           this.setState({ errors: err, isLoading: false });
@@ -58,6 +70,18 @@ class Roles extends Component {
     }
     return isValid;
   }
+
+
+
+  editRole(index, event) {
+    this.setState({ edittingRoleId: index });
+  }
+
+  handleChange() {
+    let newValue = this.refs.roleName.value;
+    this.setState({ newRoleValue: newValue });
+  }
+
   render() {
     const { errors } = this.state;
     let roles = this.props.roles;
@@ -69,7 +93,7 @@ class Roles extends Component {
           <center>
             <Card className="container" expanded initiallyExpanded>
               <form action="/" onSubmit={this.onSubmit} >
-                <h2 className="card-heading">Create new Roles</h2>
+                <h2 className="card-heading" style={{ fontSize: "30px", fontFamily: "Roboto", fontWeight: "bold", color: "black" }}>Create new Roles</h2>
                 {errors.summary && <p className="error-message">{errors.summary}</p>}
 
                 <div className='row'>
@@ -77,10 +101,10 @@ class Roles extends Component {
                     <i className="material-icons prefix">account_circle</i> &nbsp;&nbsp;
                     <TextField
                       floatingLabelText="Role Name"
-                      name="name"
-                      errorText={errors.name}
+                      name="role_name"
+                      errorText={errors.role_name}
                       onChange={this.onChange}
-                      value={this.state.name}
+                      value={this.state.role_name}
                     />
                   </div>
                 </div>
@@ -96,24 +120,41 @@ class Roles extends Component {
             {
               loading ? <CircularProgress thickness={4} /> :
                 roles.map((role, index) => {
+                  let roleName = role.role_name;
                   return <Card className="container">
-                    <form key={index} ><p>{role.id}&nbsp;&nbsp;{role.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <RaisedButton onTouchTap={() => {
-                        {/*{ console.log('is this working?>>>>', role.id); }*/}
-                        if (confirm("Are you sure you want to delete this role?") === true) {
-                          this.props.deleteRole(role.id)
-                            .then(() => {
-                              this.props.listRoles();
-                              console.log('Role Deleted');
-                            });
-                          alert("Role deleted");
-                        }
-                        else {
-                          alert("Role not deleted");
-                        }
-                      }
+                    <table key={index} >
+                      <br />
+                      <p><span style={{ fontSize: '20px', textAlign: "justify", fontFamily: "Roboto" }} >{role.id} - ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                      }>Delete</RaisedButton> </p>  <br /></form>
+                        {this.state.edittingRoleId === index && role.role_name !== 'admin' ?
+                          <input type="text" defaultValue={roleName} ref="roleName" onChange={this.handleChange} /> :
+                          <span onClick={(event) => this.editRole(index, event)} style={{ cursor: 'pointer', fontFamily: "Roboto", paddingRight: '35em', marginTop: '10px', fontSize: '20px', fontStyle: "bold", textAlign: "justify" }}>
+                            {role.role_name}</span>} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <RaisedButton secondary={true} onTouchTap={() => {
+                          if (confirm("Are you sure you want to delete this role?") === true) {
+                            this.props.deleteRole(role.id)
+                              .then(() => {
+                                this.props.listRoles();
+                              });
+                            alert("Role deleted");
+                          }
+                          else {
+                            alert("Role not deleted");
+                          }
+                        }
+
+                        } style={{ style }} danger>Delete</RaisedButton> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <RaisedButton primary={true} onTouchTap={() => {
+                          this.state.edittingRoleId = index;
+                          this.props.updateRole({ role_name: this.state.newRoleValue, id: role.id })
+                            .then(() => {
+                              this.setState({ edittingRoleId: false });
+                              this.props.listRoles();
+                            });
+
+                        }}>Update</RaisedButton> <br /><br /> </p>
+                    </table>
                   </Card>;
                 })
             }
