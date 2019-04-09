@@ -6,14 +6,8 @@ const { User, Document } = require('../../models');
 
 class UserController {
   static create(req, res) {
-    const {
-      username,
-      firstname,
-      lastname,
-      email,
-      password,
-      role_id
-    } = req.body;
+    const { username, firstname, lastname, email, password } = req.body;
+    const role_id = 2;
 
     if (!username || !firstname || !lastname || !email || !password) {
       return res.status(400).json({ message: 'Missing required field' });
@@ -24,8 +18,7 @@ class UserController {
         .status(400)
         .json({ message: 'Please Enter A Valid Email Address' });
     }
-
-    return User.create({
+    User.create({
       username,
       firstname,
       lastname,
@@ -33,9 +26,21 @@ class UserController {
       password,
       role_id
     })
-      .then(user => res.status(201).json(user))
+      .then(user => {
+        const token = jwt.sign({ userId: user.id, roleId }, secretKey, {
+          expiresIn: '24h'
+        });
+        let data = {
+          firstname,
+          lastname,
+          username,
+          email,
+          token
+        };
+        return res.status(201).json(data, console.log('hhhhhhh', data));
+      })
       .catch(error => {
-        res.status(400).json(error);
+        return res.status(400).send(error);
       });
   }
 
