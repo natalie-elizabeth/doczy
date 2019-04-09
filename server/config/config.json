@@ -1,16 +1,14 @@
 {
   "development": {
-    "username": "doczy",
-    "password": "doczy",
     "database": "doczy",
-    "host": "database",
+    "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "database": "doczy-test",
     "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   },
   "production": {

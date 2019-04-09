@@ -1,7 +1,6 @@
 const { User, Document } = require('../../models');
 
 class DocumentController {
-
   static create(req, res) {
     Document.create({
       user_id: req.userId,
@@ -14,7 +13,6 @@ class DocumentController {
         res.status(400).json(error);
       });
   }
-
 
   static listall(req, res) {
     let query = {};
@@ -31,7 +29,6 @@ class DocumentController {
     return Document.findAll(query)
       .then(documents => res.status(200).json(documents))
       .catch(error => res.status(404).json(error));
-
   }
   //   if(isPublic) {
   //     query.where = {
@@ -44,8 +41,6 @@ class DocumentController {
   //     };
   // const roles = ['', 'admin', 'user', 'success', 'learning'];
   // let query = {};
-
-
 
   // if (req.roleId !== 2 && req.roleId !== 1) { // user - other roles have been defined
   //   query.where = {
@@ -70,20 +65,17 @@ class DocumentController {
   //     //   .catch(error => res.status(404).json(error));
   //   }
   static search(req, res) {
-    return Document
-      .findAll({
-        where: {
-          title: { $ilike: `%${req.query.q}%` }
-        }
-      })
+    return Document.findAll({
+      where: {
+        title: { $ilike: `%${req.query.q}%` }
+      }
+    })
       .then(response => res.status(302).json(response))
       .catch(error => res.status(400).json(error));
   }
 
-
   static retrieve(req, res) {
-    return Document
-      .findById(req.params.id)
+    return Document.findById(req.params.id)
       .then(doc => {
         if (!doc) {
           res.status(404).send({
@@ -91,15 +83,15 @@ class DocumentController {
           });
         }
         return res.status(200).json(doc);
-      });
+      })
+      .catch(error => res.status(400).send(error), console.log(error, 'error'));
   }
 
   static delete(req, res) {
-    return Document
-      .findById(req.params.id)
+    return Document.findById(req.params.id)
       .then(document => {
         if (!document) {
-          res.status(404).send({ message: "Document not found" });
+          res.status(404).send({ message: 'Document not found' });
         }
         return document
           .destroy()
@@ -110,25 +102,22 @@ class DocumentController {
   }
 
   static update(req, res) {
-    return Document
-      .findById(req.params.id)
-      .then(document => {
-        console.log(">>>>>>>>>>>>>>>>>>>>> ", document);
-        if (!document) {
-          return res.status(404).send({
-            message: 'Document Not Found',
-          });
-        }
-        return document
-          .update({
-            title: req.body.title || document.title,
-            content: req.body.content || document.content,
-            access: req.body.access || document.access,
-
-          })
-          .then(() => res.status(200).send(document))
-          .catch((error) => res.status(400).send(error));
-      });
+    return Document.findById(req.params.id).then(document => {
+      console.log('>>>>>>>>>>>>>>>>>>>>> ', document);
+      if (!document) {
+        return res.status(404).send({
+          message: 'Document Not Found'
+        });
+      }
+      return document
+        .update({
+          title: req.body.title || document.title,
+          content: req.body.content || document.content,
+          access: req.body.access || document.access
+        })
+        .then(() => res.status(200).send(document))
+        .catch(error => res.status(400).send(error));
+    });
   }
 }
 

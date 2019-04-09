@@ -23,21 +23,20 @@ const testRole = {
   name: 'Olga'
 };
 
-
 describe('actions', () => {
   const endpoint = '/api/roles';
 
-  it('should return all roles', (done => {
+  it('should return all roles', done => {
     request(app)
       .get('/api/roles')
       .set('x-access-login', token)
       .accept('application/json')
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(res.status).to.equal(401);
         done();
       });
-  }));
-  it('should fail when create fails', (done) => {
+  });
+  it('should fail when create fails', done => {
     let createStub = sinon.stub(Role, 'create').rejects({});
 
     request(app)
@@ -52,9 +51,8 @@ describe('actions', () => {
   });
 });
 
-
 describe('Roles', () => {
-  it('should create user on /roles/POST', (done) => {
+  it('should create user on /roles/POST', done => {
     api.post('/api/roles', (error, response, body) => {
       expect(response.statusCode).toEqual(201);
       expect(response.data).toEqual('Role successful created');
@@ -63,7 +61,7 @@ describe('Roles', () => {
     done();
   });
 
-  it('should Get all roles', (done) => {
+  it('should Get all roles', done => {
     api.get('/api/roles', (error, response, body) => {
       expect(response.statusCode).toEqual(200);
       expect(response.statusMessage).toEqual('OK');
@@ -71,7 +69,7 @@ describe('Roles', () => {
     done();
   });
 
-  it('should list a single role', (done) => {
+  it('should list a single role', done => {
     api.get('/api/roles/:id', (error, response, body) => {
       expect(response.statusCode).toEqual(200);
       expect(response.statusMessage).toEqual('OK');
@@ -79,22 +77,18 @@ describe('Roles', () => {
     done();
   });
 
-  it('should delete a role', (done) => {
+  it('should delete a role', done => {
     api.delete('/api/roles/:id', (error, response, body) => {
       expect(response.statusCode).toEqual(204);
       expect(response.statusMessage).toEqual('OK');
     });
     done();
-  })
-  it('should update a single role', (done) => {
+  });
+  it('should update a single role', done => {
     api.put('/api/roles/:id', (error, response, body) => {
       expect(expect(response.statusCode).to.equal(200));
       expect(response.body.name).to.not.equal(null);
-
-
     });
     done();
   });
 });
-
-
