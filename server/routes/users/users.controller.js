@@ -4,15 +4,15 @@ const secretKey = process.env.SECRET_KEY || 'some secret';
 
 const { User, Document } = require('../../models');
 
-class UserController {
-  static create(req, res) {
-    const { username, firstname, lastname, email, password } = req.body;
+module.exports = {
+  create(req, res) {
+    const { username, firstname, lastname, email, password } = req.query;
     const role_id = 2;
 
     if (!username || !firstname || !lastname || !email || !password) {
       return res.status(400).json({ message: 'Missing required field' });
     } else if (
-      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email)
+      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(req.query.email)
     ) {
       return res
         .status(400)
@@ -27,7 +27,7 @@ class UserController {
       role_id
     })
       .then(user => {
-        const token = jwt.sign({ userId: user.id, roleId }, secretKey, {
+        const token = jwt.sign({ userId: user.id, role_id }, secretKey, {
           expiresIn: '24h'
         });
         let data = {
@@ -37,14 +37,16 @@ class UserController {
           email,
           token
         };
-        return res.status(201).json(data, console.log('hhhhhhh', data));
+        console.log(res, 'winter is here');
+        return res.status(201).json(data);
       })
       .catch(error => {
-        return res.status(400).send(error);
+        console.log('here is the culprit', error);
+        return res.sendStatus(400).json(error);
       });
-  }
+  },
 
-  static seeall(req, res) {
+  seeall(req, res) {
     if (req.query.limit || req.query.offset) {
       return User.findAll({ limit: req.query.limit, offset: req.query.offset })
         .then(users => res.status(200).json(users))
@@ -53,9 +55,9 @@ class UserController {
     User.all()
       .then(users => res.status(201).send(users))
       .catch(error => res.status(400).send(error));
-  }
+  },
 
-  static listall(req, res) {
+  listall(req, res) {
     return User.findAll({
       include: [
         {
@@ -66,9 +68,9 @@ class UserController {
     })
       .then(users => res.status(200).json(users))
       .catch(error => res.status(404).send(error));
-  }
+  },
 
-  static retrieve(req, res) {
+  retrieve(req, res) {
     return User.findById(req.params.id, {
       include: [
         {
@@ -88,9 +90,9 @@ class UserController {
       .catch(error => {
         res.status(400).json(error);
       });
-  }
+  },
 
-  static delete(req, res) {
+  delete(req, res) {
     return User.findById(req.params.id)
       .then(user => {
         if (!user) {
@@ -102,9 +104,9 @@ class UserController {
           .catch(error => res.status(400).send(user));
       })
       .catch(error => res.status(400).send(error));
-  }
+  },
 
-  static update(req, res) {
+  update(req, res) {
     return User.findById(req.params.id).then(user => {
       if (!user) {
         return res.status(404).send({
@@ -120,9 +122,9 @@ class UserController {
         .then(() => res.status(200).send(user))
         .catch(error => res.status(400).send(error));
     });
-  }
+  },
 
-  static login(req, res) {
+  login(req, res) {
     return User.findOne({
       where: {
         email: req.body.email
@@ -161,14 +163,15 @@ class UserController {
           message: 'invalid'
         });
       });
-  }
-  static logout(req, res) {
+  },
+
+  logout(req, res) {
     res.status(200).send({
       message: 'You were logged out successfully'
     });
-  }
+  },
 
-  static search(req, res) {
+  search(req, res) {
     if (req.query.q) {
       return user
         .findAll({
@@ -185,6 +188,4 @@ class UserController {
         .catch(error => res.status(400).send(error));
     }
   }
-}
-
-module.exports = UserController;
+};
