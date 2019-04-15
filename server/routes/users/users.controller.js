@@ -46,6 +46,47 @@ module.exports = {
       });
   },
 
+  login(req, res) {
+    return User.findOne({
+      where: {
+        email: req.query.email
+      }
+    })
+      .then(user => {
+        if (!user) {
+          return res.status(403).json({
+            message: 'Invalid user'
+          });
+        }
+        bcrypt.compare(req.query.password, user.password, (err, matched) => {
+          if (err) {
+            return res.status(401).json({
+              message: 'Invalid credentials'
+            });
+          }
+          if (!matched) {
+            return res.json('password or email is incorrect');
+          }
+          const token = jwt.sign(
+            { userId: user.id, roleId: user.role_id },
+            secretKey,
+            { expiresIn: '24h' }
+          );
+          return res.status(200).json({
+            message: 'Login Successful',
+            token,
+            expiresIn: '24h'
+          });
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(401).send({
+          message: 'invalid'
+        });
+      });
+  },
+
   seeall(req, res) {
     if (req.query.limit || req.query.offset) {
       return User.findAll({ limit: req.query.limit, offset: req.query.offset })
@@ -122,47 +163,6 @@ module.exports = {
         .then(() => res.status(200).send(user))
         .catch(error => res.status(400).send(error));
     });
-  },
-
-  login(req, res) {
-    return User.findOne({
-      where: {
-        email: req.body.email
-      }
-    })
-      .then(user => {
-        if (!user) {
-          return res.status(403).json({
-            message: 'Invalid user'
-          });
-        }
-        bcrypt.compare(req.body.password, user.password, (err, matched) => {
-          if (err) {
-            return res.status(401).json({
-              message: 'Invalid credentials'
-            });
-          }
-          if (!matched) {
-            return res.json('password or email is incorrect');
-          }
-          const token = jwt.sign(
-            { userId: user.id, roleId: user.role_id },
-            secretKey,
-            { expiresIn: '24h' }
-          );
-          return res.status(200).json({
-            message: 'Login Successful',
-            token,
-            expiresIn: '24h'
-          });
-        });
-      })
-      .catch(error => {
-        console.log(error);
-        res.status(401).send({
-          message: 'invalid'
-        });
-      });
   },
 
   logout(req, res) {
